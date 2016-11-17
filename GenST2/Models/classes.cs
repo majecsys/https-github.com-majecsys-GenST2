@@ -6,6 +6,7 @@ namespace GenST2.Models
     [Table("classes")]
     public partial class _class
     {
+        [Key]
         public int classID { get; set; }
 
         [Required]

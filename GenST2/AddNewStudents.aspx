@@ -43,21 +43,43 @@
 
   </div>
         <br>
-        <div class="row">
-            <div class="col-xs-3">
-                <select class="form-control">
-                    <option>Select</option>
-                </select>
-            </div>
+
+    <div class="row">
             <div class="col-xs-4">
-                <asp:DropDownList runat="server" DataTextField="classes" DataValueField="classes" AppendDataBoundItems="true" CssClass="form-control">
-                    <asp:ListItem Text="rollo" Value="pollo"></asp:ListItem>
-                </asp:DropDownList>
-            </div>
-            <div class="col-xs-5">
-                <select class="form-control">
-                    <option>Select</option>
-                </select>
-            </div>
+        <asp:DropDownList
+            ID="ddlClasses" 
+            runat="server" 
+            DataTextField="classDescriptions" 
+            SelectMethod="LoadClasses" 
+            DataValueField="classID" 
+            ItemType="GenST2.Models._class" 
+            CssClass="form-control"
+            AppendDataBoundItems="True" 
+            OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged"
+             AutoPostBack="true" >
+            <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
+        </asp:DropDownList>
+
+                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                     <Triggers>
+                         <asp:AsyncPostBackTrigger ControlID="ddlClasses" EventName="SelectedIndexChanged" />
+                     </Triggers>
+                 </asp:UpdatePanel>
+
+    </div>
+        <div class="col-xs-3">
+            <select class="form-control">
+                <option>Select</option>
+            </select>
         </div>
+
+        <div class="col-xs-5">
+            <select class="form-control">
+                <option>Select</option>
+            </select>
+        </div>
+    </div>
+
+
+
 </asp:Content>
