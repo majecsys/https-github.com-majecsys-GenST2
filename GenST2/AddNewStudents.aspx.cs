@@ -13,7 +13,8 @@ namespace GenST2
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            //this.ddlClasses.SelectedIndexChanged += new System.EventHandler(ddlClasses_SelectedIndexChanged);
+
             if (User.Identity.IsAuthenticated)
             {
                 Response.Write("The add page");
@@ -38,12 +39,75 @@ namespace GenST2
                         return query;
         }
 
+       public IQueryable<course> LoadCourses()
+        {
+            var query = from c in db.courses
+                        select c;
+                        return query;
+        }
+
         protected void ddlClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DropDownList ddl = new DropDownList();
-            
-            Response.Write(ddl.SelectedValue);
+            check(ddlClasses.SelectedValue);
 
+        }
+        public void check(string t)
+        {
+            string timmy = t;
+            lbl_ClassesPrice.Text = timmy;
+            //sponse.Write("Passed in this --" + timmy);
+        }
+
+        protected void ddlCourses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //double perHourCharge = 0;
+
+
+            //if (ddlCourses.SelectedValue.Equals("3"))
+            //{
+            //    perHourCharge = 18;
+            //}
+            //else
+            //{
+            //    perHourCharge = 15;
+            //}
+            //processCourses(perHourCharge);
+        }
+
+        public void processCourses(double perHour)
+        {
+            if (ddlNumWeeks.SelectedValue == "0")
+            {
+                LblFees.Text = "";
+                double numWeeks;
+                numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
+                LblFees.Text = Convert.ToString(numWeeks * perHour);
+            }
+            else
+            {
+
+            }
+
+
+        }
+
+        protected void ddlNumWeeks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            double numWeeks;
+            double perHourCharge = 0;
+
+            if (ddlCourses.SelectedValue.Equals("3"))
+            {
+                perHourCharge = 18;
+            }
+            else
+            {
+                perHourCharge = 15;
+            }
+            
+            numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
+            //string localck = ddlCourses.SelectedValue;
+            LblFees.Text = Convert.ToString(numWeeks * perHourCharge);
         }
     }
 

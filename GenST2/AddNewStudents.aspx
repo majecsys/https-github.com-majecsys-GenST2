@@ -42,43 +42,101 @@
 
 
   </div>
-        <br>
 
-    <div class="row">
-            <div class="col-xs-4">
-        <asp:DropDownList
-            ID="ddlClasses" 
-            runat="server" 
-            DataTextField="classDescriptions" 
-            SelectMethod="LoadClasses" 
-            DataValueField="classID" 
-            ItemType="GenST2.Models._class" 
-            CssClass="form-control"
-            AppendDataBoundItems="True" 
-            OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged"
-             AutoPostBack="true" >
-            <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
-        </asp:DropDownList>
 
-                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                     <Triggers>
-                         <asp:AsyncPostBackTrigger ControlID="ddlClasses" EventName="SelectedIndexChanged" />
-                     </Triggers>
-                 </asp:UpdatePanel>
-
-    </div>
+    <div class="row" id="classesRow">
         <div class="col-xs-3">
-            <select class="form-control">
-                <option>Select</option>
-            </select>
+            <label for="text">Classes:</label>
+            <asp:DropDownList
+                ID="ddlClasses"
+                runat="server"
+                DataTextField="classDescriptions"
+                SelectMethod="LoadClasses"
+                DataValueField="classID"
+                ItemType="GenST2.Models._class"
+                CssClass="form-control"
+                AppendDataBoundItems="True"
+                OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged"
+                AutoPostBack="true">
+                <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
+            </asp:DropDownList>
+
+        </div>
+         <div class="col-xs-1 form-group">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <fieldset>
+                    <%--                            <legend>UpdatePanel</legend>--%>
+                        <label for="text">Amt Due:</label>
+                        <asp:Label runat="server" CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
+                </fieldset>
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="ddlClasses" EventName="SelectedIndexChanged" />
+            </Triggers>
+        </asp:UpdatePanel>
+        </div>
+    </div> <%--classesRow--%>
+
+    <div class="row" id="coursesRow">
+        <div class="col-xs-3">
+            <asp:UpdatePanel ID="updateCourses" runat="server">
+                <ContentTemplate>
+                    <label for="text">Courses:</label>
+                    <asp:DropDownList
+                        ID="ddlCourses"
+                        runat="server"
+                        DataTextField="courseDescription"
+                        SelectMethod="LoadCourses"
+                        DataValueField="courseID"
+                        ItemType="GenST2.Models.course"
+                        CssClass="form-control"
+                        AppendDataBoundItems="True"
+                        OnSelectedIndexChanged="ddlCourses_SelectedIndexChanged"
+                        AutoPostBack="true">
+                        <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
+                    </asp:DropDownList>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="ddlCourses" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </div>
+        <div class="col-xs-3">
+            <label for="text">Number Of Weeks:</label>
+            <asp:DropDownList
+                ID="ddlNumWeeks"
+                runat="server"
+                CssClass="form-control"
+                AutoPostBack="true"
+                 OnSelectedIndexChanged="ddlNumWeeks_SelectedIndexChanged" >
+                <asp:ListItem Value="0">Num Weeks</asp:ListItem>
+                <asp:ListItem Value="3">3</asp:ListItem>
+                <asp:ListItem Value="4">4</asp:ListItem>
+                <asp:ListItem Value="5">5</asp:ListItem>
+                <asp:ListItem Value="6">6</asp:ListItem>
+                <asp:ListItem Value="7">7</asp:ListItem>
+                <asp:ListItem Value="8">8</asp:ListItem>
+            </asp:DropDownList>
+        </div>  
+        <%--endCol--%>
+
+    </div>
+    <%--coursesRow--%>
+
+            <div class="row" id="feeRow">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="text">Fees:</label>
+                    <asp:Label runat="server" CssClass="form-control" ID="LblFees"></asp:Label>
+                    <%--<input type="text" class="form-control" id="Fees" placeholder="Fee Amount">--%>
+                </div>
+            </div>
         </div>
 
-        <div class="col-xs-5">
-            <select class="form-control">
-                <option>Select</option>
-            </select>
-        </div>
-    </div>
+
+
+
 
 
 
