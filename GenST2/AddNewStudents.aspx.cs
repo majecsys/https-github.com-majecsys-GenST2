@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using GenST2.Models;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GenST2
 {
@@ -20,17 +16,12 @@ namespace GenST2
                 Response.Write("The add page");
             }
             else
-
             { 
              //   Response.Redirect("/Account/Login.aspx");
-        }
+            }
         }
 
-        //public IEnumerable<_class> LoadClasses()
-        //{
-        //    var classes = db.classes.ToList();
-        //    return classes;
-        //}
+
 
         public IQueryable<_class> LoadClasses()
         {
@@ -48,47 +39,26 @@ namespace GenST2
 
         protected void ddlClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
-            check(ddlClasses.SelectedValue);
+            processClassFees(ddlClasses.SelectedIndex);
 
         }
-        public void check(string t)
+
+        public void processClassFees(int classID)
         {
-            string timmy = t;
-            lbl_ClassesPrice.Text = timmy;
-            //sponse.Write("Passed in this --" + timmy);
-        }
-
-        protected void ddlCourses_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //double perHourCharge = 0;
-
-
-            //if (ddlCourses.SelectedValue.Equals("3"))
-            //{
-            //    perHourCharge = 18;
-            //}
-            //else
-            //{
-            //    perHourCharge = 15;
-            //}
-            //processCourses(perHourCharge);
-        }
-
-        public void processCourses(double perHour)
-        {
-            if (ddlNumWeeks.SelectedValue == "0")
-            {
-                LblFees.Text = "";
-                double numWeeks;
-                numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
-                LblFees.Text = Convert.ToString(numWeeks * perHour);
-            }
-            else
-            {
-
-            }
-
-
+            if (ddlClasses.SelectedIndex == 1)
+            { lbl_ClassesPrice.Text = "72"; }
+            if (ddlClasses.SelectedIndex == 2)
+            { lbl_ClassesPrice.Text = "136"; }
+            if (ddlClasses.SelectedIndex == 3)
+            { lbl_ClassesPrice.Text = "192"; }
+            if (ddlClasses.SelectedIndex == 4)
+            { lbl_ClassesPrice.Text = "228"; }
+            if (ddlClasses.SelectedIndex == 5)
+            { lbl_ClassesPrice.Text = "20"; }
+            if(ddlClasses.SelectedIndex == 7)
+            { lbl_ClassesPrice.Text = "100"; }
+            if (ddlClasses.SelectedIndex == 8)
+            { lbl_ClassesPrice.Text = "30"; }
         }
 
         protected void ddlNumWeeks_SelectedIndexChanged(object sender, EventArgs e)
@@ -104,10 +74,16 @@ namespace GenST2
             {
                 perHourCharge = 15;
             }
-            
-            numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
-            //string localck = ddlCourses.SelectedValue;
-            LblFees.Text = Convert.ToString(numWeeks * perHourCharge);
+            if (ddlCourses.SelectedIndex != 0)
+            {
+                ddlCourses.BorderColor = System.Drawing.Color.Gainsboro;
+                numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
+                LblFees.Text = Convert.ToString(numWeeks * perHourCharge);
+            }
+            else
+            {
+                ddlCourses.BorderColor = System.Drawing.Color.Red;
+            }
         }
     }
 

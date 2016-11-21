@@ -22,30 +22,11 @@
         <div class="form-group">
             <label for="phone">Phone</label>
             <input type="tel" class="form-control" id="phone" aria-describedby="tel" placeholder="phone">
-<%--            <small id="phoneHelp" class="form-text text-muted">We'll never share your phone with anyone else.</small>--%>
         </div>
-
-      <%-- <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
- <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>--%>
-
-
-  </div>
-
 
     <div class="row" id="classesRow">
-        <div class="col-xs-3">
+        <div class="col-md-3">
             <label for="text">Classes:</label>
             <asp:DropDownList
                 ID="ddlClasses"
@@ -62,7 +43,7 @@
             </asp:DropDownList>
 
         </div>
-         <div class="col-xs-1 form-group">
+         <div class="col-md-1 form-group">
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <fieldset>
@@ -79,7 +60,7 @@
     </div> <%--classesRow--%>
 
     <div class="row" id="coursesRow">
-        <div class="col-xs-3">
+        <div class="col-md-3">
             <asp:UpdatePanel ID="updateCourses" runat="server">
                 <ContentTemplate>
                     <label for="text">Courses:</label>
@@ -92,8 +73,7 @@
                         ItemType="GenST2.Models.course"
                         CssClass="form-control"
                         AppendDataBoundItems="True"
-                        OnSelectedIndexChanged="ddlCourses_SelectedIndexChanged"
-                        AutoPostBack="true">
+                        >
                         <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
                     </asp:DropDownList>
                 </ContentTemplate>
@@ -102,36 +82,61 @@
                 </Triggers>
             </asp:UpdatePanel>
         </div>
-        <div class="col-xs-3">
-            <label for="text">Number Of Weeks:</label>
-            <asp:DropDownList
-                ID="ddlNumWeeks"
-                runat="server"
-                CssClass="form-control"
-                AutoPostBack="true"
-                 OnSelectedIndexChanged="ddlNumWeeks_SelectedIndexChanged" >
-                <asp:ListItem Value="0">Num Weeks</asp:ListItem>
-                <asp:ListItem Value="3">3</asp:ListItem>
-                <asp:ListItem Value="4">4</asp:ListItem>
-                <asp:ListItem Value="5">5</asp:ListItem>
-                <asp:ListItem Value="6">6</asp:ListItem>
-                <asp:ListItem Value="7">7</asp:ListItem>
-                <asp:ListItem Value="8">8</asp:ListItem>
-            </asp:DropDownList>
-        </div>  
+        <div class="col-md-3">
+
+                    <label for="text">Number Of Weeks:</label>
+                    <asp:DropDownList
+                        ID="ddlNumWeeks"
+                        runat="server"
+                        CssClass="form-control"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="ddlNumWeeks_SelectedIndexChanged">
+                        <asp:ListItem Value="0">Num Weeks</asp:ListItem>
+                        <asp:ListItem Value="3">3</asp:ListItem>
+                        <asp:ListItem Value="4">4</asp:ListItem>
+                        <asp:ListItem Value="5">5</asp:ListItem>
+                        <asp:ListItem Value="6">6</asp:ListItem>
+                        <asp:ListItem Value="7">7</asp:ListItem>
+                        <asp:ListItem Value="8">8</asp:ListItem>
+                    </asp:DropDownList>
+
+        </div>
         <%--endCol--%>
 
     </div>
     <%--coursesRow--%>
-
+    <asp:UpdatePanel ID="updateNumWeeks" runat="server">
+        <ContentTemplate>
             <div class="row" id="feeRow">
-            <div class="col-xs-3">
-                <div class="form-group">
-                    <label for="text">Fees:</label>
-                    <asp:Label runat="server" CssClass="form-control" ID="LblFees"></asp:Label>
-                    <%--<input type="text" class="form-control" id="Fees" placeholder="Fee Amount">--%>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="text">Fees:</label>
+                        <asp:Label runat="server" CssClass="form-control" ID="LblFees"></asp:Label>
+                        <%--<input type="text" class="form-control" id="Fees" placeholder="Fee Amount">--%>
+                    </div>
                 </div>
-            </div>
+              </div>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="ddlNumWeeks" />
+        </Triggers>
+    </asp:UpdatePanel>
+
+    <div class="row" id="paidByRow" >
+        <label class="form-check-label">
+            Cash
+        <asp:CheckBox runat="server" ID="cbCash" CssClass="form-check-input"></asp:CheckBox>
+        </label>
+        <label class="form-check-label">
+            Check
+        <asp:CheckBox runat="server" ID="CheckBoxList1" CssClass="form-check-input"></asp:CheckBox>
+        </label>
+        <label class="form-check-label">
+            Credit Card
+        <asp:CheckBox runat="server" ID="CheckBoxList2" CssClass="form-check-input"></asp:CheckBox>
+        </label>
+
+
         </div>
 
 
