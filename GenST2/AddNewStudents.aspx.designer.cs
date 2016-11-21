@@ -13,6 +13,42 @@ namespace GenST2 {
     public partial class AddNewStudents {
         
         /// <summary>
+        /// firstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText firstName;
+        
+        /// <summary>
+        /// lastname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText lastname;
+        
+        /// <summary>
+        /// email control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl email;
+        
+        /// <summary>
+        /// phone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl phone;
+        
+        /// <summary>
         /// ddlClasses control.
         /// </summary>
         /// <remarks>
@@ -110,5 +146,14 @@ namespace GenST2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxList2;
+        
+        /// <summary>
+        /// btnSubmitRec control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubmitRec;
     }
 }

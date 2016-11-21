@@ -8,20 +8,20 @@
 
         <div class="form-group">
             <label for="firstName">FirstName:</label>
-            <input type="text" class="form-control" id="firstName" aria-describedby="name" placeholder="FirstName">
+            <input type="text" class="form-control" id="firstName" aria-describedby="name" runat="server"  placeholder="FirstName">
             <%--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--%>
         </div>
         <div class="form-group">
             <label for="text">Lastname:</label>
-            <input type="text" class="form-control" id="lastname" placeholder="Lastname">
+            <input type="text" class="form-control" id="lastname" runat="server" placeholder="Lastname or Family Name">
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" runat="server" placeholder="Enter email">
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="tel" class="form-control" id="phone" aria-describedby="tel" placeholder="phone">
+            <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="phone">
         </div>
   </div>
 
@@ -122,27 +122,25 @@
         </Triggers>
     </asp:UpdatePanel>
 
-    <div class="row" id="paidByRow" >
-        <label class="form-check-label">
-            Cash
+    <div class="row" id="paidByRow">
+        <div class="col-md-3">
+            <label class="form-check-label">
+                Cash
         <asp:CheckBox runat="server" ID="cbCash" CssClass="form-check-input"></asp:CheckBox>
-        </label>
-        <label class="form-check-label">
-            Check
+            </label>
+            <label class="form-check-label">
+                Check
         <asp:CheckBox runat="server" ID="CheckBoxList1" CssClass="form-check-input"></asp:CheckBox>
-        </label>
-        <label class="form-check-label">
-            Credit Card
+            </label>
+            <label class="form-check-label">
+                Credit Card
         <asp:CheckBox runat="server" ID="CheckBoxList2" CssClass="form-check-input"></asp:CheckBox>
-        </label>
-
-
+            </label>
         </div>
-
-
-
-
-
-
-
+    </div> <%--paidByRow--%>
+<br />
+<div class="form-group">
+    <asp:Button runat="server" CssClass="btn btn-primary" id="btnSubmitRec" OnClick="btnSubmitRec_Click" text="Submit Student Record" />
+  <%--<button type="button" runat="server" class="btn btn-primary">Submit Student Record</button> --%>
+</div>
 </asp:Content>

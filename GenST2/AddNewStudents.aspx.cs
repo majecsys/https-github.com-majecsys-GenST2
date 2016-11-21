@@ -85,6 +85,40 @@ namespace GenST2
                 ddlCourses.BorderColor = System.Drawing.Color.Red;
             }
         }
+
+        protected void btnSubmitRec_Click(object sender, EventArgs e)
+        {
+            insertStudentRec();
+        }
+
+        public void insertStudentRec()
+        {
+            DateTime startDate = new DateTime();
+            students newStudent = new students();
+
+            newStudent.firstname = firstName.Value;
+            newStudent.lastname = lastname.Value;
+            newStudent.Email =  email.Value;
+            newStudent.Phone = phone.Value;
+            newStudent.StartDate = startDate;
+            newStudent.classID = ddlClasses.SelectedIndex;
+
+            db.students.Add(newStudent);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                db.SaveChanges();
+                throw;
+            }
+            
+
+            
+            
+        }
     }
 
 }
