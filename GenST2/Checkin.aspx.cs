@@ -11,7 +11,6 @@ namespace GenST2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
         public IQueryable<Models.checkin> lvCheckIn_GetData()
         {
