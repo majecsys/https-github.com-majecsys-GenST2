@@ -420,7 +420,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Checkin.cs" />
-    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\classes.cs" />
     <Compile Include="Models\ClassCourseElements.cs" />
     <Compile Include="Models\courses.cs" />
