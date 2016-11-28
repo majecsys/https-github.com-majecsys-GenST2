@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 24f316e74457039b96e0b00975222acb90d37e42 eguinn <eguinn@majec.com> 1478897334 -0600	commit (initial): Add .gitignore and .gitattributes.
+24f316e74457039b96e0b00975222acb90d37e42 6e4dcfe9152c1a4ed87d8cf453acea3095d3a55d eguinn <eguinn@majec.com> 1478897337 -0600	commit: Add project files.
+6e4dcfe9152c1a4ed87d8cf453acea3095d3a55d 1ef1f5125a3ea7d82671b274015669e3477f6006 eguinn <eguinn@majec.com> 1478898018 -0600	commit: init of App service and web site GenST2
+1ef1f5125a3ea7d82671b274015669e3477f6006 fdccbaadf09e6ef648d1f8ca43a094b47ed09a4a eguinn <eguinn@majec.com> 1479401526 -0600	commit: starting dropdown selects in addstudents
+fdccbaadf09e6ef648d1f8ca43a094b47ed09a4a cb35ecc5bd7ef1234f9c1862012b45b8a7d75b38 eguinn <eguinn@majec.com> 1479426416 -0600	commit: working on ddl classes
+cb35ecc5bd7ef1234f9c1862012b45b8a7d75b38 42ebd857d24c4886f2f14fdb73816b808be2f521 eguinn <eguinn@majec.com> 1479583587 -0600	commit: added numweeks calc etc
+42ebd857d24c4886f2f14fdb73816b808be2f521 edfbae5170367503e086cbbe53604ba0298d7810 eguinn <eguinn@majec.com> 1479743427 -0600	commit: starting on mobile css got classes and courses  ui working
+edfbae5170367503e086cbbe53604ba0298d7810 c96a505a00befac60767f553887a3d821af38087 eguinn <eguinn@majec.com> 1479746886 -0600	commit: Made changes to viewswitcher to disable switch to mobile master page
+c96a505a00befac60767f553887a3d821af38087 9751687dd748e5f10bb89b85d733d72e1bbd653a eguinn <eguinn@majec.com> 1479769112 -0600	commit: more work on db queries etc
+9751687dd748e5f10bb89b85d733d72e1bbd653a c0dbb7553cda055d6badcf7ff7fb34c47c292957 eguinn <eguinn@majec.com> 1480177074 -0600	commit: added rudimentry checkin student features
