@@ -12,6 +12,20 @@ namespace GenST2
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new StyleBundle("~/Content/Css").Include(
+                            "~/Content/bootstrap.css",
+                            "~/Content/bootstrap-multiselect.css",
+                            "~/Content/jquery-ui.structure.css",
+                            "~/Content/jquery-ui.theme.css",
+                            "~/Content/themes/base/jquery.ui.all.css",
+                            "~/Content/themes/base/jquery.ui.base.css",
+                            "~/Content/themes/base/jquery.ui.dialog.css"
+                            ));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                            "~/Scripts/jquery-{version}.js",
+                            "~/Scripts/jquery-ui-{version}.js",
+                            "~/Scripts/bootstrap-multiselect.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
                             "~/Scripts/WebForms/WebForms.js",
                             "~/Scripts/WebForms/WebUIValidation.js",

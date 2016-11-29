@@ -25,6 +25,16 @@
         </div>
   </div>
 
+    <asp:ListBox ID="lbClasses"  
+        DataTextField="classDescriptions"
+        DataValueField="classID" 
+        runat="server" 
+        ItemType="GenST2.Models._class" 
+        SelectMethod="LoadClasses" 
+        SelectionMode="Multiple"
+         OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged" >
+        </asp:ListBox>
+
     <div class="row" id="classesRow">
         <div class="col-md-3">
             <label for="text">Classes:</label>
@@ -35,10 +45,11 @@
                 SelectMethod="LoadClasses"
                 DataValueField="classID"
                 ItemType="GenST2.Models._class"
-                CssClass="selectpicker btn btn-primary dropdown-toggle"
+                CssClass="selectpicker "
                 AppendDataBoundItems="True"
                 OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged"
-                AutoPostBack="true">
+                AutoPostBack="true"
+                 >
                 <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
             </asp:DropDownList>
 
@@ -143,4 +154,13 @@
     <asp:Button runat="server" CssClass="btn btn-primary" id="btnSubmitRec" OnClick="btnSubmitRec_Click" text="Submit Student Record" />
   <%--<button type="button" runat="server" class="btn btn-primary">Submit Student Record</button> --%>
 </div>
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#<%=lbClasses.ClientID%>').multiselect({
+            includeSelectAllOption: true,
+
+        });
+    });
+</script>
 </asp:Content>
