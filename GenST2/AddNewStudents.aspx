@@ -24,18 +24,47 @@
             <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="phone">
         </div>
   </div>
-
-    <asp:ListBox ID="lbClasses"  
-        DataTextField="classDescriptions"
-        DataValueField="classID" 
-        runat="server" 
-        ItemType="GenST2.Models._class" 
-        SelectMethod="LoadClasses" 
-        SelectionMode="Multiple"
-         OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged" >
-        </asp:ListBox>
-
     <div class="row" id="classesRow">
+        <div class="col-md-3">
+
+            <select id="ex" multiple="multiple">
+                <option value="cheese">Cheese</option>
+                <option value="tomatoes">Tomatoes</option>
+                <option value="mozarella">Mozzarella</option>
+                <option value="mushrooms">Mushrooms</option>
+                <option value="pepperoni">Pepperoni</option>
+                <option value="onions">Onions</option>
+            </select>
+
+            <label for="text">Classes:</label>
+            <asp:ListBox ID="lbClasses"
+                DataTextField="classDescriptions"
+                DataValueField="classID"
+                runat="server"
+                ItemType="GenST2.Models._class"
+                SelectMethod="LoadClasses"
+                SelectionMode="Multiple"
+                OnSelectedIndexChanged="lbClasses_SelectedIndexChanged"
+                >
+            </asp:ListBox>
+        </div>
+        <div class="col-md-1 form-group">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <fieldset>
+                        <%--<legend>UpdatePanel</legend>--%>
+                        <label for="text">Amt Due:</label>
+                        <asp:Label runat="server" CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
+                    </fieldset>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="lbClasses" EventName="SelectedIndexChanged" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <%--classesRow--%>
+<%--    <div class="row" id="classesRow">
         <div class="col-md-3">
             <label for="text">Classes:</label>
             <asp:DropDownList
@@ -54,21 +83,8 @@
             </asp:DropDownList>
 
         </div>
-         <div class="col-md-1 form-group">
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>
-                <fieldset>
-                    <%--                            <legend>UpdatePanel</legend>--%>
-                        <label for="text">Amt Due:</label>
-                        <asp:Label runat="server" CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
-                </fieldset>
-            </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="ddlClasses" EventName="SelectedIndexChanged" />
-            </Triggers>
-        </asp:UpdatePanel>
-        </div>
-    </div> <%--classesRow--%>
+
+    </div>--%> <%--classesRow--%>
 
     <div class="row" id="coursesRow">
         <div class="col-md-3">
@@ -155,12 +171,60 @@
   <%--<button type="button" runat="server" class="btn btn-primary">Submit Student Record</button> --%>
 </div>
 
-    <script type="text/javascript">
-    $(document).ready(function () {
-        $('#<%=lbClasses.ClientID%>').multiselect({
-            includeSelectAllOption: true,
 
-        });
-    });
-</script>
+</asp:Content>
+<asp:Content ID="scriptstail" ContentPlaceHolderID="scriptTail" runat="server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+<%--            $('#<%=lbClasses.ClientID%>').multiselect({
+                includeSelectAllOption: true,
+                noneSelectedText: "select Ranges",
+                checkAllText: "select all",
+                uncheckAllText: 'select none',
+                selectedList: 4,
+                minWidth: 100
+            });
+        });
+        $('#<%=lbClasses.ClientID%>').multiselect({
+            selectAllValue: 'multiselect-all',
+            enableCaseInsensitiveFiltering: true,
+            enableFiltering: true,
+            maxHeight: '300',
+            buttonWidth: '235',
+            onChange: function(element, checked) {
+                var brands = $('#<%=lbClasses.ClientID%> option:selected');
+                var selected = [];
+                $(brands).each(function(index, brand){
+                    selected.push([$(this).text()]);
+                });
+   //             console.log(selected);
+            }          
+        });--%> 
+
+    
+    });
+
+    
+    </script>
+    <script>
+        $(document).ready(function () {
+            var foo = [];
+            $('#<%=lbClasses.ClientID%> option:selected').each(function (i, selected) {
+                foo[i] = $(selected).text();
+                console.log('worte here'+selected);
+            });
+
+            $('#ex:selected').each(function (i, selected) {
+                foo[i] = $(selected).text();
+                console.log('and here'+selected);
+            });
+
+            console.log($("#ex option:selected").text());
+<%--            $('#<%=lbClasses.ClientID%>').click(function () {
+                $('#ex').hide();
+            });--%>
+        });
+
+    </script>
+
 </asp:Content>

@@ -38,14 +38,14 @@
         appInsights.trackPageView();
     </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#ex').multiselect({
-            enableFiltering: true,
-            includeSelectAllOption: true,
-            maxHeight: 400,
-            dropUp: true
-        });
-    });
+    //$(document).ready(function () {
+    //    $('#ex').multiselect({
+    //        enableFiltering: true,
+    //        includeSelectAllOption: true,
+    //        maxHeight: 400,
+    //        dropUp: true
+    //    });
+    //});
 </script>
     
 
@@ -111,7 +111,9 @@
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="scriptTail" runat="server">
 
+            </asp:ContentPlaceHolder>
             <hr />
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %> - Application</p>

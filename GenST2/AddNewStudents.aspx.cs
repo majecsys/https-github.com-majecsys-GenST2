@@ -37,28 +37,28 @@ namespace GenST2
                         return query;
         }
 
-        protected void ddlClasses_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lbClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ddlClasses.BorderColor = System.Drawing.Color.Gainsboro;
-            processClassFees(ddlClasses.SelectedIndex);
+            lbClasses.BorderColor = System.Drawing.Color.Gainsboro;
+            processClassFees(lbClasses.SelectedIndex);
 
         }
 
         public void processClassFees(int classID)
         {
-            if (ddlClasses.SelectedIndex == 1)
+            if (lbClasses.SelectedIndex == 1)
             { lbl_ClassesPrice.Text = "72"; }
-            if (ddlClasses.SelectedIndex == 2)
+            if (lbClasses.SelectedIndex == 2)
             { lbl_ClassesPrice.Text = "136"; }
-            if (ddlClasses.SelectedIndex == 3)
+            if (lbClasses.SelectedIndex == 3)
             { lbl_ClassesPrice.Text = "192"; }
-            if (ddlClasses.SelectedIndex == 4)
+            if (lbClasses.SelectedIndex == 4)
             { lbl_ClassesPrice.Text = "228"; }
-            if (ddlClasses.SelectedIndex == 5)
+            if (lbClasses.SelectedIndex == 5)
             { lbl_ClassesPrice.Text = "20"; }
-            if(ddlClasses.SelectedIndex == 7)
+            if(lbClasses.SelectedIndex == 7)
             { lbl_ClassesPrice.Text = "100"; }
-            if (ddlClasses.SelectedIndex == 8)
+            if (lbClasses.SelectedIndex == 8)
             { lbl_ClassesPrice.Text = "30"; }
         }
 
@@ -88,21 +88,21 @@ namespace GenST2
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
-            if (ddlClasses.SelectedIndex !=0 || ddlCourses.SelectedIndex != 0)
+            if (lbClasses.SelectedIndex !=0 || ddlCourses.SelectedIndex != 0)
             {
                 insertStudentRec();
             }
             else
             {
                 ddlCourses.BorderColor = System.Drawing.Color.Red;
-                ddlClasses.BorderColor = System.Drawing.Color.Red;
+                lbClasses.BorderColor = System.Drawing.Color.Red;
             }
             
         }
 
         public void insertStudentRec()
         {
-            string className = ddlClasses.SelectedItem.ToString();
+            string className = lbClasses.SelectedItem.ToString();
             string courseName = ddlCourses.SelectedItem.ToString();
             students newStudent = new students();
            
@@ -111,7 +111,7 @@ namespace GenST2
             newStudent.Email =  email.Value;
             newStudent.Phone = phone.Value;
             newStudent.StartDate = DateTime.Today;
-            newStudent.classID = ddlClasses.SelectedIndex;
+            newStudent.classID = lbClasses.SelectedIndex;
             newStudent.courseID = ddlCourses.SelectedIndex;
             db.students.Add(newStudent);
             try
