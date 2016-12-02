@@ -9,7 +9,7 @@ namespace GenST2
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //this.ddlClasses.SelectedIndexChanged += new System.EventHandler(ddlClasses_SelectedIndexChanged);
+            //this.lbClasses.SelectedIndexChanged += new System.EventHandler(lbClasses_SelectedIndexChanged);
 
             if (User.Identity.IsAuthenticated)
             {

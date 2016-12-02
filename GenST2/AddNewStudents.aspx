@@ -26,29 +26,19 @@
   </div>
     <div class="row" id="classesRow">
         <div class="col-md-3">
-
-            <select id="ex" multiple="multiple">
-                <option value="cheese">Cheese</option>
-                <option value="tomatoes">Tomatoes</option>
-                <option value="mozarella">Mozzarella</option>
-                <option value="mushrooms">Mushrooms</option>
-                <option value="pepperoni">Pepperoni</option>
-                <option value="onions">Onions</option>
-            </select>
-
             <label for="text">Classes:</label>
+                   <br />
             <asp:ListBox ID="lbClasses"
+                CssClass="form-control"
                 DataTextField="classDescriptions"
                 DataValueField="classID"
                 runat="server"
                 ItemType="GenST2.Models._class"
                 SelectMethod="LoadClasses"
                 SelectionMode="Multiple"
-                OnSelectedIndexChanged="lbClasses_SelectedIndexChanged"
-                >
-            </asp:ListBox>
+                OnSelectedIndexChanged="lbClasses_SelectedIndexChanged"></asp:ListBox>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-md-2 form-group">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
                     <fieldset>
@@ -176,53 +166,54 @@
 <asp:Content ID="scriptstail" ContentPlaceHolderID="scriptTail" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-<%--            $('#<%=lbClasses.ClientID%>').multiselect({
-                includeSelectAllOption: true,
-                noneSelectedText: "select Ranges",
-                checkAllText: "select all",
-                uncheckAllText: 'select none',
-                selectedList: 4,
-                minWidth: 100
+
+            $('#<%=lbClasses.ClientID%>').multiselect({
+                selectAllValue: 'multiselect-all',
+                enableCaseInsensitiveFiltering: false,
+                enableFiltering: false,
+               
+                onChange: function (element, checked) {
+                    var brands = $('#<%=lbClasses.ClientID%> option:selected');
+                    var selected = [];
+                    $(brands).each(function (index, brand) {
+                        console.log($(this).val());
+                        processClassChoices($(this).val());
+                        selected.push([$(this).val()]);
+                     //   selected.push([$(this).text()]);
+                    });
+                }
+            });
+
+            function processClassChoices(selected)
+            {
+
+                $('#<%=lbl_ClassesPrice.ClientID%>').text(selected);
+                
+               // alert("value selected" + selected);
+            }
+            $('#classesRow').mouseleave(function () {
+              //  alert('ioio');
+            });
+            $('#<%=lbClasses.ClientID%>').mouseleave(function () {
+                alert('io---io');
+            });
+
+            $('#<%=lbClasses.ClientID%>').change(function () {
+                alert($(this).val());
             });
         });
-        $('#<%=lbClasses.ClientID%>').multiselect({
-            selectAllValue: 'multiselect-all',
-            enableCaseInsensitiveFiltering: true,
-            enableFiltering: true,
-            maxHeight: '300',
-            buttonWidth: '235',
-            onChange: function(element, checked) {
-                var brands = $('#<%=lbClasses.ClientID%> option:selected');
-                var selected = [];
-                $(brands).each(function(index, brand){
-                    selected.push([$(this).text()]);
-                });
-   //             console.log(selected);
-            }          
-        });--%> 
-
-    
-    });
-
-    
     </script>
     <script>
         $(document).ready(function () {
-            var foo = [];
-            $('#<%=lbClasses.ClientID%> option:selected').each(function (i, selected) {
-                foo[i] = $(selected).text();
-                console.log('worte here'+selected);
-            });
 
-            $('#ex:selected').each(function (i, selected) {
-                foo[i] = $(selected).text();
-                console.log('and here'+selected);
+            //$(document).ready(function () {
+            //    $("[ID$='lblClasses']").hide(5000);
+            //});
+            $("select").mouseenter(function (e) {
+                e.stopPropagation();
+                $id = $(this).attr("id");
+                console.log($id);
             });
-
-            console.log($("#ex option:selected").text());
-<%--            $('#<%=lbClasses.ClientID%>').click(function () {
-                $('#ex').hide();
-            });--%>
         });
 
     </script>
