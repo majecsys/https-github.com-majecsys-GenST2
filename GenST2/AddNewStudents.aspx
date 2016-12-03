@@ -89,8 +89,8 @@
                         DataValueField="courseID"
                         ItemType="GenST2.Models.course"
                         CssClass="form-control"
-                        AppendDataBoundItems="True"
-                        >
+                        AppendDataBoundItems="True">
+
                         <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
                     </asp:DropDownList>
                 </ContentTemplate>
@@ -186,18 +186,8 @@
 
             function processClassChoices(selected)
             {
-
                 $('#<%=lbl_ClassesPrice.ClientID%>').text(selected);
-                
-               // alert("value selected" + selected);
             }
-            $('#classesRow').mouseleave(function () {
-              //  alert('ioio');
-            });
-            $('#<%=lbClasses.ClientID%>').mouseleave(function () {
-                alert('io---io');
-            });
-
             $('#<%=lbClasses.ClientID%>').change(function () {
                 alert($(this).val());
             });
@@ -214,8 +204,21 @@
                 $id = $(this).attr("id");
                 console.log($id);
             });
-        });
 
+            $('#<%=lbClasses.ClientID%>').mouseleave(function() {
+
+                $find('#<%=lbClasses.ClientID%>').hide();
+            });
+                // this refers to the option so you can do this.value if you need..
+
+
+            $("#<%=lbClasses.ClientID%>").multiselect({
+                onDropDownHide: function (event) {
+                    alert("bob");
+                }  
+            });
+        
+        });
     </script>
 
 </asp:Content>
