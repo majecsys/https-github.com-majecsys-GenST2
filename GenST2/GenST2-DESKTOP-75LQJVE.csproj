@@ -209,6 +209,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -218,11 +219,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="Less\bootstrap-multiselect.less" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\GenST2.pubxml" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -327,8 +330,8 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="test.aspx" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="w.aspx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
@@ -513,19 +516,19 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="w.aspx.cs">
-      <DependentUpon>w.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="w.aspx.designer.cs">
-      <DependentUpon>w.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
