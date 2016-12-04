@@ -1,11 +1,13 @@
 ﻿using System;
 using GenST2.Models;
 using System.Linq;
+using System.Web.UI.WebControls;
 
 namespace GenST2
 {
     public partial class AddNewStudents : System.Web.UI.Page
     {
+        public string lbClassIDs { get; set; }
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -90,6 +92,7 @@ namespace GenST2
         {
             if (lbClasses.SelectedIndex !=0 || ddlCourses.SelectedIndex != 0)
             {
+                processClassCourseIDs();
                 insertStudentRec();
             }
             else
@@ -98,6 +101,18 @@ namespace GenST2
                 lbClasses.BorderColor = System.Drawing.Color.Red;
             }
             
+        }
+
+        private void processClassCourseIDs()
+        {
+            foreach (ListItem lbcID in lbClasses.Items)
+            {
+                if (lbcID.Selected)
+                {
+                    lbClassIDs += (lbcID.Value+",");
+                }
+                lbClassIDs.TrimEnd(',');
+            } 
         }
 
         public void insertStudentRec()

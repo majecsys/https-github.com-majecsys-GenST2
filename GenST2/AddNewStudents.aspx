@@ -176,9 +176,8 @@
                     var brands = $('#<%=lbClasses.ClientID%> option:selected');
                     var selected = [];
                     $(brands).each(function (index, brand) {
-                        console.log($(this).val());
-                        processClassChoices($(this).val());
                         selected.push([$(this).val()]);
+                        processClassChoices(selected);
                      //   selected.push([$(this).text()]);
                     });
                 }
@@ -186,38 +185,35 @@
 
             function processClassChoices(selected)
             {
-                $('#<%=lbl_ClassesPrice.ClientID%>').text(selected);
-            }
-            $('#<%=lbClasses.ClientID%>').change(function () {
-                alert($(this).val());
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
+                var sum = 0;
+                $.each(selected, function (index, value) {
+                    if (value == 1) {
+                        sum += 72;
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
 
-            //$(document).ready(function () {
-            //    $("[ID$='lblClasses']").hide(5000);
-            //});
+                    }
+                    else if (value == 2)
+                    {
+                        sum += 136
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                    }
+
+                });
+
+             //   $('#<%=lbl_ClassesPrice.ClientID%>').text(selected);
+            }
+
+<%--            $('#<%=lbClasses.ClientID%>').change(function () {
+                alert($(this).val());
+            });--%>
+        });
+        
+        $(document).ready(function () {
             $("select").mouseenter(function (e) {
                 e.stopPropagation();
                 $id = $(this).attr("id");
                 console.log($id);
-            });
-
-            $('#<%=lbClasses.ClientID%>').mouseleave(function() {
-
-                $find('#<%=lbClasses.ClientID%>').hide();
-            });
-                // this refers to the option so you can do this.value if you need..
-
-
-            $("#<%=lbClasses.ClientID%>").multiselect({
-                onDropDownHide: function (event) {
-                    alert("bob");
-                }  
-            });
-        
+            });      
         });
     </script>
 
