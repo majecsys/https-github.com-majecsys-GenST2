@@ -111,8 +111,8 @@ namespace GenST2
                 {
                     lbClassIDs += (lbcID.Value+",");
                 }
-                lbClassIDs.TrimEnd(',');
-            } 
+            }
+            lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
         }
 
         public void insertStudentRec()
@@ -126,7 +126,7 @@ namespace GenST2
             newStudent.Email =  email.Value;
             newStudent.Phone = phone.Value;
             newStudent.StartDate = DateTime.Today;
-            newStudent.classID = lbClasses.SelectedIndex;
+            newStudent.classID = lbClassIDs; // lbClasses.SelectedIndex;
             newStudent.courseID = ddlCourses.SelectedIndex;
             db.students.Add(newStudent);
             try

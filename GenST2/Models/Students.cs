@@ -22,7 +22,7 @@ namespace GenST2.Models
         [Column(TypeName = "date")]
         public DateTime? StartDate { get; set; }
 
-        public int classID { get; set; }
+        public string classID { get; set; }
 
         [StringLength(50)]
         public string Email { get; set; }
@@ -32,7 +32,7 @@ namespace GenST2.Models
 
         public short remainingClasses { get; set; }
 
-        public int courseID { get; set; }
+        public string courseID { get; set; }
 
         public short? amtPaid { get; set; }
     }
