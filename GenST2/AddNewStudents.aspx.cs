@@ -8,6 +8,7 @@ namespace GenST2
     public partial class AddNewStudents : System.Web.UI.Page
     {
         public string lbClassIDs { get; set; }
+        public string lbCourseIDs { get; set; }
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -68,7 +69,7 @@ namespace GenST2
         {
             double numWeeks;
             double perHourCharge = 0;
-            if (ddlCourses.SelectedValue.Equals("3"))
+            if (lbCourses.SelectedValue.Equals("3"))
             {
                 perHourCharge = 18;
             }
@@ -76,28 +77,28 @@ namespace GenST2
             {
                 perHourCharge = 15;
             }
-            if (ddlCourses.SelectedIndex != 0)
+            if (lbCourses.SelectedIndex != 0)
             {
-                ddlCourses.BorderColor = System.Drawing.Color.Gainsboro;
+                lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
                 numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
                 lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
             }
             else
             {
-                ddlCourses.BorderColor = System.Drawing.Color.Red;
+                lbCourses.BorderColor = System.Drawing.Color.Red;
             }
         }
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
-            if (lbClasses.SelectedIndex !=0 || ddlCourses.SelectedIndex != 0)
+            if (lbClasses.SelectedIndex !=0 || lbCourses.SelectedIndex != 0)
             {
                 processClassCourseIDs();
                 insertStudentRec();
             }
             else
             {
-                ddlCourses.BorderColor = System.Drawing.Color.Red;
+                lbCourses.BorderColor = System.Drawing.Color.Red;
                 lbClasses.BorderColor = System.Drawing.Color.Red;
             }
             
@@ -113,12 +114,21 @@ namespace GenST2
                 }
             }
             lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
+            foreach (ListItem lbCourID in lbCourses.Items)
+            {
+                if (lbCourID.Selected)
+                {
+                    lbCourseIDs += (lbCourID.Value + ",");
+                }
+            }
+            lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
+            lbCourseIDs = lbCourseIDs.Remove(lbCourseIDs.Length - 1);
         }
 
         public void insertStudentRec()
         {
             string className = lbClasses.SelectedItem.ToString();
-            string courseName = ddlCourses.SelectedItem.ToString();
+            string courseName = lbCourses.SelectedItem.ToString();
             students newStudent = new students();
            
             newStudent.firstname = firstName.Value;
@@ -127,7 +137,7 @@ namespace GenST2
             newStudent.Phone = phone.Value;
             newStudent.StartDate = DateTime.Today;
             newStudent.classID = lbClassIDs; // lbClasses.SelectedIndex;
-            newStudent.courseID = ddlCourses.SelectedIndex;
+            newStudent.courseID = lbCourseIDs;
             db.students.Add(newStudent);
             try
             {

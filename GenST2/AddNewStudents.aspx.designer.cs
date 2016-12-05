@@ -85,13 +85,13 @@ namespace GenST2 {
         protected global::System.Web.UI.UpdatePanel updateCourses;
         
         /// <summary>
-        /// ddlCourses control.
+        /// lbCourses control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCourses;
+        protected global::System.Web.UI.WebControls.ListBox lbCourses;
         
         /// <summary>
         /// ddlNumWeeks control.

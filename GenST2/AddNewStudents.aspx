@@ -55,24 +55,7 @@
     </div>
     <%--classesRow--%>
 <%--    <div class="row" id="classesRow">
-        <div class="col-md-3">
-            <label for="text">Classes:</label>
-            <asp:DropDownList
-                ID="ddlClasses"
-                runat="server"
-                DataTextField="classDescriptions"
-                SelectMethod="LoadClasses"
-                DataValueField="classID"
-                ItemType="GenST2.Models._class"
-                CssClass="selectpicker "
-                AppendDataBoundItems="True"
-                OnSelectedIndexChanged="ddlClasses_SelectedIndexChanged"
-                AutoPostBack="true"
-                 >
-                <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
-            </asp:DropDownList>
 
-        </div>
 
     </div>--%> <%--classesRow--%>
 
@@ -81,21 +64,19 @@
             <asp:UpdatePanel ID="updateCourses" runat="server">
                 <ContentTemplate>
                     <label for="text">Courses:</label>
-                    <asp:DropDownList
-                        ID="ddlCourses"
-                        runat="server"
-                        DataTextField="courseDescription"
-                        SelectMethod="LoadCourses"
-                        DataValueField="courseID"
-                        ItemType="GenST2.Models.course"
+                    <br />
+                    <asp:ListBox
                         CssClass="form-control"
-                        AppendDataBoundItems="True">
-
-                        <asp:ListItem Value="0" Text="">--Select --</asp:ListItem>
-                    </asp:DropDownList>
+                        DataTextField="courseDescription"
+                        DataValueField="courseID"
+                        runat="server"
+                        ItemType="GenST2.Models.course"
+                        SelectMethod="LoadCourses"
+                        SelectionMode="Multiple"
+                       id="lbCourses"></asp:ListBox>
                 </ContentTemplate>
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="ddlCourses" />
+                    <asp:AsyncPostBackTrigger ControlID="lbCourses" />
                 </Triggers>
             </asp:UpdatePanel>
         </div>
@@ -166,6 +147,15 @@
 <asp:Content ID="scriptstail" ContentPlaceHolderID="scriptTail" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#<%=lbCourses.ClientID%>').multiselect({
+                selectAllValue: 'multiselect-all',
+                enableCaseInsensitiveFiltering: false,
+                enableFiltering: false,
+               
+                onChange: function (element, checked) { }
+
+            });
 
             $('#<%=lbClasses.ClientID%>').multiselect({
                 selectAllValue: 'multiselect-all',
