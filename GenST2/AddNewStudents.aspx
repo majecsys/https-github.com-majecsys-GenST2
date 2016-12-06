@@ -81,8 +81,8 @@
             </asp:UpdatePanel>
         </div>
         <div class="col-md-3">
-
                     <label for="text">Number Of Weeks:</label>
+
                     <asp:DropDownList
                         ID="ddlNumWeeks"
                         runat="server"
@@ -152,8 +152,17 @@
                 selectAllValue: 'multiselect-all',
                 enableCaseInsensitiveFiltering: false,
                 enableFiltering: false,
-               
-                onChange: function (element, checked) { }
+                onChange: function (element, checked) {
+                    var courseIds = $('#<%=lbCourses.ClientID%> option:selected');
+                    var selected = [];
+                    var description = "";
+
+                    $(courseIds).each(function (index, courseIds) {
+                        description = $(this).text();
+                        selected.push([$(this).val()]);
+                        processCourseChoices(selected,description);
+                    });
+                }
 
             });
 
@@ -163,9 +172,9 @@
                 enableFiltering: false,
                
                 onChange: function (element, checked) {
-                    var brands = $('#<%=lbClasses.ClientID%> option:selected');
+                    var classIDs = $('#<%=lbClasses.ClientID%> option:selected');
                     var selected = [];
-                    $(brands).each(function (index, brand) {
+                    $(classIDs).each(function (index, classIDs) {
                         selected.push([$(this).val()]);
                         processClassChoices(selected);
                      //   selected.push([$(this).text()]);
@@ -173,6 +182,18 @@
                 }
             });
 
+            function processCourseChoices(selected,description) {
+                $.each(selected, function (index, value) {
+                    if (value == 3) {
+                        priceMultiplier = 18;
+                        //$('#<%=lbl_CoursePrice.ClientID%>').text(description);
+                    }
+                    else 
+                    {
+                        priceMultiplier = 15;
+                    }
+                });
+            };
             function processClassChoices(selected)
             {
                 var sum = 0;
@@ -180,23 +201,17 @@
                     if (value == 1) {
                         sum += 72;
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-
                     }
                     else if (value == 2)
                     {
                         sum += 136
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
                     }
-
                 });
-
-             //   $('#<%=lbl_ClassesPrice.ClientID%>').text(selected);
             }
 
-<%--            $('#<%=lbClasses.ClientID%>').change(function () {
-                alert($(this).val());
-            });--%>
-        });
+            
+        }); //end if main group
         
         $(document).ready(function () {
             $("select").mouseenter(function (e) {
