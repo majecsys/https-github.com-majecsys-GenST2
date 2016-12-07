@@ -61,9 +61,7 @@
 
     <div class="row" id="coursesRow">
         <div class="col-md-3">
-            <asp:UpdatePanel ID="updateCourses" runat="server">
-                <ContentTemplate>
-                    <label for="text">Courses:</label>
+                                <label for="text">Courses:</label>
                     <br />
                     <asp:ListBox
                         CssClass="form-control"
@@ -74,6 +72,10 @@
                         SelectMethod="LoadCourses"
                         SelectionMode="Multiple"
                        id="lbCourses"></asp:ListBox>
+
+            <asp:UpdatePanel ID="updateCourses" runat="server">
+                <ContentTemplate>
+
                 </ContentTemplate>
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="lbCourses" />
@@ -88,7 +90,7 @@
                         runat="server"
                         CssClass="form-control"
                         AutoPostBack="true"
-                        OnSelectedIndexChanged="ddlNumWeeks_SelectedIndexChanged">
+                       >
                         <asp:ListItem Value="0">Num Weeks</asp:ListItem>
                         <asp:ListItem Value="3">3</asp:ListItem>
                         <asp:ListItem Value="4">4</asp:ListItem>
@@ -103,9 +105,8 @@
 
     </div>
     <%--coursesRow--%>
-    <asp:UpdatePanel ID="updateNumWeeks" runat="server">
-        <ContentTemplate>
-            <div class="row" id="feeRow">
+
+                <div class="row" id="feeRow">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="text">Fees:</label>
@@ -114,6 +115,9 @@
                     </div>
                 </div>
               </div>
+    <asp:UpdatePanel ID="updateNumWeeks" runat="server">
+        <ContentTemplate>
+
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="ddlNumWeeks" />
@@ -148,6 +152,39 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $('#<%=ddlNumWeeks.ClientID%>').attr("disabled", "disabled");
+
+  //****************   
+            $('#<%=lbClasses.ClientID%>').multiselect({
+                selectAllValue: 'multiselect-all',
+                enableCaseInsensitiveFiltering: false,
+                enableFiltering: false,
+
+                onChange: function (element, checked) {
+                    var classIDs = $('#<%=lbClasses.ClientID%> option:selected');
+                    var selected = [];
+                    $(classIDs).each(function (index, classIDs) {
+                        selected.push([$(this).val()]);
+                        processClassChoices(selected);
+                        //   selected.push([$(this).text()]);
+                    });
+                }
+            });
+            function processClassChoices(selected) {
+                $('#<%=ddlNumWeeks.ClientID%>').removeAttr("disabled");
+                var sum = 0;
+                $.each(selected, function (index, value) {
+                    if (value == 1) {
+                        sum += 72;
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                    }
+                    else if (value == 2) {
+                        sum += 136
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                    }
+                });
+        }
+  //****************          
             $('#<%=lbCourses.ClientID%>').multiselect({
                 selectAllValue: 'multiselect-all',
                 enableCaseInsensitiveFiltering: false,
@@ -165,28 +202,10 @@
                 }
 
             });
-
-            $('#<%=lbClasses.ClientID%>').multiselect({
-                selectAllValue: 'multiselect-all',
-                enableCaseInsensitiveFiltering: false,
-                enableFiltering: false,
-               
-                onChange: function (element, checked) {
-                    var classIDs = $('#<%=lbClasses.ClientID%> option:selected');
-                    var selected = [];
-                    $(classIDs).each(function (index, classIDs) {
-                        selected.push([$(this).val()]);
-                        processClassChoices(selected);
-                     //   selected.push([$(this).text()]);
-                    });
-                }
-            });
-
             function processCourseChoices(selected,description) {
                 $.each(selected, function (index, value) {
                     if (value == 3) {
                         priceMultiplier = 18;
-                        //$('#<%=lbl_CoursePrice.ClientID%>').text(description);
                     }
                     else 
                     {
@@ -194,32 +213,25 @@
                     }
                 });
             };
-            function processClassChoices(selected)
-            {
-                var sum = 0;
-                $.each(selected, function (index, value) {
-                    if (value == 1) {
-                        sum += 72;
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-                    }
-                    else if (value == 2)
-                    {
-                        sum += 136
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-                    }
-                });
-            }
+//*******************
 
-            
-        }); //end if main group
+            $('#<%=ddlNumWeeks.ClientID%>').change(function () {
+                var id = $(this).find("option:selected").attr("value");
+                var total = priceMultiplier * id;
+                $('#<%=lbl_CoursePrice.ClientID%>').text(total);
+
+              //  e.preventDefault();
+            });
+    
+        }); //end of main group
         
-        $(document).ready(function () {
-            $("select").mouseenter(function (e) {
-                e.stopPropagation();
-                $id = $(this).attr("id");
-                console.log($id);
-            });      
-        });
+        //$(document).ready(function () {
+        //    $("select").mouseenter(function (e) {
+        //        e.stopPropagation();
+        //        $id = $(this).attr("id");
+        //        console.log($id);
+        //    });      
+        //});
     </script>
 
 </asp:Content>

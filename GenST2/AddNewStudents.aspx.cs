@@ -66,52 +66,52 @@ namespace GenST2
             { lbl_ClassesPrice.Text = "30"; }
         }
 
-        protected void ddlNumWeeks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            double numWeeks;
-            double perHourCharge = 0;
-            //if (lbCourses.SelectedValue.Equals("3"))
-            //{
-            //    perHourCharge = 18;
-            //}
-            //else
-            //{
-            //    perHourCharge = 15;
-            //}
-            //if (lbCourses.SelectedIndex != 0)
-            //{
-            //    lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
-            //    numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
-            //    lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
-            //}
-            //else
-            //{
-            //    lbCourses.BorderColor = System.Drawing.Color.Red;
-            //}
+        //protected void ddlNumWeeks_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    double numWeeks;
+        //    double perHourCharge = 0;
+        //    //if (lbCourses.SelectedValue.Equals("3"))
+        //    //{
+        //    //    perHourCharge = 18;
+        //    //}
+        //    //else
+        //    //{
+        //    //    perHourCharge = 15;
+        //    //}
+        //    //if (lbCourses.SelectedIndex != 0)
+        //    //{
+        //    //    lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
+        //    //    numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
+        //    //    lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
+        //    //}
+        //    //else
+        //    //{
+        //    //    lbCourses.BorderColor = System.Drawing.Color.Red;
+        //    //}
 
-            foreach (ListItem courseValue in lbCourses.Items)
-            {
-                if (courseValue.Selected)
-                {
-                    lbCourseIDs += courseValue.Value + ",";
-                    //if (courseValue.Value.Equals("3"))
-                    //{
-                    //    perHourCharge = 18;
-                    //}
-                    //else
-                    //{
-                    //    perHourCharge = 15;
-                    //}
-                    //lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
-                    //numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
-                    //lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
-                }
-                else
-                {
-                    lbCourses.BorderColor = System.Drawing.Color.Red;
-                }
-            }
-        }
+        //    foreach (ListItem courseValue in lbCourses.Items)
+        //    {
+        //        if (courseValue.Selected)
+        //        {
+        //            lbCourseIDs += courseValue.Value + ",";
+        //            //if (courseValue.Value.Equals("3"))
+        //            //{
+        //            //    perHourCharge = 18;
+        //            //}
+        //            //else
+        //            //{
+        //            //    perHourCharge = 15;
+        //            //}
+        //            //lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
+        //            //numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
+        //            //lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
+        //        }
+        //        else
+        //        {
+        //            lbCourses.BorderColor = System.Drawing.Color.Red;
+        //        }
+        //    }
+        //}
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
