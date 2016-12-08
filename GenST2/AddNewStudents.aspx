@@ -61,48 +61,36 @@
 
     <div class="row" id="coursesRow">
         <div class="col-md-3">
-                                <label for="text">Courses:</label>
-                    <br />
-                    <asp:ListBox
-                        CssClass="form-control"
-                        DataTextField="courseDescription"
-                        DataValueField="courseID"
-                        runat="server"
-                        ItemType="GenST2.Models.course"
-                        SelectMethod="LoadCourses"
-                        SelectionMode="Multiple"
-                       id="lbCourses"></asp:ListBox>
-
-            <asp:UpdatePanel ID="updateCourses" runat="server">
-                <ContentTemplate>
-
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lbCourses" />
-                </Triggers>
-            </asp:UpdatePanel>
+            <label for="text">Courses:</label>
+            <br />
+            <asp:ListBox
+                CssClass="form-control"
+                DataTextField="courseDescription"
+                DataValueField="courseID"
+                runat="server"
+                ItemType="GenST2.Models.course"
+                SelectMethod="LoadCourses"
+                SelectionMode="Multiple"
+                ID="lbCourses"></asp:ListBox>
         </div>
         <div class="col-md-3">
-                    <label for="text">Number Of Weeks:</label>
+            <label for="text">Number Of Weeks:</label>
 
-                    <asp:DropDownList
-                        ID="ddlNumWeeks"
-                        runat="server"
-                        CssClass="form-control"
-                        AutoPostBack="true"
-                       >
-                        <asp:ListItem Value="0">Num Weeks</asp:ListItem>
-                        <asp:ListItem Value="3">3</asp:ListItem>
-                        <asp:ListItem Value="4">4</asp:ListItem>
-                        <asp:ListItem Value="5">5</asp:ListItem>
-                        <asp:ListItem Value="6">6</asp:ListItem>
-                        <asp:ListItem Value="7">7</asp:ListItem>
-                        <asp:ListItem Value="8">8</asp:ListItem>
-                    </asp:DropDownList>
-
+            <asp:DropDownList
+                ID="ddlNumWeeks"
+                runat="server"
+                CssClass="form-control"
+                AutoPostBack="true">
+                <asp:ListItem Value="0">Num Weeks</asp:ListItem>
+                <asp:ListItem Value="3">3</asp:ListItem>
+                <asp:ListItem Value="4">4</asp:ListItem>
+                <asp:ListItem Value="5">5</asp:ListItem>
+                <asp:ListItem Value="6">6</asp:ListItem>
+                <asp:ListItem Value="7">7</asp:ListItem>
+                <asp:ListItem Value="8">8</asp:ListItem>
+            </asp:DropDownList>
         </div>
         <%--endCol--%>
-
     </div>
     <%--coursesRow--%>
 
@@ -166,12 +154,11 @@
                     $(classIDs).each(function (index, classIDs) {
                         selected.push([$(this).val()]);
                         processClassChoices(selected);
-                        //   selected.push([$(this).text()]);
                     });
                 }
             });
             function processClassChoices(selected) {
-                $('#<%=ddlNumWeeks.ClientID%>').removeAttr("disabled");
+                
                 var sum = 0;
                 $.each(selected, function (index, value) {
                     if (value == 1) {
@@ -180,6 +167,26 @@
                     }
                     else if (value == 2) {
                         sum += 136
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                    }
+                     else if (value == 3) {
+                        sum += 192
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                     }
+                     else if (value == 4) {
+                        sum += 228
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                     }
+                     else if (value == 5) {
+                        sum += 20
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                     }
+                     else if (value == 6) {
+                        sum += 100
+                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                     }
+                     else if (value == 7) {
+                        sum += 30
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
                     }
                 });
@@ -202,27 +209,24 @@
                 }
 
             });
-            function processCourseChoices(selected,description) {
+            function processCourseChoices(selected, description) {
+                $('#<%=ddlNumWeeks.ClientID%>').removeAttr("disabled");
                 $.each(selected, function (index, value) {
                     if (value == 3) {
                         priceMultiplier = 18;
                     }
-                    else 
-                    {
+                    else {
                         priceMultiplier = 15;
                     }
                 });
             };
-//*******************
 
             $('#<%=ddlNumWeeks.ClientID%>').change(function () {
                 var id = $(this).find("option:selected").attr("value");
                 var total = priceMultiplier * id;
                 $('#<%=lbl_CoursePrice.ClientID%>').text(total);
-
-              //  e.preventDefault();
             });
-    
+            //*******************    
         }); //end of main group
         
         //$(document).ready(function () {

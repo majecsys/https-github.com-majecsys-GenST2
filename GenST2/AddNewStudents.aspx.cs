@@ -137,7 +137,6 @@ namespace GenST2
                     lbClassIDs += (lbcID.Value+",");
                 }
             }
-            lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
             foreach (ListItem lbCourID in lbCourses.Items)
             {
                 if (lbCourID.Selected)
