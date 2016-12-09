@@ -72,6 +72,7 @@ namespace GenST2
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
+            int localFeeTotal = int.Parse(hiddenTotalFees.Value);
 
             if (lbClasses.SelectedIndex !=0 || lbCourses.SelectedIndex != 0)
             {
@@ -83,9 +84,11 @@ namespace GenST2
                 }
                 else
                 {
-                    //     paidByRow.Attributes.Add("style", "border-color:#ff0000");
+                   lbl_totalFees.Text = Convert.ToString(localFeeTotal); ;
                     paidByRow.Style["border-style"] = "dotted";
-           //         paidByRow.Attributes.Add("style", "border-style:solid");
+                    //     paidByRow.Attributes.Add("style", "border-color:#ff0000");
+
+                    //         paidByRow.Attributes.Add("style", "border-style:solid");
                     // paidByRow.Attributes.Add("style", "border-color:#ff0000");
                     //HtmlGenericControl myDiv = (HtmlGenericControl)paidByRow;
                     //paidByRow.RenderControl(myDiv);

@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="phone">
+            <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="xxx-xxx-xxxx">
         </div>
   </div>
     <div class="row" id="classesRow">
