@@ -80,7 +80,7 @@
                 ID="ddlNumWeeks"
                 runat="server"
                 CssClass="form-control"
-                AutoPostBack="true">
+               >
                 <asp:ListItem Value="0">Num Weeks</asp:ListItem>
                 <asp:ListItem Value="3">3</asp:ListItem>
                 <asp:ListItem Value="4">4</asp:ListItem>
@@ -98,21 +98,16 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="text">Fees:</label>
-                        <asp:Label runat="server" CssClass="form-control" ID="lbl_CoursePrice"></asp:Label>
+                        <asp:HiddenField runat="server" ID="hiddenTotalFees" />
+                        <asp:Label runat="server" CssClass="form-control" ID="lbl_totalFees"></asp:Label>
+
                         <%--<input type="text" class="form-control" id="Fees" placeholder="Fee Amount">--%>
                     </div>
                 </div>
               </div>
-    <asp:UpdatePanel ID="updateNumWeeks" runat="server">
-        <ContentTemplate>
 
-        </ContentTemplate>
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="ddlNumWeeks" />
-        </Triggers>
-    </asp:UpdatePanel>
 
-    <div class="row" id="paidByRow">
+    <div class="row" id="paidByRow" runat="server">
         <div class="col-md-3">
             <label class="form-check-label">
                 Cash
@@ -130,8 +125,17 @@
     </div> <%--paidByRow--%>
 <br />
 <div class="form-group">
-    <asp:Button runat="server" CssClass="btn btn-primary" id="btnSubmitRec" OnClick="btnSubmitRec_Click" text="Submit Student Record" />
-  <%--<button type="button" runat="server" class="btn btn-primary">Submit Student Record</button> --%>
+        <asp:Button runat="server" CssClass="btn btn-primary" id="btnSubmitRec" OnClick="btnSubmitRec_Click" text="Submit Student Record" />   
+<%--        <asp:UpdatePanel ID="btn" runat="server">
+        <ContentTemplate>
+             
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="btnSubmitRec" />
+        </Triggers>
+    </asp:UpdatePanel>--%>
+
+
 </div>
 
 
@@ -222,9 +226,11 @@
             };
 
             $('#<%=ddlNumWeeks.ClientID%>').change(function () {
+                var classAMTs = $('#<%=lbl_ClassesPrice.ClientID%>').text();
                 var id = $(this).find("option:selected").attr("value");
                 var total = priceMultiplier * id;
-                $('#<%=lbl_CoursePrice.ClientID%>').text(total);
+                $('#<%=hiddenTotalFees.ClientID%>').val(parseInt(total) + parseInt(classAMTs));
+                $('#<%=lbl_totalFees.ClientID%>').text(parseInt(total)+ parseInt(classAMTs));
             });
             //*******************    
         }); //end of main group

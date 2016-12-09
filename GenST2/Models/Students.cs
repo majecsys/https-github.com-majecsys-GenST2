@@ -19,8 +19,10 @@ namespace GenST2.Models
 
         public bool didPay { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? StartDate { get; set; }
+    //    [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}") ]
+        public DateTime StartDate { get; set; }
 
         public string classID { get; set; }
 

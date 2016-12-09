@@ -2,6 +2,8 @@
 using GenST2.Models;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
 
 namespace GenST2
 {
@@ -13,7 +15,8 @@ namespace GenST2
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //this.lbClasses.SelectedIndexChanged += new System.EventHandler(lbClasses_SelectedIndexChanged);
+
+           
 
             if (User.Identity.IsAuthenticated)
             {
@@ -66,66 +69,54 @@ namespace GenST2
             { lbl_ClassesPrice.Text = "30"; }
         }
 
-        //protected void ddlNumWeeks_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    double numWeeks;
-        //    double perHourCharge = 0;
-        //    //if (lbCourses.SelectedValue.Equals("3"))
-        //    //{
-        //    //    perHourCharge = 18;
-        //    //}
-        //    //else
-        //    //{
-        //    //    perHourCharge = 15;
-        //    //}
-        //    //if (lbCourses.SelectedIndex != 0)
-        //    //{
-        //    //    lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
-        //    //    numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
-        //    //    lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
-        //    //}
-        //    //else
-        //    //{
-        //    //    lbCourses.BorderColor = System.Drawing.Color.Red;
-        //    //}
-
-        //    foreach (ListItem courseValue in lbCourses.Items)
-        //    {
-        //        if (courseValue.Selected)
-        //        {
-        //            lbCourseIDs += courseValue.Value + ",";
-        //            //if (courseValue.Value.Equals("3"))
-        //            //{
-        //            //    perHourCharge = 18;
-        //            //}
-        //            //else
-        //            //{
-        //            //    perHourCharge = 15;
-        //            //}
-        //            //lbCourses.BorderColor = System.Drawing.Color.Gainsboro;
-        //            //numWeeks = Convert.ToDouble(ddlNumWeeks.SelectedValue);
-        //            //lbl_CoursePrice.Text = Convert.ToString(numWeeks * perHourCharge);
-        //        }
-        //        else
-        //        {
-        //            lbCourses.BorderColor = System.Drawing.Color.Red;
-        //        }
-        //    }
-        //}
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
+
             if (lbClasses.SelectedIndex !=0 || lbCourses.SelectedIndex != 0)
             {
-                processClassCourseIDs();
-                insertStudentRec();
+                if (requirePaymentType())
+                {
+                    processClassCourseIDs();
+                    insertStudentRec();
+                    Response.Redirect("default.aspx");
+                }
+                else
+                {
+                    //     paidByRow.Attributes.Add("style", "border-color:#ff0000");
+                    paidByRow.Style["border-style"] = "dotted";
+           //         paidByRow.Attributes.Add("style", "border-style:solid");
+                    // paidByRow.Attributes.Add("style", "border-color:#ff0000");
+                    //HtmlGenericControl myDiv = (HtmlGenericControl)paidByRow;
+                    //paidByRow.RenderControl(myDiv);
+                    //myDiv.Style.Add("border-color", "#ff0000");
+                }
             }
             else
             {
                 lbCourses.BorderColor = System.Drawing.Color.Red;
                 lbClasses.BorderColor = System.Drawing.Color.Red;
             }
-            
+          
+        }
+
+        public bool requirePaymentType()
+        {
+            bool isChecked=false;
+
+            if (cbCash.Checked)
+            {
+                isChecked = true;
+            }
+            else if (cbCheck.Checked)
+            {
+                isChecked = true;
+            }
+            else if (cbCreditCard.Checked)
+            {
+                isChecked = true;
+            }
+            return isChecked;
         }
 
         private void processClassCourseIDs()
@@ -176,18 +167,19 @@ namespace GenST2
 
         protected void addFeeAmts(int studentid)
         {
-            if(lbl_ClassesPrice.Text =="")
-            {
-                lbl_ClassesPrice.Text = "0";
-            }
-            if (lbl_CoursePrice.Text == "")
-            {
-                lbl_CoursePrice.Text = "0";
-            }
+            //if(lbl_ClassesPrice.Text =="")
+            //{
+            //    lbl_ClassesPrice.Text = "0";
+            //}
+            //if (lbl_totalFees.Text == "")
+            //{
+            //    lbl_totalFees.Text = "0";
+            //}
 
             int classFee = int.Parse(lbl_ClassesPrice.Text);
-            int courseFee = int.Parse(lbl_CoursePrice.Text);
-            int fees = (classFee + courseFee);
+       //     int courseFee = int.Parse(lbl_totalFees.Text);
+            int fees = int.Parse(hiddenTotalFees.Value); //(classFee + courseFee);
+
             payments payment = new payments();
             payment.fees = Convert.ToDecimal(fees);
             payment.paymentType = paymentsType();

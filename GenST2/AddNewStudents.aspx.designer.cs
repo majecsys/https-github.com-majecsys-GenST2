@@ -94,22 +94,31 @@ namespace GenST2 {
         protected global::System.Web.UI.WebControls.DropDownList ddlNumWeeks;
         
         /// <summary>
-        /// lbl_CoursePrice control.
+        /// hiddenTotalFees control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_CoursePrice;
+        protected global::System.Web.UI.WebControls.HiddenField hiddenTotalFees;
         
         /// <summary>
-        /// updateNumWeeks control.
+        /// lbl_totalFees control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updateNumWeeks;
+        protected global::System.Web.UI.WebControls.Label lbl_totalFees;
+        
+        /// <summary>
+        /// paidByRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl paidByRow;
         
         /// <summary>
         /// cbCash control.
