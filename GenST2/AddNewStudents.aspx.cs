@@ -2,8 +2,6 @@
 using GenST2.Models;
 using System.Linq;
 using System.Web.UI.WebControls;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
 
 namespace GenST2
 {
@@ -87,12 +85,6 @@ namespace GenST2
                    lbl_totalFees.Text = Convert.ToString(localFeeTotal); ;
                     paidByRow.Style["border-style"] = "dotted";
                     //     paidByRow.Attributes.Add("style", "border-color:#ff0000");
-
-                    //         paidByRow.Attributes.Add("style", "border-style:solid");
-                    // paidByRow.Attributes.Add("style", "border-color:#ff0000");
-                    //HtmlGenericControl myDiv = (HtmlGenericControl)paidByRow;
-                    //paidByRow.RenderControl(myDiv);
-                    //myDiv.Style.Add("border-color", "#ff0000");
                 }
             }
             else
@@ -100,7 +92,6 @@ namespace GenST2
                 lbCourses.BorderColor = System.Drawing.Color.Red;
                 lbClasses.BorderColor = System.Drawing.Color.Red;
             }
-          
         }
 
         public bool requirePaymentType()
@@ -144,8 +135,6 @@ namespace GenST2
 
         public void insertStudentRec()
         {
-            string className = lbClasses.SelectedItem.ToString();
-            string courseName = lbCourses.SelectedItem.ToString();
             students newStudent = new students();
            
             newStudent.firstname = firstName.Value;
@@ -170,20 +159,11 @@ namespace GenST2
 
         protected void addFeeAmts(int studentid)
         {
-            //if(lbl_ClassesPrice.Text =="")
-            //{
-            //    lbl_ClassesPrice.Text = "0";
-            //}
-            //if (lbl_totalFees.Text == "")
-            //{
-            //    lbl_totalFees.Text = "0";
-            //}
-
             int classFee = int.Parse(lbl_ClassesPrice.Text);
-       //     int courseFee = int.Parse(lbl_totalFees.Text);
             int fees = int.Parse(hiddenTotalFees.Value); //(classFee + courseFee);
 
             payments payment = new payments();
+            
             payment.fees = Convert.ToDecimal(fees);
             payment.paymentType = paymentsType();
             payment.studentID = studentid;
@@ -192,13 +172,50 @@ namespace GenST2
             try
             {
                 db.SaveChanges();
+                checkinUtilities(studentid);
             }
             catch (Exception)
             {
-
                 throw;
             }
+        }
 
+        public void checkinUtilities(int studentid)
+        {
+            students student = new students();
+            var checkinRec =   (from q in db.students where q.id == 36  select new {q.firstname,q.lastname, q.StartDate, q.classID, q.courseID, q.id }).ToArray();
+
+            string cid = "";
+            string coid = "";
+            string fn = "";
+            string ln = "";
+            int id = 0;
+
+            foreach (var item in checkinRec)
+            {
+                id = item.id;
+                ln = item.lastname;
+                fn = item.firstname;
+                cid = item.classID;
+                coid = item.courseID;
+            }
+            int[] cidArr = cid.Split(',').Select(int.Parse).ToArray();
+            int[] coidArr = coid.Split(',').Select(int.Parse).ToArray();
+            updateClassCourse(cidArr, coidArr,id);
+ 
+        }
+
+        private void updateClassCourse(int[] cidArr, int[] coidArr,int studentID)
+        {
+            classCourse cc = new classCourse();
+
+            foreach (var item in cidArr)
+            {
+                db.classCourse.Add(new classCourse() { cid = item });
+                db.SaveChanges();
+            }
+
+            throw new NotImplementedException();
         }
 
         public string paymentsType()

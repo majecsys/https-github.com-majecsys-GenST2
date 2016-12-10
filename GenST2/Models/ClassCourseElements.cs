@@ -4,9 +4,11 @@ namespace GenST2.Models
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-
+    using Models;
     public partial class ClassCourseElements : DbContext
     {
+        //internal readonly object checkin;
+
         public ClassCourseElements()
             : base("name=dbCourseClass")
         {
@@ -16,7 +18,8 @@ namespace GenST2.Models
         public virtual DbSet<course> courses { get; set; }
         public virtual DbSet<payments> payments { get; set; }
         public virtual DbSet<students> students { get; set; }
-        public virtual DbSet<checkin> checkin { get; set; }
+        public virtual DbSet<checkins> checkins { get; set; }
+        public virtual DbSet <classCourse> classCourse { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

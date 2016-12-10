@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using GenST2.Models;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,11 +11,14 @@ namespace GenST2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            
         }
-        public IQueryable<Models.checkin> lvCheckIn_GetData()
+        public IQueryable<Models.checkins> lvCheckIn_GetData()
         {
             var db = new Models.ClassCourseElements();
-            IQueryable<Models.checkin> query = db.checkin.Where(c => c.currentStudent) ;
+            IQueryable<checkins> query = db.checkins.Where(c => c.currentStudent) ;
+            
             return query;
         }
     }

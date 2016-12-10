@@ -1,11 +1,10 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GenST2.Models
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("checkin")]
-    public partial class checkin
+    public class checkins
     {
         public int id { get; set; }
 

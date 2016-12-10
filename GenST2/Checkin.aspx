@@ -4,7 +4,7 @@
     <div>
         <asp:ListView ID="lvCheckIn" runat="server"
             Style="background-color: blueviolet"
-            ItemType="GenST2.Models.checkin"
+            ItemType="GenST2.Models.checkins"
             SelectMethod="lvcheckin_getdata" GroupPlaceholderID="groupPlaceHolder1"
             ItemPlaceholderID="itemPlaceHolder1">
             <LayoutTemplate>
