@@ -2,6 +2,7 @@
 using GenST2.Models;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Data.Entity.Validation;
 
 namespace GenST2
 {
@@ -9,7 +10,8 @@ namespace GenST2
     {
         public string lbClassIDs { get; set; }
         public string lbCourseIDs { get; set; }
-      
+        public int globalStudentID { get; set; }
+
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -78,7 +80,9 @@ namespace GenST2
                 {
                     processClassCourseIDs();
                     insertStudentRec();
+                    checkinUtilities(globalStudentID);
                     Response.Redirect("default.aspx");
+
                 }
                 else
                 {
@@ -159,6 +163,8 @@ namespace GenST2
 
         protected void addFeeAmts(int studentid)
         {
+            globalStudentID = studentid;
+
             int classFee = int.Parse(lbl_ClassesPrice.Text);
             int fees = int.Parse(hiddenTotalFees.Value); //(classFee + courseFee);
 
@@ -172,7 +178,7 @@ namespace GenST2
             try
             {
                 db.SaveChanges();
-                checkinUtilities(studentid);
+                
             }
             catch (Exception)
             {
@@ -207,15 +213,40 @@ namespace GenST2
 
         private void updateClassCourse(int[] cidArr, int[] coidArr,int studentID)
         {
+            ClassCourseElements ccDB = new ClassCourseElements();
             classCourse cc = new classCourse();
-
+            
             foreach (var item in cidArr)
             {
-                db.classCourse.Add(new classCourse() { cid = item });
-                db.SaveChanges();
-            }
+                
+               
 
-            throw new NotImplementedException();
+            }
+            cc.coid = 1;
+            cc.cid = 2;
+            cc.sid = 36;
+            ccDB.classCourse.Add(cc);
+
+            try
+            {
+                ccDB.SaveChanges();
+            }
+     //       catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException ex)
+            catch (DbEntityValidationException ex)
+            {
+             //   ex.Entries.Single().Reload();
+                ccDB.SaveChanges();
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Diagnostics.Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
+           
+
+         //   throw new NotImplementedException();
         }
 
         public string paymentsType()

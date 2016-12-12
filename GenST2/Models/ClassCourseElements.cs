@@ -5,6 +5,7 @@ namespace GenST2.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using Models;
+    using System.Data.Entity.ModelConfiguration.Conventions;
     public partial class ClassCourseElements : DbContext
     {
         //internal readonly object checkin;
@@ -23,6 +24,8 @@ namespace GenST2.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            
         }
     }
 }
