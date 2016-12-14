@@ -165,7 +165,7 @@ namespace GenST2
         {
             globalStudentID = studentid;
 
-            int classFee = int.Parse(lbl_ClassesPrice.Text);
+    //        int classFee = int.Parse(lbl_ClassesPrice.Text);
             int fees = int.Parse(hiddenTotalFees.Value); //(classFee + courseFee);
 
             payments payment = new payments();
@@ -189,7 +189,7 @@ namespace GenST2
         public void checkinUtilities(int studentid)
         {
             students student = new students();
-            var checkinRec =   (from q in db.students where q.id == 36  select new {q.firstname,q.lastname, q.StartDate, q.classID, q.courseID, q.id }).ToArray();
+            var checkinRec =   (from q in db.students where q.id == studentid select new {q.firstname,q.lastname, q.StartDate, q.classID, q.courseID, q.id }).ToArray();
 
             string cid = "";
             string coid = "";
@@ -213,40 +213,48 @@ namespace GenST2
 
         private void updateClassCourse(int[] cidArr, int[] coidArr,int studentID)
         {
-            ClassCourseElements ccDB = new ClassCourseElements();
-            classCourse cc = new classCourse();
-            
-            foreach (var item in cidArr)
-            {
-                
-               
+            classCourse classCourseElements = new classCourse();
+            int len = cidArr.Length;
 
-            }
-            cc.coid = 1;
-            cc.cid = 2;
-            cc.sid = 36;
-            ccDB.classCourse.Add(cc);
+            for (int i = 0; i < Math.Max(cidArr.Length, coidArr.Length); i++)
+            {
+                classCourseElements.cid = cidArr.ElementAtOrDefault(i);
+                classCourseElements.coid = coidArr.ElementAtOrDefault(i);
+                classCourseElements.sid = studentID;
+                db.classCourse.Add(classCourseElements);
 
-            try
-            {
-                ccDB.SaveChanges();
-            }
-     //       catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException ex)
-            catch (DbEntityValidationException ex)
-            {
-             //   ex.Entries.Single().Reload();
-                ccDB.SaveChanges();
-                foreach (var validationErrors in ex.EntityValidationErrors)
+                try
                 {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        System.Diagnostics.Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                    }
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    db.SaveChanges();
                 }
             }
-           
+            //foreach ( var ids in coidArr.Zip(cidArr, Tuple.Create))
+            ////foreach (var ids in cidArr)
+            //{
+            //    classCourseElements.cid = ids.Item2;
+            //    classCourseElements.coid = ids.Item1;
+            //    classCourseElements.sid = studentID;
 
-         //   throw new NotImplementedException();
+            //    db.classCourse.Add(classCourseElements);
+
+            //    try
+            //    {
+            //        db.SaveChanges();
+            //    }
+            //    catch (DbEntityValidationException ex)
+            //    {
+            //        db.SaveChanges();
+            //    }
+            //}
+
+
+
+            //   throw new NotImplementedException();
+
         }
 
         public string paymentsType()
