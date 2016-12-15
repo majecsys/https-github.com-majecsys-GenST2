@@ -6,7 +6,8 @@
             Style="background-color: blueviolet"
             ItemType="GenST2.Models.checkins"
             SelectMethod="lvcheckin_getdata" GroupPlaceholderID="groupPlaceHolder1"
-            ItemPlaceholderID="itemPlaceHolder1">
+            ItemPlaceholderID="itemPlaceHolder1" >
+
             <LayoutTemplate>
                 <table class="table table-hover">
                     <thead>

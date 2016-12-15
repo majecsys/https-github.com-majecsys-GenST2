@@ -15,9 +15,6 @@ namespace GenST2
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
-
-           
-
             if (User.Identity.IsAuthenticated)
             {
                 Response.Write("The add page");
@@ -27,8 +24,6 @@ namespace GenST2
              //   Response.Redirect("/Account/Login.aspx");
             }
         }
-
-
 
         public IQueryable<_class> LoadClasses()
         {
@@ -47,26 +42,8 @@ namespace GenST2
         protected void lbClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
             lbClasses.BorderColor = System.Drawing.Color.Gainsboro;
-            processClassFees(lbClasses.SelectedIndex);
+   //         processClassFees(lbClasses.SelectedIndex);
 
-        }
-
-        public void processClassFees(int classID)
-        {
-            if (lbClasses.SelectedIndex == 1)
-            { lbl_ClassesPrice.Text = "72"; }
-            if (lbClasses.SelectedIndex == 2)
-            { lbl_ClassesPrice.Text = "136"; }
-            if (lbClasses.SelectedIndex == 3)
-            { lbl_ClassesPrice.Text = "192"; }
-            if (lbClasses.SelectedIndex == 4)
-            { lbl_ClassesPrice.Text = "228"; }
-            if (lbClasses.SelectedIndex == 5)
-            { lbl_ClassesPrice.Text = "20"; }
-            if(lbClasses.SelectedIndex == 7)
-            { lbl_ClassesPrice.Text = "100"; }
-            if (lbClasses.SelectedIndex == 8)
-            { lbl_ClassesPrice.Text = "30"; }
         }
 
 
@@ -140,6 +117,7 @@ namespace GenST2
         public void insertStudentRec()
         {
             students newStudent = new students();
+
            
             newStudent.firstname = firstName.Value;
             newStudent.lastname = lastname.Value;
@@ -149,10 +127,35 @@ namespace GenST2
             newStudent.classID = lbClassIDs; // lbClasses.SelectedIndex;
             newStudent.courseID = lbCourseIDs;
             db.students.Add(newStudent);
+
             try
             {
                 db.SaveChanges();
+                insertIntoCheckin(newStudent.id);
                 addFeeAmts(newStudent.id);
+            }
+            catch (Exception)
+            {
+                db.SaveChanges();
+                throw;
+            }
+        }
+
+        public void insertIntoCheckin(int id)
+        {
+            checkins checkin = new checkins();
+
+            checkin.studentID = id;
+            checkin.FirstName = firstName.Value;
+            checkin.Lastname = lastname.Value;
+            checkin.currentStudent = true;
+            checkin.StartDate = DateTime.Today;
+            db.checkins.Add(checkin);
+
+            try
+            {
+                db.SaveChanges();
+                
             }
             catch (Exception)
             {
@@ -232,29 +235,6 @@ namespace GenST2
                     db.SaveChanges();
                 }
             }
-            //foreach ( var ids in coidArr.Zip(cidArr, Tuple.Create))
-            ////foreach (var ids in cidArr)
-            //{
-            //    classCourseElements.cid = ids.Item2;
-            //    classCourseElements.coid = ids.Item1;
-            //    classCourseElements.sid = studentID;
-
-            //    db.classCourse.Add(classCourseElements);
-
-            //    try
-            //    {
-            //        db.SaveChanges();
-            //    }
-            //    catch (DbEntityValidationException ex)
-            //    {
-            //        db.SaveChanges();
-            //    }
-            //}
-
-
-
-            //   throw new NotImplementedException();
-
         }
 
         public string paymentsType()
@@ -274,7 +254,5 @@ namespace GenST2
             }
             return payment;
         }
-
     }
-
 }

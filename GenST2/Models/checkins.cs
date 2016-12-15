@@ -7,6 +7,7 @@ namespace GenST2.Models
     public class checkins
     {
         public int id { get; set; }
+        public int studentID { get; set; }
 
         public bool currentStudent { get; set; }
 
