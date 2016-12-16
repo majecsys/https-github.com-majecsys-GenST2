@@ -37,7 +37,8 @@
                                 Check
                             <asp:CheckBox runat="server" ID="cbClass" CssClass="form-check-input"></asp:CheckBox>
                             </asp:label>
-                            <td><%# Item.StartDate %></td>
+                            <td><%# Item.classDesc %></td>
+                             <td><%# Item.courseDesc %></td>
                             <td><%# Item.present %>   <input type="radio" class="form-check-input"></td>
                         </tr>
                     </tbody>

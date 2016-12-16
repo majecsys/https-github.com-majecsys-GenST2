@@ -20,6 +20,12 @@ namespace GenST2.Models
         [StringLength(50)]
         public string FamilyName { get; set; }
 
+        [StringLength(50)]
+        public string classDesc { get; set; }
+
+        [StringLength(50)]
+        public string courseDesc { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public bool present { get; set; }

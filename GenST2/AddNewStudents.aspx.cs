@@ -3,6 +3,7 @@ using GenST2.Models;
 using System.Linq;
 using System.Web.UI.WebControls;
 using System.Data.Entity.Validation;
+using System.Collections.Generic;
 
 namespace GenST2
 {
@@ -118,7 +119,6 @@ namespace GenST2
         {
             students newStudent = new students();
 
-           
             newStudent.firstname = firstName.Value;
             newStudent.lastname = lastname.Value;
             newStudent.Email =  email.Value;
@@ -131,7 +131,7 @@ namespace GenST2
             try
             {
                 db.SaveChanges();
-                insertIntoCheckin(newStudent.id);
+                insertIntoCheckin(newStudent.id,lbClassIDs,lbCourseIDs);
                 addFeeAmts(newStudent.id);
             }
             catch (Exception)
@@ -141,27 +141,39 @@ namespace GenST2
             }
         }
 
-        public void insertIntoCheckin(int id)
+
+
+        public void insertIntoCheckin(int id,string classIds,string courseIds)
         {
             checkins checkin = new checkins();
-
-            checkin.studentID = id;
-            checkin.FirstName = firstName.Value;
-            checkin.Lastname = lastname.Value;
-            checkin.currentStudent = true;
-            checkin.StartDate = DateTime.Today;
-            db.checkins.Add(checkin);
-
-            try
+            List<int> Ids = classIds.Split(',').Select(int.Parse).ToList();
+            int courseId = Convert.ToInt16(courseIds);
+            foreach (var cid in Ids)
             {
-                db.SaveChanges();
-                
+
+                var classDescription = (from c in db.classes where c.classID == cid select c.classDescriptions ).FirstOrDefault();
+                var courseDescription =  ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
+                checkin.classDesc = classDescription.ToString(); //Convert.ToString(classDescription);
+                checkin.courseDesc = courseDescription.ToString(); // (Convert.ToString(courseDescription));
+                checkin.studentID = id;
+                checkin.FirstName = firstName.Value;
+                checkin.Lastname = lastname.Value;
+                checkin.currentStudent = true;
+                checkin.StartDate = DateTime.Today;
+                db.checkins.Add(checkin);
+
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception)
+                {
+                    db.SaveChanges();
+                    throw;
+                }
             }
-            catch (Exception)
-            {
-                db.SaveChanges();
-                throw;
-            }
+
         }
 
         protected void addFeeAmts(int studentid)
