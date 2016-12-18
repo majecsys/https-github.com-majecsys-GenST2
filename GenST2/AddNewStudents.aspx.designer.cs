@@ -67,6 +67,15 @@ namespace GenST2 {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
+        /// HiddenFieldAmtDue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenFieldAmtDue;
+        
+        /// <summary>
         /// lbl_ClassesPrice control.
         /// </summary>
         /// <remarks>

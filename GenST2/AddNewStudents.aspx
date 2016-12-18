@@ -44,7 +44,8 @@
                     <fieldset>
                         <%--<legend>UpdatePanel</legend>--%>
                         <label for="text">Amt Due:</label>
-                        <asp:Label runat="server" CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
+                        <asp:HiddenField runat="server" ID="HiddenFieldAmtDue" />
+                        <asp:Label runat="server"  CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
                     </fieldset>
                 </ContentTemplate>
                 <Triggers>
@@ -70,7 +71,7 @@
                 runat="server"
                 ItemType="GenST2.Models.course"
                 SelectMethod="LoadCourses"
-                SelectionMode="Multiple"
+                
                 ID="lbCourses"></asp:ListBox>
         </div>
         <div class="col-md-3">
@@ -162,7 +163,7 @@
                 }
             });
             function processClassChoices(selected) {
-                
+
                 var sum = 0;
                 $.each(selected, function (index, value) {
                     if (value == 1) {
@@ -173,28 +174,31 @@
                         sum += 136
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
                     }
-                     else if (value == 3) {
+                    else if (value == 3) {
                         sum += 192
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-                     }
-                     else if (value == 4) {
+                    }
+                    else if (value == 4) {
                         sum += 228
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-                     }
-                     else if (value == 5) {
+                    }
+                    else if (value == 5) {
                         sum += 20
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-                     }
-                     else if (value == 6) {
+                    }
+                    else if (value == 6) {
                         sum += 100
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
-                     }
-                     else if (value == 7) {
+                    }
+                    else if (value == 7) {
                         sum += 30
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
                     }
+                    $('#<%=lbl_totalFees.ClientID%>').text(sum);
+                    $('#<%=HiddenFieldAmtDue.ClientID%>').val(sum);
                 });
-        }
+            }
+
   //****************          
             $('#<%=lbCourses.ClientID%>').multiselect({
                 selectAllValue: 'multiselect-all',
@@ -226,7 +230,11 @@
             };
 
             $('#<%=ddlNumWeeks.ClientID%>').change(function () {
-                var classAMTs = $('#<%=lbl_ClassesPrice.ClientID%>').text();
+                if ($('#<%=lbl_ClassesPrice.ClientID%>').text() != "") {
+                     var classAMTs = $('#<%=lbl_ClassesPrice.ClientID%>').text();
+                } else {
+                    classAMTs = 0;
+                }
                 var id = $(this).find("option:selected").attr("value");
                 var total = priceMultiplier * id;
                 $('#<%=hiddenTotalFees.ClientID%>').val(parseInt(total) + parseInt(classAMTs));

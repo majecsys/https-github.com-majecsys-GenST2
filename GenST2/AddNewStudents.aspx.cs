@@ -50,8 +50,17 @@ namespace GenST2
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
-            int localFeeTotal = int.Parse(hiddenTotalFees.Value);
-
+            int localFeeTotal = 0;
+            
+            if (hiddenTotalFees.Value == "")
+            {
+                localFeeTotal = int.Parse(HiddenFieldAmtDue.Value);
+            }
+            else
+            {
+                localFeeTotal = int.Parse(hiddenTotalFees.Value);
+            }
+        
             if (lbClasses.SelectedIndex !=0 || lbCourses.SelectedIndex != 0)
             {
                 if (requirePaymentType())
@@ -111,8 +120,16 @@ namespace GenST2
                     lbCourseIDs += (lbCourID.Value + ",");
                 }
             }
-            lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
-            lbCourseIDs = lbCourseIDs.Remove(lbCourseIDs.Length - 1);
+            if (lbClassIDs != null)
+            {
+                lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
+            }
+            
+            if (lbCourseIDs != null)
+            {
+                lbCourseIDs = lbCourseIDs.Remove(lbCourseIDs.Length - 1);
+            }
+
         }
 
         public void insertStudentRec()
@@ -124,8 +141,26 @@ namespace GenST2
             newStudent.Email =  email.Value;
             newStudent.Phone = phone.Value;
             newStudent.StartDate = DateTime.Today;
-            newStudent.classID = lbClassIDs; // lbClasses.SelectedIndex;
-            newStudent.courseID = lbCourseIDs;
+            
+            if (lbClassIDs != null)
+            {
+                newStudent.classID = lbClassIDs;
+            }
+            else
+            {
+                newStudent.classID = "0";
+                lbClassIDs = "0";
+            }
+            if (lbCourseIDs != null)
+            {
+                newStudent.courseID = lbCourseIDs;
+            }
+            else
+            {
+                newStudent.courseID = "0";
+                lbCourseIDs = "0";
+            }
+            
             db.students.Add(newStudent);
 
             try
@@ -153,8 +188,24 @@ namespace GenST2
 
                 var classDescription = (from c in db.classes where c.classID == cid select c.classDescriptions ).FirstOrDefault();
                 var courseDescription =  ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
-                checkin.classDesc = classDescription.ToString(); //Convert.ToString(classDescription);
-                checkin.courseDesc = courseDescription.ToString(); // (Convert.ToString(courseDescription));
+                if (classDescription != null)
+                {
+                    checkin.classDesc = classDescription.ToString();
+                }
+                else
+                {
+                    checkin.classDesc = "";
+                }
+                if (courseDescription != null)
+                {
+                    checkin.courseDesc = courseDescription.ToString();
+                }
+                else
+                {
+                    checkin.courseDesc = "";
+                }
+                 //Convert.ToString(classDescription);
+                // (Convert.ToString(courseDescription));
                 checkin.studentID = id;
                 checkin.FirstName = firstName.Value;
                 checkin.Lastname = lastname.Value;
@@ -179,9 +230,17 @@ namespace GenST2
         protected void addFeeAmts(int studentid)
         {
             globalStudentID = studentid;
-
-    //        int classFee = int.Parse(lbl_ClassesPrice.Text);
-            int fees = int.Parse(hiddenTotalFees.Value); //(classFee + courseFee);
+            int fees = 0;
+            //        int classFee = int.Parse(lbl_ClassesPrice.Text);
+            if (hiddenTotalFees.Value == "")
+            {
+              fees   = int.Parse(HiddenFieldAmtDue.Value);
+            }
+            else
+            {
+                fees = int.Parse(hiddenTotalFees.Value);
+            }
+           //(classFee + courseFee);
 
             payments payment = new payments();
             
