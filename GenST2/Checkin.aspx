@@ -4,12 +4,13 @@
     <div>
         
         <asp:ListView ID="lvCheckIn" runat="server"
+            
             Style="background-color: blueviolet"
             ItemType="GenST2.Models.checkins"
             SelectMethod="lvcheckin_getdata" GroupPlaceholderID="groupPlaceHolder1"
             ItemPlaceholderID="itemPlaceHolder1" >
            
-            <LayoutTemplate>
+            <LayoutTemplate >
                 <br />
                 <br />
                 <br />
@@ -33,7 +34,7 @@
                 </tr>
             </GroupTemplate>
             <ItemTemplate>
-                <div class="container">
+                <div class="list-group">
                     <tbody>
                         <tr>
                             <td><%# Item.FirstName %> </td>
@@ -42,7 +43,10 @@
                             <td><%# Item.classDesc %></td>
                             <td><%# Item.courseDesc %></td>
                             <td><%--<%# Item.present %>--%>   
-                                <input type="radio" class="form-check-input"></td>
+                                <asp:checkbox  runat="server" ID="cbPresent" CssClass="form-check-input"  OnCheckedChanged="cbPresent_CheckedChanged" />
+                                <%--<input runat="server" type="radio" class="form-check-input">--%>
+
+                            </td>
                         </tr>
                     </tbody>
                 </div>

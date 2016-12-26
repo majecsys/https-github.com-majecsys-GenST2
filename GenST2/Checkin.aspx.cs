@@ -44,9 +44,15 @@ namespace GenST2
         public IQueryable<checkins> lvCheckIn_GetData()
         {
            
-            IQueryable<checkins> query = db.checkins.Where(c => c.currentStudent) ;
-            
+            IQueryable<checkins> query = db.checkins.Where(c => c.currentStudent && c.classDesc != "") ;
+
+
             return query;
+        }
+
+        protected void cbPresent_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
