@@ -166,6 +166,7 @@ namespace GenST2
             try
             {
                 db.SaveChanges();
+                insertIntoClassInstanceProfile(lbClassIDs ,newStudent.id);
                 insertIntoCheckin(newStudent.id,lbClassIDs,lbCourseIDs);
                 addFeeAmts(newStudent.id);
             }
@@ -176,7 +177,29 @@ namespace GenST2
             }
         }
 
+        public void insertIntoClassInstanceProfile(string classIDs , int studentID)
+        {
+            ClassInstanceProfile cci = new ClassInstanceProfile();
+            List<int> Ids = classIDs.Split(',').Select(int.Parse).ToList();
+            foreach (var cid in Ids)
+            {
+                var instance = (from i in db.classes where i.classID == cid select i.instance).FirstOrDefault();
+                cci.classID = cid;
+                cci.studentID = studentID;
+                cci.remainingInstances = instance;
+                cci.recDate = DateTime.Today;
+                db.classInstanceProfile.Add(cci);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
 
+                    throw;
+                } 
+            }
+        }
 
         public void insertIntoCheckin(int id,string classIds,string courseIds)
         {
@@ -190,7 +213,7 @@ namespace GenST2
                 var courseDescription =  ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
                 if (classDescription != null)
                 {
-                    checkin.classDesc = classDescription.ToString();
+                    checkin.classDesc = classDescription.ToString(); 
                 }
                 else
                 {

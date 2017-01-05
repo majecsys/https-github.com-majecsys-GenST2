@@ -12,5 +12,6 @@ namespace GenST2.Models
         [Required]
         [StringLength(50)]
         public string classDescriptions { get; set; }
+        public int instance { get; set; }
     }
 }

@@ -497,6 +497,7 @@
     <Compile Include="Models\classCourse.cs" />
     <Compile Include="Models\classes.cs" />
     <Compile Include="Models\ClassCourseElements.cs" />
+    <Compile Include="Models\ClassInstanceProfile.cs" />
     <Compile Include="Models\courses.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Payments.cs" />
