@@ -2,20 +2,19 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div>
-        
+
         <asp:ListView ID="lvCheckIn" runat="server"
-            
             Style="background-color: blueviolet"
             ItemType="GenST2.Models.checkins"
             SelectMethod="lvcheckin_getdata" GroupPlaceholderID="groupPlaceHolder1"
-            ItemPlaceholderID="itemPlaceHolder1" >
-           
-            <LayoutTemplate >
+            ItemPlaceholderID="itemPlaceHolder1">
+
+            <LayoutTemplate>
                 <br />
                 <br />
                 <br />
                 <br />
-                                <table class="table table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Firstname</th>
@@ -42,11 +41,12 @@
 
                             <td><%# Item.classDesc %></td>
                             <td><%# Item.courseDesc %></td>
-                            <td><%--<%# Item.present %>--%>   
-                                <asp:checkbox  runat="server" ID="cbPresent" CssClass="form-check-input"  OnCheckedChanged="cbPresent_CheckedChanged" />
+                            <td><%--<%# Item.present %>--%>
+                                <asp:CheckBox AutoPostBack="true" runat="server" ID="cbPresent" CssClass="form-check-input" OnCheckedChanged="cbPresent_CheckedChanged" />
                                 <%--<input runat="server" type="radio" class="form-check-input">--%>
 
                             </td>
+                            <asp:HiddenField ID="studentID" runat="server"  Value="<%# Item.studentID %>" />
                         </tr>
                     </tbody>
                 </div>

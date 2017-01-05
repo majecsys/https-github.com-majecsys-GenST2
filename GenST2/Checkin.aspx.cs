@@ -44,15 +44,40 @@ namespace GenST2
         public IQueryable<checkins> lvCheckIn_GetData()
         {
            
-            IQueryable<checkins> query = db.checkins.Where(c => c.currentStudent && c.classDesc != "") ;
-
-
+            IQueryable<checkins> query = db.checkins.Where(c => c.currentStudent && c.classDesc != "");
+            ;
             return query;
         }
-
-        protected void cbPresent_CheckedChanged(object sender, EventArgs e)
+        
+        public void processCbCheck(string cb)
         {
 
+        }
+        protected void cbPresent_CheckedChanged(object sender, EventArgs e)
+        {
+            int studentID = Convert.ToInt16(((HiddenField)((CheckBox)sender).Parent.FindControl("studentID")).Value);
+            incrementClasses(studentID);
+
+            //string chkBox = ((Control)sender).UniqueID;
+            //Response.Write("<br /><br /><br />"+ studentID); 
+        }
+
+        private void incrementClasses( int studentID)
+        {
+            students students = new students();
+            var query = from q in db.students where ((q.id == studentID) && (q.remainingClasses != 0)) select new { q.id, q.firstname };
+            if (query != null)
+            {
+                var remaining = (from rem in db.students where rem.remainingClasses != 0 select rem.remainingClasses).FirstOrDefault();
+                var decrement = 1;
+
+                students stu = (from s in db.students where (s.remainingClasses > 0) select s).FirstOrDefault();
+                stu.remainingClasses = (short)(remaining - decrement);
+
+                db.SaveChanges();
+            }
+        //    query.Dump();
+           
         }
     }
 }
