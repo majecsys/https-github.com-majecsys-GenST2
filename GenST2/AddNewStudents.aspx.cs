@@ -179,23 +179,23 @@ namespace GenST2
 
         public void insertIntoClassInstanceProfile(string classIDs , int studentID)
         {
-            ClassInstanceProfile cci = new ClassInstanceProfile();
+            ClassInstanceProfile classInstances = new ClassInstanceProfile();
             List<int> Ids = classIDs.Split(',').Select(int.Parse).ToList();
+
             foreach (var cid in Ids)
             {
                 var instance = (from i in db.classes where i.classID == cid select i.instance).FirstOrDefault();
-                cci.classID = cid;
-                cci.studentID = studentID;
-                cci.remainingInstances = instance;
-                cci.recDate = DateTime.Today;
-                db.classInstanceProfile.Add(cci);
+                classInstances.classID = cid;
+                classInstances.studentID = studentID;
+                classInstances.remainingInstances = instance;
+                classInstances.recDate = DateTime.Today;
+                db.classInstanceProfile.Add(classInstances);
                 try
                 {
                     db.SaveChanges();
                 }
                 catch (Exception)
                 {
-
                     throw;
                 } 
             }
@@ -234,6 +234,7 @@ namespace GenST2
                 checkin.Lastname = lastname.Value;
                 checkin.currentStudent = true;
                 checkin.StartDate = DateTime.Today;
+                checkin.classID = cid;
                 db.checkins.Add(checkin);
 
                 try

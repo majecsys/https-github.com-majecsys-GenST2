@@ -23,6 +23,8 @@ namespace GenST2.Models
         [StringLength(50)]
         public string classDesc { get; set; }
 
+        public int classID { get; set; }
+
         [StringLength(50)]
         public string courseDesc { get; set; }
 

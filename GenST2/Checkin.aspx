@@ -47,6 +47,7 @@
 
                             </td>
                             <asp:HiddenField ID="studentID" runat="server"  Value="<%# Item.studentID %>" />
+                            <asp:HiddenField ID="classID" runat="server"  Value="<%# Item.classID%>" />
                         </tr>
                     </tbody>
                 </div>
