@@ -41,10 +41,47 @@ namespace GenST2
         //                            });
         //    return ids.AsQueryable();
         //}
-        public IQueryable<checkins> lvCheckIn_GetData()
+        public IQueryable<CheckinLVDisplayItems> lvCheckIn_GetData()
         {
-            IQueryable<checkins> query = db.checkins.Where(c => c.currentStudent && c.classDesc != "");
-            return query;
+            var query = (from c in db.checkins
+                         where (c.currentStudent && c.classDesc != "")
+                         join cip in db.classInstanceProfile on c.studentID equals cip.studentID
+
+                         into agroup
+                         from cip in agroup.DefaultIfEmpty()
+
+                         select new
+                         {
+                             c.FirstName,
+                             cip.remainingInstances,
+                             c.Lastname,
+                             c.classDesc,
+                             c.courseDesc
+                         }).ToList().Select(li => new CheckinLVDisplayItems()
+                         {
+                              FirstName=li.FirstName,
+                              remainingInstances = li.remainingInstances,
+                              Lastname = li.Lastname,
+                             classDesc = li.classDesc,
+                             courseDesc = li.courseDesc
+                         });
+
+            //IQueryable<checkins> query =
+
+            //    from c in db.checkins
+            //    from cip in db.classInstanceProfile
+            //    where c.studentID == cip.studentID
+            //    select new checkins()
+            //    {
+            //        FirstName = c.FirstName,
+            //        cip.remainingInstances,
+            //        Lastname = c.Lastname,
+            //        classDesc = c.classDesc,
+            //        courseDesc = c.courseDesc
+            //    };
+
+
+            return query.AsQueryable();
         }
 
         protected void cbPresent_CheckedChanged(object sender, EventArgs e)
@@ -84,6 +121,19 @@ namespace GenST2
 
                 db.SaveChanges();
             }
+        }
+
+        protected void lvCheckIn_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                Label rem = (Label)e.Item.FindControl("remaining");
+              //  var remains = (from r in db.classInstanceProfile where r.remainingInstances != 0 select r.remainingInstances).FirstOrDefault();
+              // (e.Item.DataItem)
+            //    rem.Text =  (from r in db.classInstanceProfile where r.remainingInstances != 0 select r.remainingInstances).FirstOrDefault().ToString();
+
+            }
+
         }
     }
 }

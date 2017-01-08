@@ -5,8 +5,8 @@
 
         <asp:ListView ID="lvCheckIn" runat="server"
             Style="background-color: blueviolet"
-            ItemType="GenST2.Models.checkins"
-            SelectMethod="lvcheckin_getdata" GroupPlaceholderID="groupPlaceHolder1"
+            ItemType="GenST2.Models.CheckinLVDisplayItems"
+            SelectMethod="lvcheckin_getdata" OnItemDataBound="lvCheckIn_ItemDataBound" GroupPlaceholderID="groupPlaceHolder1"
             ItemPlaceholderID="itemPlaceHolder1">
 
             <LayoutTemplate>
@@ -22,6 +22,7 @@
                             <th>Class</th>
                             <th>Course</th>
                             <th>Present</th>
+                            <th>Remaining Classes</th>
                         </tr>
                     </thead>
                     <asp:PlaceHolder runat="server" ID="groupPlaceHolder1"></asp:PlaceHolder>
@@ -46,6 +47,7 @@
                                 <%--<input runat="server" type="radio" class="form-check-input">--%>
 
                             </td>
+                            <td><asp:Label runat="server" ID="remaining" Text="<%# Item.remainingInstances %>" ></asp:Label></td>
                             <asp:HiddenField ID="studentID" runat="server"  Value="<%# Item.studentID %>" />
                             <asp:HiddenField ID="classID" runat="server"  Value="<%# Item.classID%>" />
                         </tr>

@@ -493,6 +493,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\cc.cs" />
+    <Compile Include="Models\CheckinLVDisplayItems.cs" />
     <Compile Include="Models\checkins.cs" />
     <Compile Include="Models\classCourse.cs" />
     <Compile Include="Models\classes.cs" />
