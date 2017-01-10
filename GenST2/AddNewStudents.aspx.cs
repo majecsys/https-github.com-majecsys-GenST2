@@ -117,7 +117,7 @@ namespace GenST2
             {
                 if (lbCourID.Selected)
                 {
-                    lbCourseIDs += (lbCourID.Value + ",");
+                    lbCourseIDs += (lbCourID.Value); // + ",");
                 }
             }
             if (lbClassIDs != null)
@@ -125,10 +125,10 @@ namespace GenST2
                 lbClassIDs = lbClassIDs.Remove(lbClassIDs.Length - 1);
             }
             
-            if (lbCourseIDs != null)
-            {
-                lbCourseIDs = lbCourseIDs.Remove(lbCourseIDs.Length - 1);
-            }
+            //if (lbCourseIDs != null)
+            //{
+            //    lbCourseIDs = lbCourseIDs.Remove(lbCourseIDs.Length - 1);
+            //}
 
         }
 
@@ -204,21 +204,58 @@ namespace GenST2
         public void insertIntoCheckin(int id,string classIds,string courseIds)
         {
             checkins checkin = new checkins();
-            List<int> Ids = classIds.Split(',').Select(int.Parse).ToList();
-            int courseId = Convert.ToInt16(courseIds);
-            foreach (var cid in Ids)
-            {
 
-                var classDescription = (from c in db.classes where c.classID == cid select c.classDescriptions ).FirstOrDefault();
-                var courseDescription =  ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
-                if (classDescription != null)
+            if (classIds != "0")
+            {
+                List<int> Ids = classIds.Split(',').Select(int.Parse).ToList();
+                int courseId = Convert.ToInt16(courseIds);
+                foreach (var cid in Ids)
                 {
-                    checkin.classDesc = classDescription.ToString(); 
+
+                    var classDescription = (from c in db.classes where c.classID == cid select c.classDescriptions).FirstOrDefault();
+                    var courseDescription = ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
+                    if (classDescription != null)
+                    {
+                        checkin.classDesc = classDescription.ToString();
+                    }
+                    else
+                    {
+                        checkin.classDesc = "";
+                    }
+                    if (courseDescription != null)
+                    {
+                        checkin.courseDesc = courseDescription.ToString();
+                    }
+                    else
+                    {
+                        checkin.courseDesc = "";
+                    }
+                    //Convert.ToString(classDescription);
+                    // (Convert.ToString(courseDescription));
+                    checkin.studentID = id;
+                    checkin.FirstName = firstName.Value;
+                    checkin.Lastname = lastname.Value;
+                    checkin.currentStudent = true;
+                    checkin.StartDate = DateTime.Today;
+                    checkin.classID = cid;
+                    db.checkins.Add(checkin);
+
+                    try
+                    {
+                        db.SaveChanges();
+
+                    }
+                    catch (Exception)
+                    {
+                        db.SaveChanges();
+                        throw;
+                    }
                 }
-                else
-                {
-                    checkin.classDesc = "";
-                }
+            }
+            else
+            {
+                int courseId = Convert.ToInt16(courseIds);
+                var courseDescription = ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
                 if (courseDescription != null)
                 {
                     checkin.courseDesc = courseDescription.ToString();
@@ -227,14 +264,12 @@ namespace GenST2
                 {
                     checkin.courseDesc = "";
                 }
-                 //Convert.ToString(classDescription);
-                // (Convert.ToString(courseDescription));
                 checkin.studentID = id;
                 checkin.FirstName = firstName.Value;
                 checkin.Lastname = lastname.Value;
                 checkin.currentStudent = true;
                 checkin.StartDate = DateTime.Today;
-                checkin.classID = cid;
+               
                 db.checkins.Add(checkin);
 
                 try
@@ -248,7 +283,6 @@ namespace GenST2
                     throw;
                 }
             }
-
         }
 
         protected void addFeeAmts(int studentid)
