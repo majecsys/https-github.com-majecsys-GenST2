@@ -1,17 +1,21 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace GenST2.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+
 
     [Table("classes")]
-    public partial class _class
+    public partial class classes
     {
         [Key]
-        public int classID { get; set; }
+        public int pkgID { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string classDescriptions { get; set; }
-        public int instance { get; set; }
+        public string description { get; set; }
+        public int numclasses { get; set; }
+        public string classtype { get; set; }
+        public int timelimit { get; set; }
+        public DateTime entrydate { get; set; }
+        public DateTime updatedate { get; set; }
     }
 }

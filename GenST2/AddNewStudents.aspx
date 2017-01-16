@@ -30,10 +30,10 @@
                    <br />
             <asp:ListBox ID="lbClasses"
                 CssClass="form-control"
-                DataTextField="classDescriptions"
-                DataValueField="classID"
+                DataTextField="description"
+                DataValueField="pkgID"
                 runat="server"
-                ItemType="GenST2.Models._class"
+                ItemType="GenST2.Models.classes"
                 SelectMethod="LoadClasses"
                 SelectionMode="Multiple"
                 OnSelectedIndexChanged="lbClasses_SelectedIndexChanged"></asp:ListBox>
@@ -66,10 +66,10 @@
             <br />
             <asp:ListBox
                 CssClass="form-control"
-                DataTextField="courseDescription"
+                DataTextField="name"
                 DataValueField="courseID"
                 runat="server"
-                ItemType="GenST2.Models.course"
+                ItemType="GenST2.Models.REFCourse"
                 SelectMethod="LoadCourses"
                 
                 ID="lbCourses"></asp:ListBox>
@@ -156,47 +156,74 @@
                 onChange: function (element, checked) {
                     var classIDs = $('#<%=lbClasses.ClientID%> option:selected');
                     var selected = [];
-                    $(classIDs).each(function (index, classIDs) {
-                        selected.push([$(this).val()]);
-                        processClassChoices(selected);
-                    });
+                    if ($('#<%=lbClasses.ClientID%>').val()) {
+                        $(classIDs).each(function (index, classIDs) {
+                            selected.push([$(this).val()]);
+                            processClassChoices(selected);
+                        });
+                    }
+                    else {
+                         $('#<%=lbl_ClassesPrice.ClientID%>').text('');
+                    }
                 }
             });
             function processClassChoices(selected) {
-
                 var sum = 0;
+                $.each(selected, function (index, value) {                   
+                    $.ajax({
+                        type: "POST",
+                        url: "AddNewStudents.aspx/GetPrices",
+                        data: '{selectedID : "' + value + '"}',
+                        contentType: "application/json; charset=utf-8",
+                       
+                        success: function (msg) {
+                            sum += parseInt(msg.d);
+                            $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                            $('#<%=lbl_totalFees.ClientID%>').text(sum);
+                            $('#<%=HiddenFieldAmtDue.ClientID%>').val(sum);
+                          //  alert("in success  " + msg.d);
+                        },
+                        error: function (msg) {
+                        //    alert("in error  " + msg.d);
+                        }
+                    });
+                });
+
+
+
+<%--               var sum = 0;
                 $.each(selected, function (index, value) {
-                    if (value == 1) {
+                    if (value == 8) {
                         sum += 72;
                         $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
                     }
-                    else if (value == 2) {
+                    else if (value == 9) {
                         sum += 136
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                        $('#<%=lbl_classesprice.clientid%>').text(sum);
                     }
-                    else if (value == 3) {
+                    else if (value == 10) {
                         sum += 192
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                        $('#<%=lbl_classesprice.clientid%>').text(sum);
                     }
-                    else if (value == 4) {
+                    else if (value == 11) {
                         sum += 228
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                        $('#<%=lbl_classesprice.clientid%>').text(sum);
                     }
-                    else if (value == 5) {
+                    else if (value == 12) {
                         sum += 20
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                        $('#<%=lbl_classesprice.clientid%>').text(sum);
                     }
-                    else if (value == 6) {
+                    else if (value == 13) {
                         sum += 100
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                        $('#<%=lbl_classesprice.clientid%>').text(sum);
                     }
-                    else if (value == 7) {
+                    else if (value == 14) {
                         sum += 30
-                        $('#<%=lbl_ClassesPrice.ClientID%>').text(sum);
+                        $('#<%=lbl_classesprice.clientid%>').text(sum);
                     }
-                    $('#<%=lbl_totalFees.ClientID%>').text(sum);
-                    $('#<%=HiddenFieldAmtDue.ClientID%>').val(sum);
-                });
+                    $('#<%=lbl_totalfees.clientid%>').text(sum);
+                    $('#<%=hiddenfieldamtdue.clientid%>').val(sum);
+                });--%>
             }
 
   //****************          

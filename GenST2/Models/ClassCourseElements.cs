@@ -15,12 +15,15 @@ namespace GenST2.Models
         {
         }
 
-        public virtual DbSet<_class> classes { get; set; }
-        public virtual DbSet<course> courses { get; set; }
+     //   public virtual DbSet<_class> classes { get; set; }
+        public virtual DbSet<classes> classes { get; set; }
+        public virtual DbSet<REFCourse> courses { get; set; }
         public virtual DbSet<payments> payments { get; set; }
         public virtual DbSet<students> students { get; set; }
         public virtual DbSet<checkins> checkins { get; set; }
         public virtual DbSet <classCourse> classCourse { get; set; }
+        public virtual DbSet <prices> prices { get; set; }
+        public virtual DbSet<purchases> purchases { get; set; }
         public virtual DbSet <ClassInstanceProfile> classInstanceProfile { get; set; }
         public virtual DbSet<cc> cc { get; set; }
 
