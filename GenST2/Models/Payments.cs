@@ -6,13 +6,13 @@ namespace GenST2.Models
 
     public partial class payments
     {
-        public int Id { get; set; }
+        [Key]
+        public int paymentID { get; set; }
 
         public int studentID { get; set; }
-
-        
+        public int pkgID { get; set; }
         [DataType(DataType.Currency)]
-        public decimal fees { get; set; }
+        public decimal amount { get; set; }
 
         [Required]
         [StringLength(15)]

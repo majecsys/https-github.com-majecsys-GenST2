@@ -10,6 +10,7 @@ namespace GenST2.Models
     {
         [Key]
         public int pkgID { get; set; }
+        public int price { get; set; }
 
         public string description { get; set; }
         public int numclasses { get; set; }

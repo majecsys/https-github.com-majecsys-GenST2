@@ -168,7 +168,7 @@ namespace GenST2
                 //insertIntoClassInstanceProfile(lbClassIDs, newStudent.id);
                 //insertIntoCheckin(newStudent.id, lbClassIDs, lbCourseIDs);
                 makePurchase(newStudent.studentID);
-   //             addFeeAmts(newStudent.studentID);
+   //           ;
             }
             catch (Exception)
             {
@@ -191,6 +191,7 @@ namespace GenST2
                     try
                     {
                         db.SaveChanges();
+                        addFeeAmts(studentID, Convert.ToInt16((lbPkgID.Value)));
                     }
                     catch (Exception)
                     {
@@ -316,7 +317,7 @@ namespace GenST2
         //    }
         //}
 
-        protected void addFeeAmts(int studentid)
+        protected void addFeeAmts(int studentid,int pkgID)
         {
             globalStudentID = studentid;
             int fees = 0;
@@ -333,9 +334,10 @@ namespace GenST2
 
             payments payment = new payments();
             
-            payment.fees = Convert.ToDecimal(fees);
+            payment.amount = Convert.ToDecimal(fees);
             payment.paymentType = paymentsType();
             payment.studentID = studentid;
+            payment.pkgID = pkgID;
             payment.paymentDate = DateTime.Today;
             db.payments.Add(payment);
             try
@@ -425,12 +427,12 @@ namespace GenST2
             ClassCourseElements localDB = new ClassCourseElements();
             int selID = Convert.ToInt16(selectedID);
             int displayAmt = 0;
-            var numclassses = (from ca in localDB.classes where (ca.pkgID == selID) select ca.numclasses).SingleOrDefault();
-            var priceperhr = (from p in localDB.prices join c in localDB.classes on p.pkgID equals c.pkgID where (c.pkgID == selID) select p.priceperhr).SingleOrDefault();
+            var price = (from ca in localDB.classes where (ca.pkgID == selID) select ca.price).SingleOrDefault();
+        //    var priceperhr = (from p in localDB.prices join c in localDB.classes on p.pkgID equals c.pkgID where (c.pkgID == selID) select p.priceperhr).SingleOrDefault();
 
-            displayAmt += numclassses * priceperhr;
+            displayAmt += price; // numclassses * priceperhr;
 
-            return Convert.ToString(displayAmt); // numclassses;
+            return Convert.ToString(displayAmt);
         }
 
  

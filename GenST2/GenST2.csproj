@@ -371,6 +371,7 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="studentlist.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -533,7 +534,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\cc.cs" />
     <Compile Include="Models\CheckinLVDisplayItems.cs" />
     <Compile Include="Models\checkins.cs" />
     <Compile Include="Models\classCourse.cs" />
@@ -543,12 +543,11 @@
     <Compile Include="Models\courses.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Payments.cs" />
-    <Compile Include="Models\prices.cs" />
     <Compile Include="Models\purchases.cs" />
     <Compile Include="Models\REFClass.cs" />
     <Compile Include="Models\REFCourse.cs" />
+    <Compile Include="Models\StudentDetailsDisplayItems.cs" />
     <Compile Include="Models\students.cs" />
-    <Compile Include="Models\StudentsOLD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -565,6 +564,13 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="studentlist.aspx.cs">
+      <DependentUpon>studentlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="studentlist.aspx.designer.cs">
+      <DependentUpon>studentlist.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
