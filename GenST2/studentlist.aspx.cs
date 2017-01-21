@@ -16,8 +16,20 @@ namespace GenST2
         {
             //var sts = from s in db.students where s.studentID == 21 select s;
             //return sts;
-            var query = db.students;
-            return query;
+            //var query = db.students;
+            //return query;
+            var v = (from s in db.students
+                     join p in db.purchases on s.studentID equals p.studentID
+                     join c in db.classes on p.pkgID equals c.pkgID
+                     select new
+                     {
+                         s.firstname,
+                         s.lastname,
+                         s.studentID,
+                         p.pkgID
+                     }).ToList().Select(n => new students() { firstname = n.firstname,
+                                                              lastname = n.lastname, studentID = n.studentID }); ;
+            return v.AsQueryable();
         }
 
 
