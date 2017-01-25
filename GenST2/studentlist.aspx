@@ -1,14 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="studentlist.aspx.cs" Inherits="GenST2.studentlist" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="col-md-3">
+    <%--<div class="col-md-3">--%>
+    <div>
     <asp:ListView ID="lvStudents" runat="server" 
         Style="background-color: blueviolet"
          ItemType="GenST2.Models.students" 
         SelectMethod="getStudents" 
         ItemPlaceholderID="placeHolder1"  
-          DataKeyNames ="studentID" 
-        GroupPlaceholderID="gp1" 
-        >
+        DataKeyNames ="studentID" OnItemDataBound="lvStudents_ItemDataBound" >
         <LayoutTemplate>
                             <br />
                 <br />
@@ -18,13 +17,13 @@
                     <thead>
                         <tr>
                             <th>Student</th>
+                            <th>Class Type</th>
+                            <th>Present</th>
                             <%--<th>Lastname</th>--%>
                         </tr>
                     </thead>
                     <asp:PlaceHolder runat="server" ID="placeHolder1"></asp:PlaceHolder>
                 </table>
-             
-            
         </LayoutTemplate>
 
         <ItemTemplate>
@@ -42,13 +41,14 @@
                             <asp:ListView runat="server" ID="lvStudentDetails" ItemType="GenST2.Models.StudentDetailsDisplayItems"
                                 SelectMethod="lvStudentDetails_GetDetails"
                                 DataKeyNames="studentID"
-                                ItemPlaceholderID="details">
+                                ItemPlaceholderID="details" OnItemDataBound="lvStudentDetails_ItemDataBound">
                                 <LayoutTemplate>
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Class Type</th>
-                                                <th>Present</th>
+                                                <asp:Label runat="server" CssClass="form-control" ID="lblTest"></asp:Label>
+                                                <%-- <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="waldo" CssClass="form-check-input"></asp:CheckBox>--%>
+
                                                 <asp:PlaceHolder runat="server" ID="details"></asp:PlaceHolder>
                                             </tr>
                                         </thead>
@@ -62,8 +62,8 @@
                                                 <%#: Item.classDescription %>
                                             </td>
                                             <td>                                                
-                                               <asp:CheckBox runat="server" ID="present" CssClass="form-check-input"></asp:CheckBox>
-                                            </td>
+                                                <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>
+                                            </td> 
                                         </tr>
                                     </div>
                                 </ItemTemplate>
@@ -78,3 +78,4 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="scriptTail" runat="server">
 </asp:Content>
+ 
