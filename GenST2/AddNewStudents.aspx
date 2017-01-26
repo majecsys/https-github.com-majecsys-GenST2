@@ -1,11 +1,88 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddNewStudents.aspx.cs" Inherits="GenST2.AddNewStudents" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="form-check">
+ <br />
+ <br />
+     <br />
+ <br /> <br />
+ <br />
+    <div class="form-group">
         <label class="form-check-label">
+            Check if current Student: 
+        <asp:DropDownList runat="server" ID="ddlCurrent"
+            ItemType="GenST2.Models.students"
+            SelectMethod="getCurrentStudents"
+            DataTextField="lastname"
+            DataValueField="studentID"
+            AppendDataBoundItems="true"
+            CssClass="form-control col-md-3" 
+            AutoPostBack="true">
+            <asp:ListItem Value="0">Select One:</asp:ListItem>
+
+        </asp:DropDownList>
+
+            <asp:FormView runat="server" ID="currentStudentDemo"
+                ItemType="GenST2.Models.students"
+                SelectMethod="returnDemo" DataKeyNames="studentID" CssClass="form-group">
+                <ItemTemplate>
+
+                    <table>
+                        <div class="form-group">
+                        <tr>
+                            <td>
+                        Firstname:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:TextBox ID="TextBox1" runat="Server" CssClass="form-control" Text='<%#: Item.firstname%>'></asp:TextBox>
+                            </td>
+                        </tr>
+                        </div>
+                        <div class="form-group">
+                        <tr>
+                            <td>
+                        Lastname:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:TextBox ID="TextBox2" runat="Server" CssClass="form-control" Text='<%#: Item.lastname%>'></asp:TextBox>
+                            </td>
+                        </tr>
+                        </div>
+                         <div class="form-group">
+                        <tr>
+                            <td>
+                        Email:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:TextBox ID="TextBox3" runat="Server" CssClass="form-control" Text='<%#: Item.email%>'></asp:TextBox>
+                            </td>
+                        </tr>
+                        </div>
+                         <div class="form-group">
+                        <tr>
+                            <td>
+                        Phone:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:TextBox ID="TextBox4" runat="Server" CssClass="form-control" Text='<%#: Item.phone%>'></asp:TextBox>
+                            </td>
+                        </tr>
+                        </div>
+                    </table>
+
+                </ItemTemplate>
+            </asp:FormView>
+
             Check if Private Lesson: 
       <input type="checkbox" class="form-check-input">
         </label>
-
+<asp:Panel runat="server" ID="hideForms" Visible="true" >
         <div class="form-group">
             <label for="firstName">FirstName:</label>
             <input type="text" class="form-control" id="firstName" aria-describedby="name" runat="server"  placeholder="FirstName">
@@ -13,7 +90,7 @@
         </div>
         <div class="form-group">
             <label for="text">Lastname:</label>
-            <input type="text" class="form-control" id="lastname" runat="server" placeholder="Lastname or Family Name">
+            <input type="text" class="form-control" id="lastname" itemtype="GenST2.Models.students" runat="server" value="" placeholder="Lastname or Family Name">
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
@@ -23,9 +100,10 @@
             <label for="phone">Phone</label>
             <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="xxx-xxx-xxxx">
         </div>
+    </asp:Panel>
   </div>
     <div class="row" id="classesRow">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="text">Classes:</label>
                    <br />
             <asp:ListBox ID="lbClasses"
@@ -61,7 +139,7 @@
     </div>--%> <%--classesRow--%>
 
     <div class="row" id="coursesRow">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="text">Courses:</label>
             <br />
             <asp:ListBox
@@ -74,7 +152,7 @@
                 
                 ID="lbCourses"></asp:ListBox>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="text">Number Of Weeks:</label>
 
             <asp:DropDownList
@@ -96,7 +174,7 @@
     <%--coursesRow--%>
 
                 <div class="row" id="feeRow">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="text">Fees:</label>
                         <asp:HiddenField runat="server" ID="hiddenTotalFees" />

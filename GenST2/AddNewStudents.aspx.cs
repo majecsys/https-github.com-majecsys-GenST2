@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using System.Data.Entity.Validation;
 using System.Web.Services;
+using System.Web.ModelBinding;
 
 namespace GenST2
 {
@@ -40,12 +41,29 @@ namespace GenST2
                         return query;
         }
 
+
+        public IQueryable<students> getCurrentStudents()
+        {
+            var query = from s in db.students orderby s.lastname select s;
+            return query;
+        }
+
+        public IQueryable<students> returnDemo([Control("ddlCurrent")] int? studentID)
+        {
+            if (studentID != 0)
+            {
+                hideForms.Visible = false;
+            }
+            var query = from n in db.students where n.studentID == studentID select n;
+
+            return query;
+        }
+
         protected void lbClasses_SelectedIndexChanged(object sender, EventArgs e)
         {
             lbClasses.BorderColor = System.Drawing.Color.Gainsboro;
-   //         processClassFees(lbClasses.SelectedIndex);
+            //         processClassFees(lbClasses.SelectedIndex);
         }
-
 
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {

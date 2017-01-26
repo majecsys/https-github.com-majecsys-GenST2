@@ -13,6 +13,33 @@ namespace GenST2 {
     public partial class AddNewStudents {
         
         /// <summary>
+        /// ddlCurrent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCurrent;
+        
+        /// <summary>
+        /// currentStudentDemo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FormView currentStudentDemo;
+        
+        /// <summary>
+        /// hideForms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel hideForms;
+        
+        /// <summary>
         /// firstName control.
         /// </summary>
         /// <remarks>
