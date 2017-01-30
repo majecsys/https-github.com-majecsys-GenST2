@@ -47,7 +47,8 @@
                                         <thead>
                                             <tr>
                                                 <asp:Label runat="server" CssClass="form-control" ID="lblTest"></asp:Label>
-                                                <%-- <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="waldo" CssClass="form-check-input"></asp:CheckBox>--%>
+<%--                                                 <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="waldo_CheckedChanged" ID="waldo" CssClass="form-check-input"></asp:CheckBox>
+                                                 --%>
 
                                                 <asp:PlaceHolder runat="server" ID="details"></asp:PlaceHolder>
                                             </tr>
@@ -61,8 +62,8 @@
                                             <td>
                                                 <%#: Item.classDescription %>
                                             </td>
-                                            <td>                                                
-                                                <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>
+                                            <td>   
+                                                <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>                                      
                                             </td> 
                                         </tr>
                                     </div>

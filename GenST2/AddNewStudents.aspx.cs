@@ -13,6 +13,7 @@ namespace GenST2
         public int[] lbClassIDArr { get; set; }
         public string lbCourseIDs { get; set; }
         public int globalStudentID { get; set; }
+        
 
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
@@ -65,8 +66,16 @@ namespace GenST2
             //         processClassFees(lbClasses.SelectedIndex);
         }
 
+        protected void ddlCurrent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ViewState["currentStudentID"] = null;
+            DropDownList ddl = (DropDownList)sender;
+            ViewState["currentStudentID"] = Convert.ToInt16(ddl.SelectedValue);
+        }
+
         protected void btnSubmitRec_Click(object sender, EventArgs e)
         {
+            Convert.ToInt16(ViewState["currentStudentID"]);
             int localFeeTotal = 0;
             
             if (hiddenTotalFees.Value == "")
@@ -82,8 +91,18 @@ namespace GenST2
             {
                 if (requirePaymentType())
                 {
-            //        processClassCourseIDs();
-                    insertStudentRec();
+                    //        processClassCourseIDs();
+                    if (ViewState["currentStudentID"] == null)
+                    {
+                        int currID = 0;
+                        insertStudentRec(currID);
+                    }
+                    else
+                    {
+                        int currID = Convert.ToInt16(ViewState["currentStudentID"]);
+                        insertStudentRec(currID);
+                    }
+                   // insertStudentRec();
               //      checkinUtilities(globalStudentID);
                     Response.Redirect("default.aspx");
 
@@ -149,8 +168,9 @@ namespace GenST2
 
         }
 
-        public void insertStudentRec()
+        public void insertStudentRec(int currID)
         {
+           
             students newStudent = new students();
 
             newStudent.firstname = firstName.Value;
@@ -158,41 +178,40 @@ namespace GenST2
             newStudent.email = email.Value;
             newStudent.phone = phone.Value;
             newStudent.entrydate = DateTime.Today;
-
-            //if (lbClassIDs != null)
-            //{
-            //    newStudent.classID = lbClassIDs;
-            //}
-            //else
-            //{
-            //    newStudent.classID = "0";
-            //    lbClassIDs = "0";
-            //}
-            //if (lbCourseIDs != null)
-            //{
-            //    newStudent.courseID = lbCourseIDs;
-            //}
-            //else
-            //{
-            //    newStudent.courseID = "0";
-            //    lbCourseIDs = "0";
-            //}
-
             db.students.Add(newStudent);
+            if (currID == 0)
+            {
+                try
+                {
+                    db.SaveChanges();
+                    //insertIntoClassInstanceProfile(lbClassIDs, newStudent.id);
+                    //insertIntoCheckin(newStudent.id, lbClassIDs, lbCourseIDs);
+                    makePurchase(newStudent.studentID);
+                    //           ;
+                }
+                catch (Exception)
+                {
+                    db.SaveChanges();
+                    throw;
+                }
+            }
+            else
+            {
+                try
+                {
+                    db.SaveChanges();
+                    //insertIntoClassInstanceProfile(lbClassIDs, newStudent.id);
+                    //insertIntoCheckin(newStudent.id, lbClassIDs, lbCourseIDs);
+                    makePurchase(currID);
+                    //           ;
+                }
+                catch (Exception)
+                {
+                   // db.SaveChanges();
+                    throw;
+                }
+            }
 
-            try
-            {
-                db.SaveChanges();
-                //insertIntoClassInstanceProfile(lbClassIDs, newStudent.id);
-                //insertIntoCheckin(newStudent.id, lbClassIDs, lbCourseIDs);
-                makePurchase(newStudent.studentID);
-   //           ;
-            }
-            catch (Exception)
-            {
-                db.SaveChanges();
-                throw;
-            }
         }
 
         private void makePurchase(int studentID)
@@ -213,7 +232,6 @@ namespace GenST2
                     }
                     catch (Exception)
                     {
-
                         throw;
                     }
                 }
@@ -227,113 +245,7 @@ namespace GenST2
            
         }
 
-        //public void insertIntoClassInstanceProfile(string classIDs , int studentID)
-        //{
-        //    ClassInstanceProfile classInstances = new ClassInstanceProfile();
-        //    List<int> Ids = classIDs.Split(',').Select(int.Parse).ToList();
 
-        //    foreach (var cid in Ids)
-        //    {
-        //        var instance = (from i in db.classes where i.classID == cid select i.instance).FirstOrDefault();
-        //        classInstances.classID = cid;
-        //        classInstances.studentID = studentID;
-        //        classInstances.remainingInstances = instance;
-        //        classInstances.recDate = DateTime.Today;
-        //        db.classInstanceProfile.Add(classInstances);
-        //        try
-        //        {
-        //            db.SaveChanges();
-        //        }
-        //        catch (Exception)
-        //        {
-        //            throw;
-        //        } 
-        //    }
-        //}
-
-        //public void insertIntoCheckin(int id,string classIds,string courseIds)
-        //{
-        //    checkins checkin = new checkins();
-
-        //    if (classIds != "0")
-        //    {
-        //        List<int> Ids = classIds.Split(',').Select(int.Parse).ToList();
-        //        int courseId = Convert.ToInt16(courseIds);
-        //        foreach (var cid in Ids)
-        //        {
-
-        //            var classDescription = (from c in db.classes where c.classID == cid select c.description).FirstOrDefault();
-        //            var courseDescription = ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
-        //            if (classDescription != null)
-        //            {
-        //                checkin.classDesc = classDescription.ToString();
-        //            }
-        //            else
-        //            {
-        //                checkin.classDesc = "";
-        //            }
-        //            if (courseDescription != null)
-        //            {
-        //                checkin.courseDesc = courseDescription.ToString();
-        //            }
-        //            else
-        //            {
-        //                checkin.courseDesc = "";
-        //            }
-        //            //Convert.ToString(classDescription);
-        //            // (Convert.ToString(courseDescription));
-        //            checkin.studentID = id;
-        //            checkin.FirstName = firstName.Value;
-        //            checkin.Lastname = lastname.Value;
-        //            checkin.currentStudent = true;
-        //            checkin.StartDate = DateTime.Today;
-        //            checkin.classID = cid;
-        //            db.checkins.Add(checkin);
-
-        //            try
-        //            {
-        //                db.SaveChanges();
-
-        //            }
-        //            catch (Exception)
-        //            {
-        //                db.SaveChanges();
-        //                throw;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        int courseId = Convert.ToInt16(courseIds);
-        //        var courseDescription = ((from cor in db.courses where cor.courseID == courseId select cor.courseDescription).SingleOrDefault());
-        //        if (courseDescription != null)
-        //        {
-        //            checkin.courseDesc = courseDescription.ToString();
-        //        }
-        //        else
-        //        {
-        //            checkin.courseDesc = "";
-        //        }
-        //        checkin.studentID = id;
-        //        checkin.FirstName = firstName.Value;
-        //        checkin.Lastname = lastname.Value;
-        //        checkin.currentStudent = true;
-        //        checkin.StartDate = DateTime.Today;
-
-        //        db.checkins.Add(checkin);
-
-        //        try
-        //        {
-        //            db.SaveChanges();
-
-        //        }
-        //        catch (Exception)
-        //        {
-        //            db.SaveChanges();
-        //            throw;
-        //        }
-        //    }
-        //}
 
         protected void addFeeAmts(int studentid,int pkgID)
         {
@@ -453,6 +365,25 @@ namespace GenST2
             return Convert.ToString(displayAmt);
         }
 
- 
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void currentStudentDemo_UpdateItem(int studentID)
+        {
+            ClassCourseElements localDB = new ClassCourseElements();
+            GenST2.Models.students item = localDB.students.Find(studentID);
+
+            if (item == null)
+            { 
+                // The item wasn't found 
+                ModelState.AddModelError("", String.Format("Item with id {0} was not found", studentID));
+                return;
+            }
+            TryUpdateModel(item);
+            if (ModelState.IsValid)
+            {
+                localDB.SaveChanges();
+            }
+        }
+
+
     }
 }
