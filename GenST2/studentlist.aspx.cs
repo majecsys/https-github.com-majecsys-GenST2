@@ -15,7 +15,6 @@ namespace GenST2
         }
         public IQueryable<students> getStudents()
         {
-
             var v = (from s in db.students
                      join p in db.purchases on s.studentID equals p.studentID
                      join c in db.classes on p.pkgID equals c.pkgID
@@ -24,10 +23,10 @@ namespace GenST2
                          s.firstname,
                          s.lastname,
                          s.studentID
+
                      }).Distinct().ToList().Select(n => new students() { firstname = n.firstname,
                                                               lastname = n.lastname, studentID = n.studentID });
             return v.AsQueryable();
-
         }
 
 
@@ -66,21 +65,7 @@ namespace GenST2
 
                 ListView lv = (ListView)e.Item.FindControl("lvStudentDetails");
                 Label Lblid = (Label)lv.Controls[0].FindControl("lblTest");
-                //CheckBox w = (CheckBox)lv.Controls[0].FindControl("waldo");
-                //CheckBox cbpresent = (CheckBox)lv.Controls[0].FindControl("cbPresent");
-                //         Response.Write("<br><br><br><br>" + cbpresent.UniqueID); 
-                //foreach (ListViewItem item in lv.Items)
-                //{
-                //    w.BackColor = System.Drawing.Color.DarkCyan;
-                //    //    CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
-                //    if (w.Checked == true)
-                //    {
-                //        w.BackColor = System.Drawing.Color.Red;
-                //    }
 
-                //}
-                // lv.ItemDataBound += new EventHandler<ListViewItemEventArgs>(this.lvStudents_ItemDataBound);
-                //w.BackColor = System.Drawing.Color.Red;
                 HiddenField sid = (HiddenField)e.Item.FindControl("selectionKeyForNestedLV");
                 Lblid.Text = sid.Value;
             }
@@ -89,31 +74,13 @@ namespace GenST2
         protected void lvStudentDetails_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             ListView lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
-            //ListViewDataItem currentParentItem = (ListViewDataItem)e.Item.Parent.Parent.Parent;
-            //     currentParentItem.DataItem;
-            //   Label lblSid = (Label) e.Item.FindControl("lblTest"); 
-
-
-
+         
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
                 //foreach (ListViewItem item in lvDetails.Items)
                 //{
                 //    CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
                 //    cbpresent.Checked = true;
-                //}
-
-
-                //Label Lblid = (Label)e.Item.FindControl("lblTest");
-
-                //if (Lblid != null)
-                //{
-
-                //    Lblid.Text = "567";
-                //}
-                //else
-                //{
-
                 //}
             }
         }
@@ -133,12 +100,6 @@ namespace GenST2
             int sid = 0;
             sid = Convert.ToInt16(studentID);
 
-            
-        }
-
-        protected void waldo_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox cb = (CheckBox)sender;
             
         }
     }

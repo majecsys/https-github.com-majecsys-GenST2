@@ -9,7 +9,7 @@ namespace GenST2.Models
         [Key]
         public int purchaseID { get; set; }
         public int studentID { get; set; }
-        public int scheduleID { get; set; }
+        public int numclasses { get; set; }
         public int pkgID { get; set; }
         public int paymentID { get; set; }
         public DateTime attendancedate{ get; set; }

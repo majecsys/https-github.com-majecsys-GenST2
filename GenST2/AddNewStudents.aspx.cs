@@ -213,7 +213,7 @@ namespace GenST2
             }
 
         }
-
+        
         private void makePurchase(int studentID)
         {
             purchases purchase = new purchases();
@@ -221,6 +221,12 @@ namespace GenST2
             {
                 if (lbPkgID.Selected)
                 {
+                    int lbValue = Convert.ToInt16(lbPkgID.Value);
+                    var numclasses = (from num in db.classes
+                                      join p in db.purchases on num.pkgID equals p.pkgID
+                                      where num.pkgID == lbValue
+                                      select num.numclasses).FirstOrDefault();
+                    purchase.numclasses = numclasses; 
                     purchase.studentID = studentID;
                     purchase.pkgID = Convert.ToInt16((lbPkgID.Value)); ;
                     purchase.purchasedate = DateTime.Today;
