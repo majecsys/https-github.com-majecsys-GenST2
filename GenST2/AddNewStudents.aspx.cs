@@ -219,14 +219,12 @@ namespace GenST2
             purchases purchase = new purchases();
             foreach (ListItem lbPkgID in lbClasses.Items)
             {
+                
                 if (lbPkgID.Selected)
                 {
                     int lbValue = Convert.ToInt16(lbPkgID.Value);
-                    var numclasses = (from num in db.classes
-                                      join p in db.purchases on num.pkgID equals p.pkgID
-                                      where num.pkgID == lbValue
-                                      select num.numclasses).FirstOrDefault();
-                    purchase.numclasses = numclasses; 
+                    
+                    purchase.numclasses = loadClassInstances(lbValue); 
                     purchase.studentID = studentID;
                     purchase.pkgID = Convert.ToInt16((lbPkgID.Value)); ;
                     purchase.purchasedate = DateTime.Today;
@@ -245,12 +243,18 @@ namespace GenST2
 
             foreach (int item in lbClasses.GetSelectedIndices())
             {
-                
-
             }
-           
         }
 
+        private int loadClassInstances(int lbValue)
+        {
+            ClassCourseElements locDb = new ClassCourseElements();
+            var numclasses = (from num in locDb.classes
+                              join p in locDb.purchases on num.pkgID equals p.pkgID
+                              where num.pkgID == lbValue
+                              select num.numclasses).First();
+          return numclasses;
+        }
 
 
         protected void addFeeAmts(int studentid,int pkgID)

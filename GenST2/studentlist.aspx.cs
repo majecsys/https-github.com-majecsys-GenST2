@@ -47,9 +47,10 @@ namespace GenST2
                      select new
                      {
                          c.description,
-                         p.studentID
+                         p.studentID,
+                         p.pkgID
                      }).ToList().Select(li => new StudentDetailsDisplayItems() { classDescription = li.description,
-                                                                                 studentID = li.studentID });
+                                                                                 studentID = li.studentID, pkgID = li.pkgID });
 
             return details.AsQueryable();
 
@@ -88,18 +89,67 @@ namespace GenST2
         protected void present_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
-            ListViewItem lvStudentItem = (ListViewItem)cb.NamingContainer;
-            ListViewDataItem dataItem = (ListViewDataItem)lvStudentItem;
-            string studentID = lvStudents.DataKeys[dataItem.DisplayIndex].Value.ToString();
 
-            updateAttendanceRec(studentID);
+            //ListViewItem lvStudentItem = (ListViewItem)cb.NamingContainer;
+            //ListViewDataItem dataItem = (ListViewDataItem)lvStudentItem;
+            //string studentID = lvStudents.DataKeys[dataItem.DataItemIndex].Values[0].ToString();
+
+            int hPkgID = Convert.ToInt16(((HiddenField)((CheckBox)sender).Parent.FindControl("hiddenPkgID")).Value);
+            string studentID = ((HiddenField)((CheckBox)sender).Parent.FindControl("hiddenStudentID")).Value;
+            Label lbl = (Label)((CheckBox)sender).Parent.FindControl("lblClassDesc");
+            updateAttendanceRec(hPkgID, studentID,lbl);
+            cb.Enabled = false;
         }
 
-        private void updateAttendanceRec(string studentID)
+        private void updateAttendanceRec(int hPkgID, string studentID,Label lbl)
         {
-            int sid = 0;
-            sid = Convert.ToInt16(studentID);
+            ClassCourseElements locDB = new ClassCourseElements();
 
+            
+            int classesBalance = 0;
+            var decrement = 1;
+            int sid = 0;
+
+            sid = Convert.ToInt16(studentID);
+            int pkgID = Convert.ToInt16(hPkgID);
+
+            int dropIncheck = pkgID;
+
+            var remainingClasses = (from p in locDB.purchases where (p.studentID == sid) && (p.pkgID == pkgID) select p).First();
+            if (remainingClasses.numclasses <= 2)
+            {
+                lbl.BackColor = System.Drawing.Color.Pink;
+            }
+            if (remainingClasses.numclasses <= 1)
+            {
+                var delRec = (from d in locDB.purchases where (d.studentID == sid) && (d.pkgID == pkgID) select d).First();
+                locDB.purchases.Remove(delRec);
+                try
+                {
+                    locDB.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                classesBalance = (short)(remainingClasses.numclasses - decrement);
+                remainingClasses.numclasses = classesBalance;
+                if (dropIncheck != 1)
+                {
+                    try
+                    {
+                        locDB.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+            }
             
         }
     }

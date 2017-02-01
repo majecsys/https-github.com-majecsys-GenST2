@@ -60,10 +60,12 @@
                                     <div class="list-group">
                                         <tr>
                                             <td>
-                                                <%#: Item.classDescription %>
+                                                <asp:Label ID="lblClassDesc" runat="server" Text=" <%#: Item.classDescription %> "></asp:Label>
+                                               <asp:HiddenField ID="hiddenStudentID" runat="server" Value="<%# Item.studentID %>" />  
+                                                 <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.pkgID %>" />  
                                             </td>
-                                            <td>   
-                                                <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>                                      
+                                            <td> 
+                                                <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>                                      
                                             </td> 
                                         </tr>
                                     </div>
