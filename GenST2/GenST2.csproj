@@ -545,7 +545,6 @@
     <Compile Include="Models\Payments.cs" />
     <Compile Include="Models\purchases.cs" />
     <Compile Include="Models\REFClass.cs" />
-    <Compile Include="Models\REFCourse.cs" />
     <Compile Include="Models\StudentDetailsDisplayItems.cs" />
     <Compile Include="Models\students.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

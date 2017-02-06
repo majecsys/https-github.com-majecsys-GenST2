@@ -22,7 +22,7 @@
                 NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
             </p>--%>
             <p>
-                <a class="btn btn-default" href="Checkin.aspx">Check In &raquo;</a>
+                <a class="btn btn-default" href="studentlist.aspx">Check In &raquo;</a>
             </p>
         </div>
 <%--        <div class="col-md-4">

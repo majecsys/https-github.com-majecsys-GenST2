@@ -1,10 +1,6 @@
 namespace GenST2.Models
 {
-    using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-    using Models;
     using System.Data.Entity.ModelConfiguration.Conventions;
     public partial class ClassCourseElements : DbContext
     {
@@ -17,7 +13,7 @@ namespace GenST2.Models
 
      //   public virtual DbSet<_class> classes { get; set; }
         public virtual DbSet<classes> classes { get; set; }
-        public virtual DbSet<REFCourse> courses { get; set; }
+        public virtual DbSet<courses> courses { get; set; }
         public virtual DbSet<payments> payments { get; set; }
         public virtual DbSet<students> students { get; set; }
         public virtual DbSet<checkins> checkins { get; set; }

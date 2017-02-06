@@ -7,7 +7,7 @@
          ItemType="GenST2.Models.students" 
         SelectMethod="getStudents" 
         ItemPlaceholderID="placeHolder1"  
-        DataKeyNames ="studentID" OnItemDataBound="lvStudents_ItemDataBound" >
+        DataKeyNames ="studentID" OnItemDataBound="lvStudents_ItemDataBound">
         <LayoutTemplate>
                             <br />
                 <br />
@@ -46,7 +46,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <asp:Label runat="server" CssClass="form-control" ID="lblTest"></asp:Label>
+                                                <%--<asp:Label runat="server" CssClass="form-control" ID="lblTest"></asp:Label>--%>
 <%--                                                 <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="waldo_CheckedChanged" ID="waldo" CssClass="form-check-input"></asp:CheckBox>
                                                  --%>
 
@@ -60,7 +60,7 @@
                                     <div class="list-group">
                                         <tr>
                                             <td>
-                                                <asp:Label ID="lblClassDesc" runat="server" Text=" <%#: Item.classDescription %> "></asp:Label>
+                                                <asp:Label ID="lblClassDesc"  runat="server" Text=" <%#: Item.classDescription %> "></asp:Label>
                                                <asp:HiddenField ID="hiddenStudentID" runat="server" Value="<%# Item.studentID %>" />  
                                                  <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.pkgID %>" />  
                                             </td>

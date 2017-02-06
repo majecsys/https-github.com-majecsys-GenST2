@@ -139,6 +139,15 @@ namespace GenST2 {
         protected global::System.Web.UI.WebControls.HiddenField hiddenTotalFees;
         
         /// <summary>
+        /// hiddenValueNumWeeks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hiddenValueNumWeeks;
+        
+        /// <summary>
         /// lbl_totalFees control.
         /// </summary>
         /// <remarks>

@@ -11,7 +11,8 @@ namespace GenST2
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+          
+
         }
         public IQueryable<students> getStudents()
         {
@@ -51,7 +52,7 @@ namespace GenST2
                          p.pkgID
                      }).ToList().Select(li => new StudentDetailsDisplayItems() { classDescription = li.description,
                                                                                  studentID = li.studentID, pkgID = li.pkgID });
-
+            
             return details.AsQueryable();
 
             //var som = from c in db.studentDetails where c.studentID == 8 orderby c.classDescription select c ;
@@ -63,28 +64,54 @@ namespace GenST2
         {
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
+                //var warn = (from f in db.purchases where f.warningFlag == true select f).ToList();
+                            
+                //ListView lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
 
-                ListView lv = (ListView)e.Item.FindControl("lvStudentDetails");
-                Label Lblid = (Label)lv.Controls[0].FindControl("lblTest");
+                //foreach (ListViewItem item in lvDetails.Items)
+                //{
+                   
+                //    foreach (var flag in warn.Where(w => w.warningFlag == true))
+                //    {
+                //        Label lbl = (Label)item.FindControl("lblClassDesc");
+                //        lbl.BackColor = System.Drawing.Color.Pink;
 
-                HiddenField sid = (HiddenField)e.Item.FindControl("selectionKeyForNestedLV");
-                Lblid.Text = sid.Value;
+                //        break;
+                //    }
+                //    break;
+                //}
             }
         }
 
         protected void lvStudentDetails_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            ListView lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
-         
-            if (e.Item.ItemType == ListViewItemType.DataItem)
-            {
-                //foreach (ListViewItem item in lvDetails.Items)
-                //{
-                //    CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
-                //    cbpresent.Checked = true;
-                //}
-            }
+            //      Label ll = (Label)e Item.FindControl("lblTest");
+            //ListView lv = (ListView)sender;
+            //ListViewItem lvStudentItem = (ListViewItem)lv.NamingContainer;
+
+            //ListView lvDetails;
+            //lvDetails = (ListView)lv.FindControl("lvStudentDetails");
+            //var warn = (from f in db.purchases where f.warningFlag == true select f).First();
+            //if (lvDetails != null)
+            //{
+            //    if (e.Item.ItemType == ListViewItemType.DataItem)
+            //    {
+
+            //    lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
+            //    foreach (ListViewItem item in lvDetails.Items)
+            //        {
+            //            if (warn.warningFlag == true)
+            //            {
+            //                CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
+            //                cbpresent.BackColor = System.Drawing.Color.Pink;
+            //            }
+
+            //        }
+            //    }
+            //}
+
         }
+
 
         protected void present_CheckedChanged(object sender, EventArgs e)
         {
@@ -116,11 +143,11 @@ namespace GenST2
             int dropIncheck = pkgID;
 
             var remainingClasses = (from p in locDB.purchases where (p.studentID == sid) && (p.pkgID == pkgID) select p).First();
-            if (remainingClasses.numclasses <= 2)
+            if (remainingClasses.numclasses == 2)
             {
                 lbl.BackColor = System.Drawing.Color.Pink;
             }
-            if (remainingClasses.numclasses <= 1)
+            if (remainingClasses.numclasses < 1)
             {
                 var delRec = (from d in locDB.purchases where (d.studentID == sid) && (d.pkgID == pkgID) select d).First();
                 locDB.purchases.Remove(delRec);
@@ -152,5 +179,7 @@ namespace GenST2
             }
             
         }
+
+
     }
 }

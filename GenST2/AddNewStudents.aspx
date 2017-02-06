@@ -232,9 +232,11 @@
                 DataTextField="name"
                 DataValueField="courseID"
                 runat="server"
-                ItemType="GenST2.Models.REFCourse"
+                ItemType="GenST2.Models.courses"
                 SelectMethod="LoadCourses"
-                ID="lbCourses"></asp:ListBox>
+                ID="lbCourses">
+
+            </asp:ListBox>
         </div>
         <div class="col-md-2">
             <label for="text">Number Of Weeks:</label>
@@ -261,6 +263,7 @@
             <div class="form-group">
                 <label for="text">Fees:</label>
                 <asp:HiddenField runat="server" ID="hiddenTotalFees" />
+                <asp:HiddenField runat="server" ID="hiddenValueNumWeeks" />
                 <asp:Label runat="server" CssClass="form-control" ID="lbl_totalFees"></asp:Label>
 
                 <%--<input type="text" class="form-control" id="Fees" placeholder="Fee Amount">--%>
@@ -423,6 +426,9 @@
                     classAMTs = 0;
                 }
                 var id = $(this).find("option:selected").attr("value");
+                
+                $('#<%=hiddenValueNumWeeks.ClientID%>').val(id);
+
                 var total = priceMultiplier * id;
                 $('#<%=hiddenTotalFees.ClientID%>').val(parseInt(total) + parseInt(classAMTs));
                 $('#<%=lbl_totalFees.ClientID%>').text(parseInt(total) + parseInt(classAMTs));

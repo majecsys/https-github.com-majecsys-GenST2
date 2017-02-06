@@ -35,7 +35,7 @@ namespace GenST2
                         return query;
         }
 
-       public IQueryable<REFCourse> LoadCourses()
+       public IQueryable<courses> LoadCourses()
         {
             var query = from c in db.courses
                         select c;
@@ -216,19 +216,20 @@ namespace GenST2
         
         private void makePurchase(int studentID)
         {
-            purchases purchase = new purchases();
+            purchases purchaseClass = new purchases();
+            purchases purchaseCourse = new purchases();
             foreach (ListItem lbPkgID in lbClasses.Items)
             {
-                
                 if (lbPkgID.Selected)
                 {
                     int lbValue = Convert.ToInt16(lbPkgID.Value);
-                    
-                    purchase.numclasses = loadClassInstances(lbValue); 
-                    purchase.studentID = studentID;
-                    purchase.pkgID = Convert.ToInt16((lbPkgID.Value)); ;
-                    purchase.purchasedate = DateTime.Today;
-                    db.purchases.Add(purchase);
+                    purchaseClass.numclasses = Convert.ToInt16((from c in db.classes
+                                                              where c.pkgID == lbValue
+                                                           select c.numclasses).First()); // loadNumClasses(lbValue); 
+                    purchaseClass.studentID = studentID;
+                    purchaseClass.pkgID = Convert.ToInt16((lbPkgID.Value)); ;
+                    purchaseClass.purchasedate = DateTime.Today;
+                    db.purchases.Add(purchaseClass);
                     try
                     {
                         db.SaveChanges();
@@ -241,18 +242,45 @@ namespace GenST2
                 }
             }
 
-            foreach (int item in lbClasses.GetSelectedIndices())
+            foreach (ListItem lbCourseID in lbCourses.Items)
             {
+                if (lbCourseID.Selected)
+                {
+                    int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
+                    purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
+                    purchaseCourse.studentID = studentID;
+                    purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
+                    purchaseCourse.entrydate = DateTime.Today;
+                    db.purchases.Add(purchaseCourse);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
             }
         }
 
-        private int loadClassInstances(int lbValue)
+        //private int loadNumWeeks(int lbCourseValue)
+        //{
+        //    ClassCourseElements locDb = new ClassCourseElements();
+        //    var numweeks = (from c in locDb.courses
+        //                      join p in locDb.purchases on c.courseID equals p.courseID
+        //                      where c.courseID == lbCourseValue
+        //                      select c.numweeks).First();
+        //    return numweeks;
+        //}
+
+        private int loadNumClasses(int lbValue)
         {
             ClassCourseElements locDb = new ClassCourseElements();
             var numclasses = (from num in locDb.classes
                               join p in locDb.purchases on num.pkgID equals p.pkgID
                               where num.pkgID == lbValue
-                              select num.numclasses).First();
+                              select num.numclasses).FirstOrDefault();
           return numclasses;
         }
 
