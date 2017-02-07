@@ -43,7 +43,7 @@
                                 DataKeyNames="studentID"
                                 ItemPlaceholderID="details" OnItemDataBound="lvStudentDetails_ItemDataBound">
                                 <LayoutTemplate>
-                                    <table class="table table-hover">
+                                    <table >
                                         <thead>
                                             <tr>
                                                 <%--<asp:Label runat="server" CssClass="form-control" ID="lblTest"></asp:Label>--%>
@@ -54,19 +54,24 @@
                                             </tr>
                                         </thead>
                                     </table>
-  
                                 </LayoutTemplate>
                                 <ItemTemplate>
-                                    <div class="list-group">
+                                    <div >
                                         <tr>
                                             <td>
-                                                <asp:Label ID="lblClassDesc"  runat="server" Text=" <%#: Item.classDescription %> "></asp:Label>
-                                               <asp:HiddenField ID="hiddenStudentID" runat="server" Value="<%# Item.studentID %>" />  
-                                                 <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.pkgID %>" />  
+                                                <asp:Label ID="lblClassDesc" runat="server" Text=" <%#: Item.classDescription %>"></asp:Label>
+                                                <asp:HiddenField ID="hiddenStudentID" runat="server" Value="<%# Item.studentID %>" />
+                                                <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.classID %>" />
+                                                <td>
+                                                    <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>
+                                                </td>
                                             </td>
-                                            <td> 
-                                                <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>                                      
-                                            </td> 
+
+                                        </tr>
+                                        <tr id="courseNameRow" runat="server">
+                                            <td>
+                                                <asp:Label ID="lblCourseName" runat="server" Text=" <%#: Item.name %>"></asp:Label></td>
+                                            <td style="color:blue;margin-left:30px;">"<%#:Item.expiration%>"</td>
                                         </tr>
                                     </div>
                                 </ItemTemplate>

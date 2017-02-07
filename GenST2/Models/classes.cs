@@ -9,7 +9,7 @@ namespace GenST2.Models
     public partial class classes
     {
         [Key]
-        public int pkgID { get; set; }
+        public int classID { get; set; }
         public int price { get; set; }
 
         public string description { get; set; }

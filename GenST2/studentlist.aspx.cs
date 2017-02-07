@@ -3,6 +3,7 @@ using GenST2.Models;
 using System.Linq;
 using System.Web.ModelBinding;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 
 namespace GenST2
 {
@@ -18,7 +19,7 @@ namespace GenST2
         {
             var v = (from s in db.students
                      join p in db.purchases on s.studentID equals p.studentID
-                     join c in db.classes on p.pkgID equals c.pkgID
+                     join c in db.classes on p.classID equals c.classID
                      select new
                      {
                          s.firstname,
@@ -41,19 +42,37 @@ namespace GenST2
         {
             var localDB = new ClassCourseElements();
             
-            var details = (from p in localDB.purchases
+            var classDetails = (from p in localDB.purchases
 
-                     join c in localDB.classes on p.pkgID equals c.pkgID
+                     join c in localDB.classes on p.classID equals c.classID
                      where p.studentID == studentID
                      select new
                      {
                          c.description,
                          p.studentID,
-                         p.pkgID
+                         p.classID
                      }).ToList().Select(li => new StudentDetailsDisplayItems() { classDescription = li.description,
-                                                                                 studentID = li.studentID, pkgID = li.pkgID });
-            
-            return details.AsQueryable();
+                                                                                 studentID = li.studentID, classID = li.classID });
+            var courseDetails= (from p in localDB.purchases
+
+                                join co in localDB.courses on p.courseID equals co.courseID
+                                where p.studentID == studentID
+                                select new
+                                {
+                                    co.name,
+                                    p.studentID,
+                                    p.classID,
+                                    p.expirationdate
+                                }).ToList().Select(sub => new StudentDetailsDisplayItems()
+                                {
+                                    expiration = sub.expirationdate,
+                                    name = sub.name,
+                                    studentID = sub.studentID,
+                                    classID = sub.classID
+                                });
+            var combo = classDetails.Union(courseDetails);
+
+            return combo.AsQueryable();
 
             //var som = from c in db.studentDetails where c.studentID == 8 orderby c.classDescription select c ;
             //return som;
@@ -85,33 +104,60 @@ namespace GenST2
 
         protected void lvStudentDetails_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            //      Label ll = (Label)e Item.FindControl("lblTest");
+            //Label ll = (Label)e Item.FindControl("lblTest");
             //ListView lv = (ListView)sender;
             //ListViewItem lvStudentItem = (ListViewItem)lv.NamingContainer;
 
-            //ListView lvDetails;
-            //lvDetails = (ListView)lv.FindControl("lvStudentDetails");
-            //var warn = (from f in db.purchases where f.warningFlag == true select f).First();
-            //if (lvDetails != null)
-            //{
-            //    if (e.Item.ItemType == ListViewItemType.DataItem)
-            //    {
 
-            //    lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
-            //    foreach (ListViewItem item in lvDetails.Items)
-            //        {
-            //            if (warn.warningFlag == true)
-            //            {
-            //                CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
-            //                cbpresent.BackColor = System.Drawing.Color.Pink;
-            //            }
 
-            //        }
-            //    }
-            //}
+            //           var warn = (from f in db.purchases where f.warningFlag == true select f).First();
+
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+              //  ListViewDataItem dataItem = (ListViewDataItem)e.Item;
+                StudentDetailsDisplayItems dataitem = (StudentDetailsDisplayItems)e.Item.DataItem;
+              //  dataitem.expiration
+
+                CheckBox cbpresent = (CheckBox)e.Item.FindControl("cbPresent");
+                HtmlTableRow coursenamerow = (HtmlTableRow)e.Item.FindControl("courseNameRow");
+                Label lbclassdec = (Label)e.Item.FindControl("lblClassDesc");
+                if (lbclassdec.Text == "")
+                {
+                    dataitem.expiration = getExpirationDate(dataitem.expiration);
+                    cbpresent.Visible = false;
+                }
+                Label lbCourseName = (Label)e.Item.FindControl("lblCourseName");
+                if (lbCourseName.Text != "")
+                {
+                    
+                }
+                else
+                {
+                    coursenamerow.Visible = false;
+                }
+
+
+
+
+                //lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
+                //foreach (ListViewItem item in lvDetails.Items)
+                //{
+                //    if (warn.warningFlag == true)
+                //    {
+                //        CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
+                //        cbpresent.BackColor = System.Drawing.Color.Pink;
+                //    }
+
+                //}
+            }
+
 
         }
 
+        private DateTime getExpirationDate(DateTime expiration)
+        {
+            throw new NotImplementedException();
+        }
 
         protected void present_CheckedChanged(object sender, EventArgs e)
         {
@@ -138,18 +184,18 @@ namespace GenST2
             int sid = 0;
 
             sid = Convert.ToInt16(studentID);
-            int pkgID = Convert.ToInt16(hPkgID);
+            int classID = Convert.ToInt16(hPkgID);
 
-            int dropIncheck = pkgID;
+            int dropIncheck = classID;
 
-            var remainingClasses = (from p in locDB.purchases where (p.studentID == sid) && (p.pkgID == pkgID) select p).First();
+            var remainingClasses = (from p in locDB.purchases where (p.studentID == sid) && (p.classID == classID) select p).First();
             if (remainingClasses.numclasses == 2)
             {
                 lbl.BackColor = System.Drawing.Color.Pink;
             }
             if (remainingClasses.numclasses < 1)
             {
-                var delRec = (from d in locDB.purchases where (d.studentID == sid) && (d.pkgID == pkgID) select d).First();
+                var delRec = (from d in locDB.purchases where (d.studentID == sid) && (d.classID == classID) select d).First();
                 locDB.purchases.Remove(delRec);
                 try
                 {

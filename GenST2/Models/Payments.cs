@@ -10,7 +10,7 @@ namespace GenST2.Models
         public int paymentID { get; set; }
 
         public int studentID { get; set; }
-        public int pkgID { get; set; }
+        public int classID { get; set; }
         [DataType(DataType.Currency)]
         public decimal amount { get; set; }
 

@@ -7,9 +7,12 @@ namespace GenST2.Models
     {
         [Key]
         public int studentID { get; set; }
-        public int pkgID { get; set; }
+        public int classID { get; set; }
         public string classDescription  { get; set; }
+        public int courseID { get; set; }
+        public string name { get; set; }
         public string firstname { get; set; }
+        public DateTime expiration { get; set; }
 
 
     }

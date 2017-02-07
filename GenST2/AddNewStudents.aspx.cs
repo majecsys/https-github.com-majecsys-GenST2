@@ -12,7 +12,7 @@ namespace GenST2
     {
         public int[] lbClassIDArr { get; set; }
         public string lbCourseIDs { get; set; }
-        public int globalStudentID { get; set; }
+ 
         
 
         ClassCourseElements db = new ClassCourseElements();
@@ -103,7 +103,7 @@ namespace GenST2
                         insertStudentRec(currID);
                     }
                    // insertStudentRec();
-              //      checkinUtilities(globalStudentID);
+              
                     Response.Redirect("default.aspx");
 
                 }
@@ -224,16 +224,16 @@ namespace GenST2
                 {
                     int lbValue = Convert.ToInt16(lbPkgID.Value);
                     purchaseClass.numclasses = Convert.ToInt16((from c in db.classes
-                                                              where c.pkgID == lbValue
+                                                              where c.classID == lbValue
                                                            select c.numclasses).First()); // loadNumClasses(lbValue); 
                     purchaseClass.studentID = studentID;
-                    purchaseClass.pkgID = Convert.ToInt16((lbPkgID.Value)); ;
+                    purchaseClass.classID = Convert.ToInt16((lbPkgID.Value)); ;
                     purchaseClass.purchasedate = DateTime.Today;
                     db.purchases.Add(purchaseClass);
                     try
                     {
                         db.SaveChanges();
-                        addFeeAmts(studentID, Convert.ToInt16((lbPkgID.Value)));
+                        addFeeAmts(studentID);
                     }
                     catch (Exception)
                     {
@@ -241,13 +241,15 @@ namespace GenST2
                     }
                 }
             }
-
+            int numWeeks = int.Parse(hiddenValueNumWeeks.Value);
+            double numDaysInWeeks = numWeeks * 7;
             foreach (ListItem lbCourseID in lbCourses.Items)
             {
                 if (lbCourseID.Selected)
                 {
                     int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
                     purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
+                    purchaseCourse.expirationdate = DateTime.Now.AddDays(numDaysInWeeks);
                     purchaseCourse.studentID = studentID;
                     purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
                     purchaseCourse.entrydate = DateTime.Today;
@@ -278,18 +280,17 @@ namespace GenST2
         {
             ClassCourseElements locDb = new ClassCourseElements();
             var numclasses = (from num in locDb.classes
-                              join p in locDb.purchases on num.pkgID equals p.pkgID
-                              where num.pkgID == lbValue
+                              join p in locDb.purchases on num.classID equals p.classID
+                              where num.classID == lbValue
                               select num.numclasses).FirstOrDefault();
           return numclasses;
         }
 
 
-        protected void addFeeAmts(int studentid,int pkgID)
+        protected void addFeeAmts(int studentid)
         {
-            globalStudentID = studentid;
+           
             int fees = 0;
-            //        int classFee = int.Parse(lbl_ClassesPrice.Text);
             if (hiddenTotalFees.Value == "")
             {
               fees   = int.Parse(HiddenFieldAmtDue.Value);
@@ -298,14 +299,13 @@ namespace GenST2
             {
                 fees = int.Parse(hiddenTotalFees.Value);
             }
-           //(classFee + courseFee);
 
             payments payment = new payments();
             
             payment.amount = Convert.ToDecimal(fees);
             payment.paymentType = paymentsType();
             payment.studentID = studentid;
-            payment.pkgID = pkgID;
+            
             payment.paymentDate = DateTime.Today;
             db.payments.Add(payment);
             try
@@ -395,8 +395,8 @@ namespace GenST2
             ClassCourseElements localDB = new ClassCourseElements();
             int selID = Convert.ToInt16(selectedID);
             int displayAmt = 0;
-            var price = (from ca in localDB.classes where (ca.pkgID == selID) select ca.price).SingleOrDefault();
-        //    var priceperhr = (from p in localDB.prices join c in localDB.classes on p.pkgID equals c.pkgID where (c.pkgID == selID) select p.priceperhr).SingleOrDefault();
+            var price = (from ca in localDB.classes where (ca.classID == selID) select ca.price).SingleOrDefault();
+        //    var priceperhr = (from p in localDB.prices join c in localDB.classes on p.classID equals c.classID where (c.classID == selID) select p.priceperhr).SingleOrDefault();
 
             displayAmt += price; // numclassses * priceperhr;
 

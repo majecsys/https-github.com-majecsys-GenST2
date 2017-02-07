@@ -194,7 +194,7 @@
             <asp:ListBox ID="lbClasses"
                 CssClass="form-control"
                 DataTextField="description"
-                DataValueField="pkgID"
+                DataValueField="classID"
                 runat="server"
                 ItemType="GenST2.Models.classes"
                 SelectMethod="LoadClasses"
