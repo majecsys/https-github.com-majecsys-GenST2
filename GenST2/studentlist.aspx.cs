@@ -132,7 +132,7 @@ namespace GenST2
                 Label lbCourseName = (Label)e.Item.FindControl("lblCourseName");
                 if (lbCourseName.Text != "")
                 {
-                    lblexp.Text = Convert.ToString(dataitem.expiration);
+                    lblexp.Text = dataitem.expiration.ToString("d");
                 }
                 else
                 {
