@@ -19,7 +19,7 @@ namespace GenST2
         {
             var v = (from s in db.students
                      join p in db.purchases on s.studentID equals p.studentID
-                     join c in db.classes on p.classID equals c.classID
+                 //    join c in db.classes on p.classID equals c.classID
                      select new
                      {
                          s.firstname,
@@ -116,20 +116,23 @@ namespace GenST2
             {
               //  ListViewDataItem dataItem = (ListViewDataItem)e.Item;
                 StudentDetailsDisplayItems dataitem = (StudentDetailsDisplayItems)e.Item.DataItem;
-              //  dataitem.expiration
+
+               // dataitem.expiration = DateTime.Now;
 
                 CheckBox cbpresent = (CheckBox)e.Item.FindControl("cbPresent");
                 HtmlTableRow coursenamerow = (HtmlTableRow)e.Item.FindControl("courseNameRow");
+                Label lblexp = (Label)e.Item.FindControl("lblExpiration");
                 Label lbclassdec = (Label)e.Item.FindControl("lblClassDesc");
                 if (lbclassdec.Text == "")
                 {
-                    dataitem.expiration = getExpirationDate(dataitem.expiration);
+                    // getExpirationDate(dataitem.expiration, dataitem.studentID);
+                    
                     cbpresent.Visible = false;
                 }
                 Label lbCourseName = (Label)e.Item.FindControl("lblCourseName");
                 if (lbCourseName.Text != "")
                 {
-                    
+                    lblexp.Text = Convert.ToString(dataitem.expiration);
                 }
                 else
                 {
@@ -154,7 +157,7 @@ namespace GenST2
 
         }
 
-        private DateTime getExpirationDate(DateTime expiration)
+        private DateTime getExpirationDate(DateTime expiration, int studentID)
         {
             throw new NotImplementedException();
         }

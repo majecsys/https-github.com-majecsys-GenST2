@@ -71,7 +71,7 @@
                                         <tr id="courseNameRow" runat="server">
                                             <td>
                                                 <asp:Label ID="lblCourseName" runat="server" Text=" <%#: Item.name %>"></asp:Label></td>
-                                            <td style="color:blue;margin-left:30px;">"<%#:Item.expiration%>"</td>
+                                            <td><asp:Label ID="lblExpiration" runat="server" Text="<%#:Item.expiration%>" style="color:green;margin-left:30px;"></asp:Label></td>
                                         </tr>
                                     </div>
                                 </ItemTemplate>
