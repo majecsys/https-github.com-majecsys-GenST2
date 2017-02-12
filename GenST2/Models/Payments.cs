@@ -11,8 +11,8 @@ namespace GenST2.Models
 
         public int studentID { get; set; }
         public int classID { get; set; }
-        [DataType(DataType.Currency)]
-        public decimal amount { get; set; }
+     //   [DataType(DataType.Currency)]
+        public int amount { get; set; }
 
         [Required]
         [StringLength(15)]

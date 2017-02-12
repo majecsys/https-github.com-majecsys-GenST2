@@ -14,7 +14,7 @@
                 <br />
                 <br />
                 <br />
-                <table  class="table table-hover table-condensed">
+                <table  class="table table-hover info table-condensed">
                     <thead >
                         <tr >
                             <th >Student</th>

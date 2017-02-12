@@ -86,8 +86,9 @@ namespace GenST2
             {
                 localFeeTotal = int.Parse(hiddenTotalFees.Value);
             }
-        
-            if (lbClasses.SelectedIndex !=0 || lbCourses.SelectedIndex != 0)
+            //int classSel = lbClasses.SelectedIndex;
+            //int courSel = lbCourses.SelectedIndex;
+            if (lbClasses.SelectedIndex >= 0 || lbCourses.SelectedIndex >= 0)
             {
                 if (requirePaymentType())
                 {
@@ -184,10 +185,8 @@ namespace GenST2
                 try
                 {
                     db.SaveChanges();
-                    //insertIntoClassInstanceProfile(lbClassIDs, newStudent.id);
-                    //insertIntoCheckin(newStudent.id, lbClassIDs, lbCourseIDs);
-                    makePurchase(newStudent.studentID);
-                    //           ;
+                    addFeeAmts(newStudent.studentID);
+                    makePurchase(newStudent.studentID);                  
                 }
                 catch (Exception)
                 {
@@ -233,7 +232,7 @@ namespace GenST2
                     try
                     {
                         db.SaveChanges();
-                        addFeeAmts(studentID);
+                       // addFeeAmts(studentID);
                     }
                     catch (Exception)
                     {
@@ -241,29 +240,35 @@ namespace GenST2
                     }
                 }
             }
-            int numWeeks = int.Parse(hiddenValueNumWeeks.Value);
-            double numDaysInWeeks = numWeeks * 7;
-            foreach (ListItem lbCourseID in lbCourses.Items)
+            if (hiddenValueNumWeeks.Value != "")
             {
-                if (lbCourseID.Selected)
+                int numWeeks = int.Parse(hiddenValueNumWeeks.Value);
+                double numDaysInWeeks = numWeeks * 7;
+                foreach (ListItem lbCourseID in lbCourses.Items)
                 {
-                    int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
-                    purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
-                    purchaseCourse.expirationdate = DateTime.Now.AddDays(numDaysInWeeks);
-                    purchaseCourse.studentID = studentID;
-                    purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
-                    purchaseCourse.entrydate = DateTime.Today;
-                    db.purchases.Add(purchaseCourse);
-                    try
+                    if (lbCourseID.Selected)
                     {
-                        db.SaveChanges();
-                    }
-                    catch (Exception)
-                    {
-                        throw;
+                        int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
+                        purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
+                        purchaseCourse.expirationdate = DateTime.Now.AddDays(numDaysInWeeks);
+                        purchaseCourse.studentID = studentID;
+                        purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
+                        purchaseCourse.entrydate = DateTime.Today;
+                        db.purchases.Add(purchaseCourse);
+                        try
+                        {
+                            db.SaveChanges();
+                         //   addFeeAmts(studentID);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
                     }
                 }
             }
+
+
         }
 
         //private int loadNumWeeks(int lbCourseValue)
@@ -301,8 +306,8 @@ namespace GenST2
             }
 
             payments payment = new payments();
-            
-            payment.amount = Convert.ToDecimal(fees);
+
+            payment.amount = fees; // Convert.ToDecimal(fees);
             payment.paymentType = paymentsType();
             payment.studentID = studentid;
             

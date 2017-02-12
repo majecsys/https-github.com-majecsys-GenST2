@@ -18,22 +18,17 @@
         </div>
         <div class="col-md-6">
             <h2>Check In Students</h2>
-<%--            <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-            </p>--%>
+
             <p>
                 <a class="btn btn-default" href="studentlist.aspx">Check In &raquo;</a>
             </p>
         </div>
-<%--        <div class="col-md-4">
-            <h2>Web Hosting</h2>
+        <div class="col-md-6">
+            <h2>Payments</h2>
             <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
+                <a class="btn btn-default" href="fees.aspx">Check Income &raquo;</a>
             </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-            </p>
-        </div>--%>
+        </div>
     </div>
 
 </asp:Content>
