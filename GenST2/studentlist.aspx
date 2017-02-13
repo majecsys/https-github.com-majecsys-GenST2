@@ -7,30 +7,46 @@
             Style="background-color: blueviolet"
             ItemType="GenST2.Models.students"
             SelectMethod="getStudents"
-            ItemPlaceholderID="placeHolder1"
+            ItemPlaceholderID="ItemplaceHolder1"
+             GroupItemCount="2" GroupPlaceholderID="grpPlaceHolder1"
             DataKeyNames="studentID" OnItemDataBound="lvStudents_ItemDataBound">
             <LayoutTemplate>
                 <br />
                 <br />
                 <br />
                 <br />
-                <table  class="table table-hover info table-condensed">
+                <table class="table table-hover table-condensed ">
+                    <tr>
+                        <th>Student</th>
+                        <th>Class Type</th>
+                       <%-- <th>Present</th>--%>
+                    </tr>
+                    <asp:PlaceHolder ID="grpPlaceHolder1" runat="server"></asp:PlaceHolder>
+
+                </table>
+
+<%--                <table  class="table table-hover info table-condensed">
                     <thead >
                         <tr >
                             <th >Student</th>
-                            <th>Class Type</th>
+                            <th>Class Type</th>--%>
                            <%-- <th>Present</th>--%>
                             <%--<th>Lastname</th>--%>
-                        </tr>
+<%--                        </tr>
                     </thead>
                     <asp:PlaceHolder runat="server" ID="placeHolder1"></asp:PlaceHolder>
-                </table>
+                </table>--%>
             </LayoutTemplate>
+            <GroupTemplate>
+                <tr>
+                    <asp:PlaceHolder runat="server" ID="ItemplaceHolder1"></asp:PlaceHolder>
+                </tr>
+            </GroupTemplate>
 
             <ItemTemplate>
                 
                 <div class="list-group">
-                    <tr>
+                    <tr> 
                         <asp:HiddenField ID="selectionKeyForNestedLV" runat="server" Value="<%# Item.studentID %>" />
                         <td>
                             <b style="font-size: medium; font-style: normal">
@@ -59,18 +75,18 @@
                                     </table>
                                 </LayoutTemplate>
                                 <ItemTemplate>
-                                    <div class="row" >
+                                    <div  >
                                        
                                             <tr>
                                                 <div>
-                                                    <td >
+                                                    <td class="col-md-4" >
                                                         <asp:Label ID="lblClassDesc" runat="server" Text=" <%#: Item.classDescription %>"></asp:Label>
 
                                                         <asp:HiddenField ID="hiddenStudentID" runat="server" Value="<%# Item.studentID %>" />
                                                         <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.classID %>" />
                                                     </td>
                                                     
-                                                    <td class="col-md-4">
+                                                    <td  >
                                                         <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>
                                                     </td>
 
@@ -80,7 +96,7 @@
                                         <tr id="courseNameRow" runat="server">
                                             <td>
                                                 <asp:Label ID="lblCourseName"  runat="server" Text=" <%#: Item.name %>"></asp:Label></td>
-                                           <td class="text-right"> 
+                                           <td class="col-md-4"  > 
                                                 <asp:Label ID="lblExpiration" runat="server" Text="<%#:Item.expiration%>" Style="color: green; margin-left: 30px;"></asp:Label>
                                                
                                                </td>
