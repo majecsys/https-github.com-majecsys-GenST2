@@ -104,63 +104,53 @@ namespace GenST2
 
         protected void lvStudentDetails_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            //Label ll = (Label)e Item.FindControl("lblTest");
-            //ListView lv = (ListView)sender;
-            //ListViewItem lvStudentItem = (ListViewItem)lv.NamingContainer;
-
-
-
-            //           var warn = (from f in db.purchases where f.warningFlag == true select f).First();
-
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
-              //  ListViewDataItem dataItem = (ListViewDataItem)e.Item;
-                StudentDetailsDisplayItems dataitem = (StudentDetailsDisplayItems)e.Item.DataItem;
+                StudentDetailsDisplayItems dataItem = (StudentDetailsDisplayItems)e.Item.DataItem;
 
-               // dataitem.expiration = DateTime.Now;
+                Label lblexp = (Label)e.Item.FindControl("lblExpiration");
 
+                if (DateTime.Today.AddDays(7) >= dataItem.expiration)
+                {
+                    lblexp.Style.Add("color", "#FF0000");
+                }
+                else
+                {
+                }
                 CheckBox cbpresent = (CheckBox)e.Item.FindControl("cbPresent");
                 HtmlTableRow coursenamerow = (HtmlTableRow)e.Item.FindControl("courseNameRow");
-                Label lblexp = (Label)e.Item.FindControl("lblExpiration");
+                
                 Label lbclassdec = (Label)e.Item.FindControl("lblClassDesc");
                 if (lbclassdec.Text == "")
                 {
-                    // getExpirationDate(dataitem.expiration, dataitem.studentID);
-                    
                     cbpresent.Visible = false;
                 }
                 Label lbCourseName = (Label)e.Item.FindControl("lblCourseName");
                 if (lbCourseName.Text != "")
                 {
-                    lblexp.Text = dataitem.expiration.ToString("d");
+                    lblexp.Text = dataItem.expiration.ToString("d");
+                    //if (getExpirationDate(dataitem.expiration))
+                    //{
+                    //}
+                    //else
+                    //{
+                    //}
                 }
                 else
                 {
                     coursenamerow.Visible = false;
                 }
-
-
-
-
-                //lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
-                //foreach (ListViewItem item in lvDetails.Items)
-                //{
-                //    if (warn.warningFlag == true)
-                //    {
-                //        CheckBox cbpresent = (CheckBox)item.FindControl("cbPresent");
-                //        cbpresent.BackColor = System.Drawing.Color.Pink;
-                //    }
-
-                //}
             }
-
-
         }
 
-        private DateTime getExpirationDate(DateTime expiration, int studentID)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool  getExpirationDate(DateTime expiration)
+        //{
+        //    bool warn = false;
+        //    var nowDate = DateTime.Today;
+        //    DateTime pastDate = DateTime.Now.AddDays(-7);
+
+        //    return warn;
+        //}
 
         protected void present_CheckedChanged(object sender, EventArgs e)
         {

@@ -11,6 +11,7 @@
         <asp:ListItem Value="1">Fees Collected last 30 days</asp:ListItem> 
         <asp:ListItem Value="2">Fees Collected last 12 months</asp:ListItem> 
     </asp:DropDownList>
+        <br /><br />
         <p style="font-size: medium; font-style: normal">
     <asp:Label Font-Bold="true" BorderWidth="1" ID="lblAmts" runat="server" Visible ="true" CssClass="form-check-label" ></asp:Label>
        </p>
