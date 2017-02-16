@@ -8,7 +8,7 @@
     <br />
     <br />
     <div class="form-group">
-        <label class="form-check-label">
+        <label >
             Check if current Student: 
         <asp:DropDownList runat="server" ID="ddlCurrent"
             ItemType="GenST2.Models.students"
@@ -189,17 +189,17 @@
     </div>
     <div class="row" id="classesRow">
         <div class="col-md-2">
-            <label for="text">Classes:</label>
+            <label for="text">Classe Cards:</label>
             <br />
-            <asp:ListBox ID="lbClasses"
+            <asp:ListBox ID="lbClassCard"
                 CssClass="form-control"
                 DataTextField="description"
-                DataValueField="classID"
+                DataValueField="classcardID"
                 runat="server"
-                ItemType="GenST2.Models.classes"
+                ItemType="GenST2.Models.classcard"
                 SelectMethod="LoadClasses"
                 SelectionMode="Multiple"
-                OnSelectedIndexChanged="lbClasses_SelectedIndexChanged"></asp:ListBox>
+                OnSelectedIndexChanged="lbClassCard_SelectedIndexChanged"></asp:ListBox>
         </div>
         <div class="col-md-2 form-group">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -212,7 +212,7 @@
                     </fieldset>
                 </ContentTemplate>
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lbClasses" EventName="SelectedIndexChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="lbClassCard" EventName="SelectedIndexChanged" />
                 </Triggers>
             </asp:UpdatePanel>
         </div>
@@ -311,15 +311,15 @@
             $('#<%=ddlNumWeeks.ClientID%>').attr("disabled", "disabled");
 
             //****************   
-            $('#<%=lbClasses.ClientID%>').multiselect({
+            $('#<%=lbClassCard.ClientID%>').multiselect({
                 selectAllValue: 'multiselect-all',
                 enableCaseInsensitiveFiltering: false,
                 enableFiltering: false,
 
                 onChange: function (element, checked) {
-                    var classIDs = $('#<%=lbClasses.ClientID%> option:selected');
+                    var classIDs = $('#<%=lbClassCard.ClientID%> option:selected');
                     var selected = [];
-                    if ($('#<%=lbClasses.ClientID%>').val()) {
+                    if ($('#<%=lbClassCard.ClientID%>').val()) {
                         $(classIDs).each(function (index, classIDs) {
                             selected.push([$(this).val()]);
                             processClassChoices(selected);

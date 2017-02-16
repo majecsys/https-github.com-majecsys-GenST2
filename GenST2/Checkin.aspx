@@ -49,7 +49,7 @@
                             </td>
                             <td><asp:Label runat="server" ID="remaining" Text="<%# Item.remainingInstances %>" ></asp:Label></td>
                             <asp:HiddenField ID="studentID" runat="server"  Value="<%# Item.studentID %>" />
-                            <asp:HiddenField ID="classID" runat="server"  Value="<%# Item.classID%>" />
+                            <asp:HiddenField ID="classcard" runat="server"  Value="<%# Item.classcard%>" />
                         </tr>
                     </tbody>
                 </div>

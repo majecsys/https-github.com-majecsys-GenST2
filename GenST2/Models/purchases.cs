@@ -11,13 +11,14 @@ namespace GenST2.Models
         public int studentID { get; set; }
         public int numclasses { get; set; }
         public int numweeks { get; set; }
-        public int classID { get; set; }
+        public int classcardID { get; set; }
         public int courseID { get; set; }
         public int paymentID { get; set; }
         public DateTime attendancedate{ get; set; }
         public DateTime expirationdate { get; set; }
+        public DateTime classexpiration { get; set; }
         public DateTime purchasedate { get; set; }
-        public DateTime entrydate { get; set; }
+       
         public DateTime updatedate { get; set; }
         public bool warningFlag { get; set; }
     }

@@ -202,7 +202,6 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="AddNewStudents.aspx" />
-    <Content Include="Checkin.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\bootstrap-select.css" />
@@ -511,13 +510,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Checkin.aspx.cs">
-      <DependentUpon>Checkin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Checkin.aspx.designer.cs">
-      <DependentUpon>Checkin.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -545,7 +537,7 @@
     <Compile Include="Models\CheckinLVDisplayItems.cs" />
     <Compile Include="Models\checkins.cs" />
     <Compile Include="Models\classCourse.cs" />
-    <Compile Include="Models\classes.cs" />
+    <Compile Include="Models\classcard.cs" />
     <Compile Include="Models\ClassCourseElements.cs" />
     <Compile Include="Models\ClassInstanceProfile.cs" />
     <Compile Include="Models\courses.cs" />

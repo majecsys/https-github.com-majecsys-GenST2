@@ -28,9 +28,9 @@ namespace GenST2
             }
         }
 
-        public IQueryable<classes> LoadClasses()
+        public IQueryable<classcard> LoadClasses()
         {
-            var query = from b in db.classes
+            var query = from b in db.classcard
                         select b;
                         return query;
         }
@@ -60,9 +60,9 @@ namespace GenST2
             return query;
         }
 
-        protected void lbClasses_SelectedIndexChanged(object sender, EventArgs e)
+        protected void lbClassCard_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lbClasses.BorderColor = System.Drawing.Color.Gainsboro;
+            lbClassCard.BorderColor = System.Drawing.Color.Gainsboro;
             //         processClassFees(lbClasses.SelectedIndex);
         }
 
@@ -88,7 +88,7 @@ namespace GenST2
             }
             //int classSel = lbClasses.SelectedIndex;
             //int courSel = lbCourses.SelectedIndex;
-            if (lbClasses.SelectedIndex >= 0 || lbCourses.SelectedIndex >= 0)
+            if (lbClassCard.SelectedIndex >= 0 || lbCourses.SelectedIndex >= 0)
             {
                 if (requirePaymentType())
                 {
@@ -118,7 +118,7 @@ namespace GenST2
             else
             {
                 lbCourses.BorderColor = System.Drawing.Color.Red;
-                lbClasses.BorderColor = System.Drawing.Color.Red;
+                lbClassCard.BorderColor = System.Drawing.Color.Red;
             }
         }
 
@@ -143,7 +143,7 @@ namespace GenST2
 
         private void processClassCourseIDs()
         {
-            foreach (ListItem lbcID in lbClasses.Items)
+            foreach (ListItem lbcID in lbClassCard.Items)
             {
                 if (lbcID.Selected)
                 {
@@ -217,16 +217,21 @@ namespace GenST2
         {
             purchases purchaseClass = new purchases();
             purchases purchaseCourse = new purchases();
-            foreach (ListItem lbPkgID in lbClasses.Items)
+            
+            foreach (ListItem lbPkgID in lbClassCard.Items)
             {
                 if (lbPkgID.Selected)
                 {
                     int lbValue = Convert.ToInt16(lbPkgID.Value);
-                    purchaseClass.numclasses = Convert.ToInt16((from c in db.classes
-                                                              where c.classID == lbValue
-                                                           select c.numclasses).First()); // loadNumClasses(lbValue); 
+                    var classesLength = (from c in db.classcard
+                                                        where c.classcardID == lbValue
+                                                        orderby c.classcardID
+                                                        select new { c.cardLength, c.numclasses }).First(); // loadNumClasses(lbValue); 
+
+                    purchaseClass.classexpiration = DateTime.Now.AddDays(classesLength.cardLength); 
+                    purchaseClass.numclasses = classesLength.numclasses;
                     purchaseClass.studentID = studentID;
-                    purchaseClass.classID = Convert.ToInt16((lbPkgID.Value)); ;
+                    purchaseClass.classcardID = Convert.ToInt16((lbPkgID.Value)); ;
                     purchaseClass.purchasedate = DateTime.Today;
                     db.purchases.Add(purchaseClass);
                     try
@@ -253,7 +258,7 @@ namespace GenST2
                         purchaseCourse.expirationdate = DateTime.Now.AddDays(numDaysInWeeks);
                         purchaseCourse.studentID = studentID;
                         purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
-                        purchaseCourse.entrydate = DateTime.Today;
+                        purchaseCourse.purchasedate = DateTime.Today;
                         db.purchases.Add(purchaseCourse);
                         try
                         {
@@ -284,9 +289,9 @@ namespace GenST2
         private int loadNumClasses(int lbValue)
         {
             ClassCourseElements locDb = new ClassCourseElements();
-            var numclasses = (from num in locDb.classes
-                              join p in locDb.purchases on num.classID equals p.classID
-                              where num.classID == lbValue
+            var numclasses = (from num in locDb.classcard
+                              join p in locDb.purchases on num.classcardID equals p.classcardID
+                              where num.classcardID == lbValue
                               select num.numclasses).FirstOrDefault();
           return numclasses;
         }
@@ -400,7 +405,7 @@ namespace GenST2
             ClassCourseElements localDB = new ClassCourseElements();
             int selID = Convert.ToInt16(selectedID);
             int displayAmt = 0;
-            var price = (from ca in localDB.classes where (ca.classID == selID) select ca.price).SingleOrDefault();
+            var price = (from ca in localDB.classcard where (ca.classcardID == selID) select ca.price).SingleOrDefault();
         //    var priceperhr = (from p in localDB.prices join c in localDB.classes on p.classID equals c.classID where (c.classID == selID) select p.priceperhr).SingleOrDefault();
 
             displayAmt += price; // numclassses * priceperhr;

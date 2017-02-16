@@ -45,33 +45,33 @@ namespace GenST2
         protected void cbPresent_CheckedChanged(object sender, EventArgs e)
         {
             int studentID = Convert.ToInt16(((HiddenField)((CheckBox)sender).Parent.FindControl("studentID")).Value);
-            int classID = Convert.ToInt16(((HiddenField)((CheckBox)sender).Parent.FindControl("classID")).Value);
-            decrementClasses(studentID, classID);
+            int classcardID = Convert.ToInt16(((HiddenField)((CheckBox)sender).Parent.FindControl("classcardID")).Value);
+            decrementClasses(studentID, classcardID);
 
             //string chkBox = ((Control)sender).UniqueID;
             //Response.Write("<br /><br /><br />"+ studentID); 
         }
 
-        private void decrementClasses(int studentID, int classID)
+        private void decrementClasses(int studentID, int classcardID)
         {
             ClassInstanceProfile students = new ClassInstanceProfile();
 
             students.recDate = DateTime.Today;
             var instanceID = (from q in db.classInstanceProfile
                               where
-                                ((q.studentID == studentID) && (q.classID == classID))
+                                ((q.studentID == studentID) && (q.classID == classcardID))
                               select q.id).FirstOrDefault();
             if (instanceID != 0)
             {
                 var remaining = (from rem in db.classInstanceProfile
                                  where
-                                   (rem.classID == classID) && (rem.remainingInstances != 0) && (rem.id == instanceID)
+                                   (rem.classID == classcardID) && (rem.remainingInstances != 0) && (rem.id == instanceID)
                                  select rem.remainingInstances).FirstOrDefault();
                 var decrement = 1;
 
                 var decrementedInstance = (from s in db.classInstanceProfile
                                            where
-                                                 ((s.remainingInstances > 0) && (s.classID == classID) && (s.id == instanceID))
+                                                 ((s.remainingInstances > 0) && (s.classID == classcardID) && (s.id == instanceID))
                                            select s.remainingInstances).FirstOrDefault();
 
                 decrementedInstance = (short)(remaining - decrement);

@@ -76,13 +76,13 @@ namespace GenST2 {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl phone;
         
         /// <summary>
-        /// lbClasses control.
+        /// lbClassCard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbClasses;
+        protected global::System.Web.UI.WebControls.ListBox lbClassCard;
         
         /// <summary>
         /// UpdatePanel1 control.

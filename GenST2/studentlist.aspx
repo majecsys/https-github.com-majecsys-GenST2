@@ -60,10 +60,12 @@
                             <asp:ListView runat="server" ID="lvStudentDetails" ItemType="GenST2.Models.StudentDetailsDisplayItems"
                                 SelectMethod="lvStudentDetails_GetDetails"
                                 DataKeyNames="studentID"
-                                ItemPlaceholderID="details" OnItemDataBound="lvStudentDetails_ItemDataBound">
+                                ItemPlaceholderID="details" 
+                               
+                                OnItemDataBound="lvStudentDetails_ItemDataBound">
                                 <LayoutTemplate>
                                     <table class="table-hover">
-                                        <thead>
+                                     
                                             <tr>
                                                 <%--<asp:Label runat="server" CssClass="form-control" ID="lblTest"></asp:Label>--%>
                                                 <%--                                                 <asp:CheckBox runat="server" AutoPostBack="true"  OnCheckedChanged="waldo_CheckedChanged" ID="waldo" CssClass="form-check-input"></asp:CheckBox>
@@ -71,36 +73,38 @@
 
                                                 <asp:PlaceHolder runat="server" ID="details"></asp:PlaceHolder>
                                             </tr>
-                                        </thead>
+                                        
                                     </table>
                                 </LayoutTemplate>
                                 <ItemTemplate>
-                                    <div  >
+                                    <div class="col-mid-4 form-group" >
                                        
                                             <tr>
-                                                <div>
-                                                    <td class="col-md-4" >
-                                                        <asp:Label ID="lblClassDesc" runat="server" Text=" <%#: Item.classDescription %>"></asp:Label>
+                                                
+                                                    <td >
+                                                        <asp:Label ID="lblCardDesc" runat="server" Text=" <%#: Item.classDescription %>"></asp:Label>
 
                                                         <asp:HiddenField ID="hiddenStudentID" runat="server" Value="<%# Item.studentID %>" />
-                                                        <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.classID %>" />
+                                                        <asp:HiddenField ID="hiddenPkgID" runat="server" Value="<%# Item.classcardID %>" />
                                                     </td>
                                                     
                                                     <td  >
-                                                        <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" CssClass="form-check-input"></asp:CheckBox>
+                                                        <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" ></asp:CheckBox>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="classExpiration"  Style="color: blue;" runat="server">></asp:Label>
                                                     </td>
 
-                                                </div>
+                                               
                                             </tr>
                                        
                                         <tr id="courseNameRow" runat="server">
                                             <td>
-                                                <asp:Label ID="lblCourseName"  runat="server" Text=" <%#: Item.name %>"></asp:Label></td>
-                                           <td class="col-md-4"  > 
-                                                <asp:Label ID="lblExpiration" runat="server" Text="<%#:Item.expiration%>" Style="color: green; margin-left: 30px;"></asp:Label>
-                                               
-                                               </td>
-                                            
+                                                <asp:Label ID="lblCourseName"  runat="server" Text=" <%#: Item.name %>"></asp:Label>
+                                            </td>
+                                            <td class="col-md-4">
+                                                <asp:Label ID="lblExpiration" runat="server" Text="<%#:Item.expiration%>" Style="color: green;"></asp:Label>
+                                            </td>
                                         </tr>
                                     </div>
                                 </ItemTemplate>

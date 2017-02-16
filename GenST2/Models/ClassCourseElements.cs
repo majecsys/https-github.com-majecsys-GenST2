@@ -12,7 +12,7 @@ namespace GenST2.Models
         }
 
      //   public virtual DbSet<_class> classes { get; set; }
-        public virtual DbSet<classes> classes { get; set; }
+        public virtual DbSet<classcard> classcard { get; set; }
         public virtual DbSet<courses> courses { get; set; }
         public virtual DbSet<payments> payments { get; set; }
         public virtual DbSet<students> students { get; set; }

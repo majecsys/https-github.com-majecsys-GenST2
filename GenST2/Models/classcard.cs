@@ -5,18 +5,17 @@ namespace GenST2.Models
 {
 
 
-    [Table("classes")]
-    public partial class classes
+    [Table("classcard")]
+    public partial class classcard
     {
         [Key]
-        public int classID { get; set; }
+        public int classcardID { get; set; }
         public int price { get; set; }
 
         public string description { get; set; }
         public int numclasses { get; set; }
-        public string classtype { get; set; }
-        public int timelimit { get; set; }
-        public DateTime entrydate { get; set; }
+        public DateTime purchasedate { get; set; }
         public DateTime updatedate { get; set; }
+        public int cardLength { get; set; }
     }
 }
