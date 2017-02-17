@@ -9,7 +9,7 @@
             SelectMethod="getStudents"
             ItemPlaceholderID="ItemplaceHolder1"
              GroupItemCount="2" GroupPlaceholderID="grpPlaceHolder1"
-            DataKeyNames="studentID" OnItemDataBound="lvStudents_ItemDataBound">
+            DataKeyNames="studentID">
             <LayoutTemplate>
                 <br />
                 <br />

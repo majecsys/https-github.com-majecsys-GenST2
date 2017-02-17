@@ -23,7 +23,7 @@
                 <a class="btn btn-default" href="studentlist.aspx">Check In &raquo;</a>
             </p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="payments" runat="server" visible="false">
             <h2>Payments</h2>
             <p>
                 <a class="btn btn-default" href="fees.aspx">Check Income &raquo;</a>

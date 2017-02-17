@@ -12,8 +12,14 @@ namespace GenST2
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
-          
+            if (User.Identity.IsAuthenticated)
+            {
 
+            }
+            else
+            {
+                Response.Redirect("/Account/Login.aspx");
+            }
         }
         public IQueryable<students> getStudents()
         {
@@ -80,34 +86,8 @@ namespace GenST2
             var combo = classDetails.Union(courseDetails);
 
             return combo.AsQueryable();
-
-            //var som = from c in db.studentDetails where c.studentID == 8 orderby c.classDescription select c ;
-            //return som;
         }
 
-
-        protected void lvStudents_ItemDataBound(object sender, ListViewItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListViewItemType.DataItem)
-            {
-                //var warn = (from f in db.purchases where f.warningFlag == true select f).ToList();
-                            
-                //ListView lvDetails = (ListView)e.Item.FindControl("lvStudentDetails");
-
-                //foreach (ListViewItem item in lvDetails.Items)
-                //{
-                   
-                //    foreach (var flag in warn.Where(w => w.warningFlag == true))
-                //    {
-                //        Label lbl = (Label)item.FindControl("lblClassDesc");
-                //        lbl.BackColor = System.Drawing.Color.Pink;
-
-                //        break;
-                //    }
-                //    break;
-                //}
-            }
-        }
         private int getNumLeft(int purchaseID)
         {
             var numLeft = (from r in db.purchases where (r.purchaseID == purchaseID)  orderby r.studentID select r.numclasses).FirstOrDefault();
@@ -115,36 +95,15 @@ namespace GenST2
         }
         protected void lvStudentDetails_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            //Response.Write("<br/><br/><br/>--------"+e.Item.UniqueID);
             StudentDetailsDisplayItems dataItem = (StudentDetailsDisplayItems)e.Item.DataItem;
 
             Label lblCardDesc = (Label)e.Item.FindControl("lblCardDesc");
-            int cntLeft = getNumLeft(dataItem.purchaseID);
-     //       var numLeft = (from r in db.purchases where (r.purchaseID == dataItem.purchaseID) && (r.numclasses <= 2) orderby r.studentID select r).First();
-            if (cntLeft <= 2 && cntLeft != 0)
+            int numLeft = getNumLeft(dataItem.purchaseID);
+     
+            if (numLeft <= 2 && numLeft != 0)
             {
                 lblCardDesc.BackColor = System.Drawing.Color.Pink;
             }
-            //if (numLeft.numclasses <= 2)
-            //{
-            //       lblCardDesc.BackColor = System.Drawing.Color.Pink;
-            //}
-
-            //foreach (var item in numLeft)
-            //{
-            //    //       Response.Write("<br/>values of item ------ " + item.numclasses + "  " + item.studentID + "<br/>");
-
-            //    if ((item.numclasses <= 2) && (item.studentID == dataItem.studentID))
-            //    {
-            //        lblCardDesc.BackColor = System.Drawing.Color.Pink;
-            //    }
-            //    else
-            //    {
-            //        lblCardDesc.BackColor = System.Drawing.Color.White;
-            //    }
-            //    //    break;
-            //}
-
 
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
@@ -154,9 +113,7 @@ namespace GenST2
                 {
                     lblexp.Style.Add("color", "#FF0000");
                 }
-                else
-                {
-                }
+
                 CheckBox cbpresent = (CheckBox)e.Item.FindControl("cbPresent");
                 HtmlTableRow coursenamerow = (HtmlTableRow)e.Item.FindControl("courseNameRow");
                 
@@ -169,12 +126,6 @@ namespace GenST2
                 if (lbCourseName.Text != "")
                 {
                     lblexp.Text = dataItem.expiration.ToString("d");
-                    //if (getExpirationDate(dataitem.expiration))
-                    //{
-                    //}
-                    //else
-                    //{
-                    //}
                 }
                 else
                 {
@@ -185,29 +136,14 @@ namespace GenST2
                 lblClassExpiration.Text = dataItem.classexpiration.ToString("d");
                 if (lbCourseName.Text != "")
                 {
-                    
                     lblClassExpiration.Visible = false;
                 }
             }
         }
 
-        //public bool  getExpirationDate(DateTime expiration)
-        //{
-        //    bool warn = false;
-        //    var nowDate = DateTime.Today;
-        //    DateTime pastDate = DateTime.Now.AddDays(-7);
-
-        //    return warn;
-        //}
-
         protected void present_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
-
-            //ListViewItem lvStudentItem = (ListViewItem)cb.NamingContainer;
-            //ListViewDataItem dataItem = (ListViewDataItem)lvStudentItem;
-            //string studentID = lvStudents.DataKeys[dataItem.DataItemIndex].Values[0].ToString();
-
             int hPkgID = Convert.ToInt16(((HiddenField)((CheckBox)sender).Parent.FindControl("hiddenPkgID")).Value);
             string studentID = ((HiddenField)((CheckBox)sender).Parent.FindControl("hiddenStudentID")).Value;
             Label lblcardDesc = (Label)((CheckBox)sender).Parent.FindControl("lblCardDesc");
@@ -266,19 +202,5 @@ namespace GenST2
             }
             
         }
-
-        //protected void lvStudentDetails_ItemCreated(object sender, ListViewItemEventArgs e)
-        //{
-        //    StudentDetailsDisplayItems dataItem = (StudentDetailsDisplayItems)e.Item.DataItem;
-        //    Label lblCardDesc = (Label)e.Item.FindControl("lblCardDesc");
-
-        //    int cntLeft = getNumLeft(dataItem.purchaseID);
-        //    if (cntLeft <= 2 && cntLeft != 0)
-        //    {
-        //           lblCardDesc.BackColor = System.Drawing.Color.Pink;
-        //    }
-        //}
-
-
     }
 }

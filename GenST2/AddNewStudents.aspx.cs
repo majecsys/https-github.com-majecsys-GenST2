@@ -12,19 +12,17 @@ namespace GenST2
     {
         public int[] lbClassIDArr { get; set; }
         public string lbCourseIDs { get; set; }
- 
         
-
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (User.Identity.IsAuthenticated)
             {
-                Response.Write("The add page");
+
             }
             else
-            { 
-             //   Response.Redirect("/Account/Login.aspx");
+            {
+                Response.Redirect("/Account/Login.aspx");
             }
         }
 
