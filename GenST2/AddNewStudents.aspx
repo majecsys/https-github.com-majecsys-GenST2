@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:TextBox ID="TextBox1" runat="Server" CssClass="form-control" Text='<%#: Item.firstname%>'></asp:TextBox>
+                                    <asp:TextBox ID="tbFname" runat="Server" CssClass="form-control" Text='<%#: Item.firstname%>'></asp:TextBox>
                                 </td>
                             </tr>
                         </div>
@@ -51,7 +51,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:TextBox ID="TextBox2" runat="Server" CssClass="form-control" Text='<%#: Item.lastname%>'></asp:TextBox>
+                                    <asp:TextBox ID="tbLname" runat="Server" CssClass="form-control" Text='<%#: Item.lastname%>'></asp:TextBox>
                                 </td>
                             </tr>
                         </div>
@@ -62,7 +62,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:TextBox ID="TextBox3" runat="Server" CssClass="form-control" Text='<%#: Item.email%>'></asp:TextBox>
+                                    <asp:TextBox ID="tbEmail" runat="Server" CssClass="form-control" Text='<%#: Item.email%>'></asp:TextBox>
                                 </td>
                             </tr>
                         </div>
@@ -73,7 +73,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:TextBox ID="TextBox4" runat="Server" CssClass="form-control" Text='<%#: Item.phone%>'></asp:TextBox>
+                                    <asp:TextBox ID="tbPhone" runat="Server" CssClass="form-control" Text='<%#: Item.phone%>'></asp:TextBox>
                                 </td>
                             </tr>
                         </div>
@@ -104,7 +104,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:TextBox ID="TextBox1" runat="Server" CssClass="form-control" Text='<%#: BindItem.firstname%>'></asp:TextBox>
+                                        <asp:TextBox ID="tbFname" runat="Server" CssClass="form-control" Text='<%#: BindItem.firstname%>'></asp:TextBox>
                                     </td>
                                 </tr>
                             </div>
@@ -115,7 +115,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:TextBox ID="TextBox2" runat="Server" CssClass="form-control" Text='<%#: BindItem.lastname%>'></asp:TextBox>
+                                        <asp:TextBox ID="tbLname" runat="Server" CssClass="form-control" Text='<%#: BindItem.lastname%>'></asp:TextBox>
                                     </td>
                                 </tr>
                             </div>
@@ -126,7 +126,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:TextBox ID="TextBox3" runat="Server" CssClass="form-control" Text='<%#: BindItem.email%>'></asp:TextBox>
+                                        <asp:TextBox ID="tbEmail" runat="Server" CssClass="form-control" Text='<%#: BindItem.email%>'></asp:TextBox>
                                     </td>
                                 </tr>
                             </div>
@@ -137,7 +137,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <asp:TextBox ID="TextBox4" runat="Server" CssClass="form-control" Text='<%#: BindItem.phone%>'></asp:TextBox>
+                                        <asp:TextBox ID="tbPhone" runat="Server" CssClass="form-control" Text='<%#: BindItem.phone%>'></asp:TextBox>
                                     </td>
                                 </tr>
                             </div>
@@ -161,10 +161,10 @@
                 </EditItemTemplate>
 
             </asp:FormView>
-
-            Check if Private Lesson: 
-      <input type="checkbox" class="form-check-input">
-        </label>
+  </label>
+<%--            Check if Private Lesson: 
+      <input type="checkbox" class="form-check-input">--%>
+      
         <asp:Panel runat="server" ID="hideForms" Visible="true">
 
             <div class="form-group">

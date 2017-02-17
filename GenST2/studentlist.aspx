@@ -92,7 +92,7 @@
                                                         <asp:CheckBox runat="server" AutoPostBack="true" OnCheckedChanged="present_CheckedChanged" ID="cbPresent" ></asp:CheckBox>
                                                     </td>
                                                     <td>
-                                                        <asp:Label ID="classExpiration"  Style="color: blue;" runat="server">></asp:Label>
+                                                        <asp:Label ID="classExpiration"  Style="color: black;" runat="server">></asp:Label>
                                                     </td>
 
                                                
@@ -103,7 +103,7 @@
                                                 <asp:Label ID="lblCourseName"  runat="server" Text=" <%#: Item.name %>"></asp:Label>
                                             </td>
                                             <td class="col-md-4">
-                                                <asp:Label ID="lblExpiration" runat="server" Text="<%#:Item.expiration%>" Style="color: green;"></asp:Label>
+                                                <asp:Label ID="lblExpiration" runat="server" Text="<%#:Item.expiration%>" Style="color: black;"></asp:Label>
                                             </td>
                                         </tr>
                                     </div>
