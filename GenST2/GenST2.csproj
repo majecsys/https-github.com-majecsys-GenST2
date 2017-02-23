@@ -262,6 +262,7 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="ClassDiagram1.cd" />
     <Content Include="fees\Web.config" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\GenST2 - Web Deploy %284%29.pubxml" />
@@ -578,6 +579,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

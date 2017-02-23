@@ -12,7 +12,9 @@ namespace GenST2
     {
         public int[] lbClassIDArr { get; set; }
         public string lbCourseIDs { get; set; }
-        
+
+
+
         ClassCourseElements db = new ClassCourseElements();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -215,19 +217,23 @@ namespace GenST2
         {
             purchases purchaseClass = new purchases();
             purchases purchaseCourse = new purchases();
-            
+
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime localTime = TimeZoneInfo.ConvertTime(timeUtc, cstZone);
+
             foreach (ListItem lbPkgID in lbClassCard.Items)
             {
                 if (lbPkgID.Selected)
                 {
                     int lbValue = Convert.ToInt16(lbPkgID.Value);
-                    var classesLength = (from c in db.classcard
+                    var classesLengthInDays = (from c in db.classcard
                                                         where c.classcardID == lbValue
                                                         orderby c.classcardID
-                                                        select new { c.cardLength, c.numclasses }).First(); // loadNumClasses(lbValue); 
-
-                    purchaseClass.classexpiration = DateTime.Now.AddDays(classesLength.cardLength); 
-                    purchaseClass.numclasses = classesLength.numclasses;
+                                                        select new {c.cardLength, c.numclasses }).First(); // loadNumClasses(lbValue); 
+                    
+                    purchaseClass.classexpiration = localTime.AddDays(classesLengthInDays.cardLength); 
+                    purchaseClass.numclasses = classesLengthInDays.numclasses;
                     purchaseClass.studentID = studentID;
                     purchaseClass.classcardID = Convert.ToInt16((lbPkgID.Value)); ;
                     purchaseClass.purchasedate = DateTime.Today;
@@ -253,7 +259,7 @@ namespace GenST2
                     {
                         int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
                         purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
-                        purchaseCourse.expirationdate = DateTime.Now.AddDays(numDaysInWeeks);
+                        purchaseCourse.expirationdate = localTime.AddDays(numDaysInWeeks);
                         purchaseCourse.studentID = studentID;
                         purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
                         purchaseCourse.purchasedate = DateTime.Today;

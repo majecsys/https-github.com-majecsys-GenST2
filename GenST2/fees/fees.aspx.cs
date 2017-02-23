@@ -51,8 +51,8 @@ namespace GenST2
             var nowDate = DateTime.Today;
             DateTime pastDate = DateTime.Now.AddDays(-days);
             var amt = (from p in db.payments
-                       where ((p.paymentDate > pastDate) && (p.paymentDate < nowDate))
-                       select p.amount).Sum();
+                       where  ((p.paymentDate >= pastDate) && (p.paymentDate <= nowDate))
+                       select  p.amount).Sum() ;
             lblAmts.Visible = true;
             lblAmts.Text ="$" + amt.ToString();
            
