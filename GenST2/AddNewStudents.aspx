@@ -184,78 +184,78 @@
                 <label for="phone">Phone</label>
                 <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="xxx-xxx-xxxx">
             </div>
-
         </asp:Panel>
+                    <div class="form-group">
+                <label for="dropin">Check if Dropin</label>
+                <asp:CheckBox runat="server" ID="cbDropin" AutoPostBack="true" OnCheckedChanged="cbDropin_CheckedChanged" />
+                </div>
     </div>
-    <div class="row" id="classesRow">
-        <div class="col-md-2">
-            <label for="text">Classe Cards:</label>
-            <br />
-            <asp:ListBox ID="lbClassCard"
-                CssClass="form-control"
-                DataTextField="description"
-                DataValueField="classcardID"
-                runat="server"
-                ItemType="GenST2.Models.classcard"
-                SelectMethod="LoadClasses"
-                SelectionMode="Multiple"
-                OnSelectedIndexChanged="lbClassCard_SelectedIndexChanged"></asp:ListBox>
+    <asp:Panel runat="server" ID="hideClassCourseInputs">
+        <div class="row" id="classesRow">
+            <div class="col-md-2">
+                <label for="text">Class Cards:</label>
+                <br />
+                <asp:ListBox ID="lbClassCard"
+                    CssClass="form-control"
+                    DataTextField="description"
+                    DataValueField="classcardID"
+                    runat="server"
+                    ItemType="GenST2.Models.classcard"
+                    SelectMethod="LoadClasses"
+                    SelectionMode="Multiple"
+                    OnSelectedIndexChanged="lbClassCard_SelectedIndexChanged"></asp:ListBox>
+            </div>
+            <div class="col-md-2 form-group">
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <fieldset>
+                            <%--<legend>UpdatePanel</legend>--%>
+                            <label for="text">Amt Due:</label>
+                            <asp:HiddenField runat="server" ID="HiddenFieldAmtDue" />
+                            <asp:Label runat="server" CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
+                        </fieldset>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="lbClassCard" EventName="SelectedIndexChanged" />
+                    </Triggers>
+                </asp:UpdatePanel>
+            </div>
         </div>
-        <div class="col-md-2 form-group">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
-                    <fieldset>
-                        <%--<legend>UpdatePanel</legend>--%>
-                        <label for="text">Amt Due:</label>
-                        <asp:HiddenField runat="server" ID="HiddenFieldAmtDue" />
-                        <asp:Label runat="server" CssClass="form-control" ID="lbl_ClassesPrice"></asp:Label>
-                    </fieldset>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lbClassCard" EventName="SelectedIndexChanged" />
-                </Triggers>
-            </asp:UpdatePanel>
+        <%--coursesRow--%>
+        <div class="row" id="coursesRow">
+            <div class="col-md-2">
+                <label for="text">Courses:</label>
+                <br />
+                <asp:ListBox
+                    CssClass="form-control"
+                    DataTextField="name"
+                    DataValueField="courseID"
+                    runat="server"
+                    ItemType="GenST2.Models.courses"
+                    SelectMethod="LoadCourses"
+                    ID="lbCourses">
+
+                </asp:ListBox>
+            </div>
+            <div class="col-md-2">
+                <label for="text">Number Of Weeks:</label>
+
+                <asp:DropDownList
+                    ID="ddlNumWeeks"
+                    runat="server"
+                    CssClass="form-control">
+                    <asp:ListItem Value="0">Num Weeks</asp:ListItem>
+                    <asp:ListItem Value="3">3</asp:ListItem>
+                    <asp:ListItem Value="4">4</asp:ListItem>
+                    <asp:ListItem Value="5">5</asp:ListItem>
+                    <asp:ListItem Value="6">6</asp:ListItem>
+                    <asp:ListItem Value="7">7</asp:ListItem>
+                    <asp:ListItem Value="8">8</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+            <%--endCol--%>
         </div>
-    </div>
-    <%--classesRow--%>
-    <%--    <div class="row" id="classesRow">
-
-
-    </div>--%> <%--classesRow--%>
-
-    <div class="row" id="coursesRow">
-        <div class="col-md-2">
-            <label for="text">Courses:</label>
-            <br />
-            <asp:ListBox
-                CssClass="form-control"
-                DataTextField="name"
-                DataValueField="courseID"
-                runat="server"
-                ItemType="GenST2.Models.courses"
-                SelectMethod="LoadCourses"
-                ID="lbCourses">
-
-            </asp:ListBox>
-        </div>
-        <div class="col-md-2">
-            <label for="text">Number Of Weeks:</label>
-
-            <asp:DropDownList
-                ID="ddlNumWeeks"
-                runat="server"
-                CssClass="form-control">
-                <asp:ListItem Value="0">Num Weeks</asp:ListItem>
-                <asp:ListItem Value="3">3</asp:ListItem>
-                <asp:ListItem Value="4">4</asp:ListItem>
-                <asp:ListItem Value="5">5</asp:ListItem>
-                <asp:ListItem Value="6">6</asp:ListItem>
-                <asp:ListItem Value="7">7</asp:ListItem>
-                <asp:ListItem Value="8">8</asp:ListItem>
-            </asp:DropDownList>
-        </div>
-        <%--endCol--%>
-    </div>
+    </asp:Panel>
     <%--coursesRow--%>
 
     <div class="row" id="feeRow">
@@ -411,11 +411,12 @@
                 $('#<%=ddlNumWeeks.ClientID%>').removeAttr("disabled");
                 $.each(selected, function (index, value) {
                     if (value == 3) {
-                        priceMultiplier = 18;
+                   //     priceMultiplier = 18;
+                        priceMultiplier = 14.37;
                     }
-                    else {
-                        priceMultiplier = 15;
-                    }
+                    //else {
+                    //    priceMultiplier = 15;
+                    //}
                 });
             };
 

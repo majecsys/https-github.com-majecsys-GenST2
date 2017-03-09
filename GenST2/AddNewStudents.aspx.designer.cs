@@ -76,6 +76,24 @@ namespace GenST2 {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl phone;
         
         /// <summary>
+        /// cbDropin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbDropin;
+        
+        /// <summary>
+        /// hideClassCourseInputs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel hideClassCourseInputs;
+        
+        /// <summary>
         /// lbClassCard control.
         /// </summary>
         /// <remarks>
