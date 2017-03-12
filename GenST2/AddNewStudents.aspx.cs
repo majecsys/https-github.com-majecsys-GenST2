@@ -42,6 +42,13 @@ namespace GenST2
                         return query;
         }
 
+        public IQueryable<semesterCourses> LoadSemesterCourses()
+        {
+            var query = from c in db.semesterCourses select c;
+            return query;
+
+        }
+
 
         public IQueryable<students> getCurrentStudents()
         {
@@ -79,13 +86,10 @@ namespace GenST2
             int localFeeTotal = 0;
             bool isDropin = Convert.ToBoolean(ViewState["isDropinStudent"]);
             //    localFeeTotal = int.Parse(hiddenTotalFees.Value);
-
             if (isDropin)
             {
-
                 if (requirePaymentType())
-                {
-                    
+                {                   
                     if (ViewState["currentStudentID"] == null)
                     {
                         int currID = 0;
@@ -119,11 +123,10 @@ namespace GenST2
                 }
                 //int classSel = lbClasses.SelectedIndex;
                 //int courSel = lbCourses.SelectedIndex;
-                if (lbClassCard.SelectedIndex >= 0 || lbCourses.SelectedIndex >= 0)
+                if ((lbClassCard.SelectedIndex >= 0) || (lbCourses.SelectedIndex >= 0) || (lbSemesterCourses.SelectedIndex >= 0))
                 {
                     if (requirePaymentType())
                     {
-                        //        processClassCourseIDs();
                         if (ViewState["currentStudentID"] == null)
                         {
                             int currID = 0;
@@ -169,98 +172,99 @@ namespace GenST2
             }
             return isChecked;
         }
-
-        private void processClassCourseIDs()
+        public int createStudents(int currID)
         {
-            foreach (ListItem lbcID in lbClassCard.Items)
-            {
-                if (lbcID.Selected)
-                {
-                //    lbClassIDArr += (lbcID.Value+",");
-                }
-            }
-            foreach (ListItem lbCourID in lbCourses.Items)
-            {
-                if (lbCourID.Selected)
-                {
-                    lbCourseIDs += (lbCourID.Value); // + ",");
-                }
-            }
-            if (lbClassIDArr != null)
-            {
-            //    lbClassIDArr = lbClassIDArr.Remove(lbClassIDArr.Length - 1);
-            }
-            
-            //if (lbCourseIDs != null)
-            //{
-            //    lbCourseIDs = lbCourseIDs.Remove(lbCourseIDs.Length - 1);
-            //}
+            students newStudent = new students();
 
+            newStudent.firstname = firstName.Value;
+            newStudent.lastname = lastname.Value;
+            newStudent.email = email.Value;
+            newStudent.phone = phone.Value;
+            newStudent.entrydate = DateTime.Today;
+            db.students.Add(newStudent);
+            try
+            {
+                db.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return newStudent.studentID;
         }
-
         public void insertStudentRec(int currID)
         {
             bool isDropin = Convert.ToBoolean(ViewState["isDropinStudent"]);
-            if (isDropin)
+
+            if (isDropin && currID == 0)
+            {
+                int newID = createStudents(currID);
+                addFeeAmts(newID);
+                makePurchase(newID);
+            }
+            else if (isDropin && currID != 0)
             {
                 addFeeAmts(currID);
                 makePurchase(currID);
             }
             else
             {
-                students newStudent = new students();
+                //students newStudent = new students();
 
-                newStudent.firstname = firstName.Value;
-                newStudent.lastname = lastname.Value;
-                newStudent.email = email.Value;
-                newStudent.phone = phone.Value;
-                newStudent.entrydate = DateTime.Today;
+                //newStudent.firstname = firstName.Value;
+                //newStudent.lastname = lastname.Value;
+                //newStudent.email = email.Value;
+                //newStudent.phone = phone.Value;
+                //newStudent.entrydate = DateTime.Today;
                 if ((currID != 0))
                 {
-                   
+                    addFeeAmts(currID);
+                    makePurchase(currID);
+                    // tells me its a existing student so we dont insert by running .Add
                 }
                 else
                 {
-                    db.students.Add(newStudent);
+                    int newID = createStudents(currID);
+                    addFeeAmts(newID);
+                    makePurchase(newID);
+                //    db.students.Add(newStudent);
                 }
                 
-                if (currID == 0)
-                {
-                    try
-                    {
-                        db.SaveChanges();
-                        addFeeAmts(newStudent.studentID);
-                        makePurchase(newStudent.studentID);
-                    }
-                    catch (Exception)
-                    {
-                        db.SaveChanges();
-                        throw;
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        db.SaveChanges();
-                        addFeeAmts(currID);
-                        makePurchase(currID);
-                    }
-                    catch (Exception)
-                    {
-                        // db.SaveChanges();
-                        throw;
-                    }
-                }
-
+                //if (currID == 0)
+                //{
+                //    try
+                //    {
+                //        db.SaveChanges();
+                //        addFeeAmts(newStudent.studentID);
+                //        makePurchase(newStudent.studentID);
+                //    }
+                //    catch (Exception)
+                //    {
+                //        db.SaveChanges();
+                //        throw;
+                //    }
+                //}
+                //else
+                //{
+                //    try
+                //    {
+                //        db.SaveChanges();
+                //        addFeeAmts(currID);
+                //        makePurchase(currID);
+                //    }
+                //    catch (Exception)
+                //    {
+                //        // db.SaveChanges();
+                //        throw;
+                //    }
+                //}
             }
-
-
         }
 
         private void makePurchase(int studentID)
         {
-            int localFeeTotal = 0;
             bool isDropin = Convert.ToBoolean(ViewState["isDropinStudent"]);
 
             purchases purchaseClass = new purchases();
@@ -315,25 +319,51 @@ namespace GenST2
                         }
                     }
                 }
-                if (hiddenValueNumWeeks.Value != "")
+            }
+            if (hiddenValueNumWeeks.Value != "")
+            {
+                int numWeeks = int.Parse(hiddenValueNumWeeks.Value);
+                double numDaysInWeeks = numWeeks * 7;
+                foreach (ListItem lbCourseID in lbCourses.Items)
                 {
-                    int numWeeks = int.Parse(hiddenValueNumWeeks.Value);
-                    double numDaysInWeeks = numWeeks * 7;
-                    foreach (ListItem lbCourseID in lbCourses.Items)
+                    if (lbCourseID.Selected)
                     {
-                        if (lbCourseID.Selected)
+                        int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
+                        purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
+                        purchaseCourse.expirationdate = localTime.AddDays(numDaysInWeeks);
+                        purchaseCourse.studentID = studentID;
+                        purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
+                        purchaseCourse.purchasedate = DateTime.Today;
+             //           purchaseCourse.semesterSeason = "";
+                        db.purchases.Add(purchaseCourse);
+                        try
                         {
-                            int lbCourseValue = Convert.ToInt16(lbCourseID.Value);
-                            purchaseCourse.numweeks = int.Parse(hiddenValueNumWeeks.Value);
-                            purchaseCourse.expirationdate = localTime.AddDays(numDaysInWeeks);
+                            db.SaveChanges();
+                            //   addFeeAmts(studentID);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (lbSemesterCourses.SelectedIndex >= 0)
+                {
+                    foreach (ListItem semesterID in lbSemesterCourses.Items)
+                    {
+                        if (semesterID.Selected)
+                        {
                             purchaseCourse.studentID = studentID;
-                            purchaseCourse.courseID = Convert.ToInt16(lbCourseID.Value);
+                            purchaseCourse.semesterID = Convert.ToInt16(semesterID.Value);
                             purchaseCourse.purchasedate = DateTime.Today;
+              //              purchaseCourse.semesterSeason = "Winter/Spring"; // lbSemesterCourses.Text;
                             db.purchases.Add(purchaseCourse);
                             try
                             {
                                 db.SaveChanges();
-                                //   addFeeAmts(studentID);
                             }
                             catch (Exception)
                             {
@@ -344,17 +374,6 @@ namespace GenST2
                 }
             }
         }
-
-        //private int loadNumWeeks(int lbCourseValue)
-        //{
-        //    ClassCourseElements locDb = new ClassCourseElements();
-        //    var numweeks = (from c in locDb.courses
-        //                      join p in locDb.purchases on c.courseID equals p.courseID
-        //                      where c.courseID == lbCourseValue
-        //                      select c.numweeks).First();
-        //    return numweeks;
-        //}
-
         private int loadNumClasses(int lbValue)
         {
             ClassCourseElements locDb = new ClassCourseElements();
@@ -477,6 +496,22 @@ namespace GenST2
             var price = (from ca in localDB.classcard where (ca.classcardID == selID) select ca.price).SingleOrDefault();
         //    var priceperhr = (from p in localDB.prices join c in localDB.classes on p.classID equals c.classID where (c.classID == selID) select p.priceperhr).SingleOrDefault();
 
+            displayAmt += price; // numclassses * priceperhr;
+
+            return Convert.ToString(displayAmt);
+        }
+        [WebMethod]
+        public static string GetSemesterPrices(string selectedID)
+        {
+            return processSemesterPrices(selectedID);
+        }
+
+        public static string processSemesterPrices(string selectedID)
+        {
+            ClassCourseElements localDB = new ClassCourseElements();
+            int selID = Convert.ToInt16(selectedID);
+            int displayAmt = 0;
+            var price = (from sem in localDB.semesterCourses where (sem.scID == selID) select sem.price).SingleOrDefault();
             displayAmt += price; // numclassses * priceperhr;
 
             return Convert.ToString(displayAmt);

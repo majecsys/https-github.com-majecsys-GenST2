@@ -8,7 +8,7 @@
     <br />
     <br />
     <div class="form-group">
-        <label >
+        <label>
             Check if current Student: 
         <asp:DropDownList runat="server" ID="ddlCurrent"
             ItemType="GenST2.Models.students"
@@ -161,10 +161,10 @@
                 </EditItemTemplate>
 
             </asp:FormView>
-  </label>
-<%--            Check if Private Lesson: 
+        </label>
+        <%--            Check if Private Lesson: 
       <input type="checkbox" class="form-check-input">--%>
-      
+
         <asp:Panel runat="server" ID="hideForms" Visible="true">
 
             <div class="form-group">
@@ -185,10 +185,10 @@
                 <input type="tel" class="form-control" id="phone" aria-describedby="tel" runat="server" placeholder="xxx-xxx-xxxx">
             </div>
         </asp:Panel>
-                    <div class="form-group">
-                <label for="dropin">Check if Dropin</label>
-                <asp:CheckBox runat="server" ID="cbDropin" AutoPostBack="true" OnCheckedChanged="cbDropin_CheckedChanged" />
-                </div>
+        <div class="form-group">
+            <label for="dropin">Check if Dropin</label>
+            <asp:CheckBox runat="server" ID="cbDropin" AutoPostBack="true" OnCheckedChanged="cbDropin_CheckedChanged" />
+        </div>
     </div>
     <asp:Panel runat="server" ID="hideClassCourseInputs">
         <div class="row" id="classesRow">
@@ -224,7 +224,7 @@
         <%--coursesRow--%>
         <div class="row" id="coursesRow">
             <div class="col-md-2">
-                <label for="text">Courses:</label>
+                <label for="text">Beginner Session:</label>
                 <br />
                 <asp:ListBox
                     CssClass="form-control"
@@ -233,9 +233,7 @@
                     runat="server"
                     ItemType="GenST2.Models.courses"
                     SelectMethod="LoadCourses"
-                    ID="lbCourses">
-
-                </asp:ListBox>
+                    ID="lbCourses"></asp:ListBox>
             </div>
             <div class="col-md-2">
                 <label for="text">Number Of Weeks:</label>
@@ -253,7 +251,24 @@
                     <asp:ListItem Value="8">8</asp:ListItem>
                 </asp:DropDownList>
             </div>
+
+
             <%--endCol--%>
+        </div>
+        <br />
+        <div class="row" id="semesterRow">
+            <div class="col-md-2">
+                <label for="text">Semester Courses:</label>
+                <br />
+                <asp:ListBox CssClass="form-control"
+                    runat="server"
+                    ID="lbSemesterCourses"
+                    ItemType="GenST2.Models.semesterCourses"
+                    DataValueField="scID"
+                    DataTextField="description"
+                    SelectMethod="LoadSemesterCourses"
+                    SelectionMode="Multiple"></asp:ListBox>
+            </div>
         </div>
     </asp:Panel>
     <%--coursesRow--%>
@@ -310,7 +325,48 @@
 
             $('#<%=ddlNumWeeks.ClientID%>').attr("disabled", "disabled");
 
-            //****************   
+            //*****ajax pull of data from selected semesterCourses
+            $('#<%=lbSemesterCourses.ClientID%>').multiselect({
+                selectAllValue: 'multiselect-all',
+                enableCaseInsensitiveFiltering: false,
+                enableFiltering: false,
+                onChange: function (element, checked) {
+                    var semCourseIDs = $('#<%=lbSemesterCourses.ClientID%> option:selected');
+                    var selected = [];
+                    if ($('#<%=lbSemesterCourses.ClientID%>').val()) {
+                        $(semCourseIDs).each(function (index, semCourseIDs) {
+                            selected.push([$(this).val()]);
+                            processSemesterChoices(selected);
+                        });
+                    }
+                    else {
+                            $('#<%=lbl_totalFees.ClientID%>').text('');
+                         }
+                }
+
+            });
+            function processSemesterChoices(selected) {
+                var sum = 0;
+                $.each(selected, function (index, value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "AddNewStudents.aspx/GetSemesterPrices",
+                        data: '{selectedID : "' + value + '"}',
+                        contentType: "application/json; charset=utf-8",
+
+                        success: function (msg) {
+                            sum += parseInt(msg.d);
+                            $('#<%=lbl_totalFees.ClientID%>').text(sum);
+                            $('#<%=HiddenFieldAmtDue.ClientID%>').val(sum);
+                            //  alert("in success  " + msg.d);
+                        },
+                        error: function (msg) {
+                            //    alert("in error  " + msg.d);
+                        }
+                    });
+                });
+            }
+            //*****ajax pull of data from selected classCard
             $('#<%=lbClassCard.ClientID%>').multiselect({
                 selectAllValue: 'multiselect-all',
                 enableCaseInsensitiveFiltering: false,
@@ -327,6 +383,7 @@
                     }
                     else {
                         $('#<%=lbl_ClassesPrice.ClientID%>').text('');
+                        $('#<%=lbl_totalFees.ClientID%>').text('');
                     }
                 }
             });
@@ -351,10 +408,60 @@
                         }
                     });
                 });
+            }
+            //****************          
+            $('#<%=lbCourses.ClientID%>').multiselect({
+                selectAllValue: 'multiselect-all',
+                enableCaseInsensitiveFiltering: false,
+                enableFiltering: false,
+                onChange: function (element, checked) {
+                    var courseIds = $('#<%=lbCourses.ClientID%> option:selected');
+                    var selected = [];
+                    var description = "";
+
+                    $(courseIds).each(function (index, courseIds) {
+                        description = $(this).text();
+                        selected.push([$(this).val()]);
+                        processCourseChoices(selected, description);
+                    });
+                }
+
+            });
+            function processCourseChoices(selected, description) {
+                $('#<%=ddlNumWeeks.ClientID%>').removeAttr("disabled");
+                $.each(selected, function (index, value) {
+                    if (value == 3) {
+                        //     priceMultiplier = 18;
+                        priceMultiplier = 14.37;
+                    }
+                    //else {
+                    //    priceMultiplier = 15;
+                    //}
+                });
+            };
+
+            $('#<%=ddlNumWeeks.ClientID%>').change(function () {
+                if ($('#<%=lbl_ClassesPrice.ClientID%>').text() != "") {
+                    var classAMTs = $('#<%=lbl_ClassesPrice.ClientID%>').text();
+                } else {
+                    classAMTs = 0;
+                }
+                var id = $(this).find("option:selected").attr("value");
+
+                $('#<%=hiddenValueNumWeeks.ClientID%>').val(id);
+
+                var total = priceMultiplier * id;
+                $('#<%=hiddenTotalFees.ClientID%>').val(parseInt(total) + parseInt(classAMTs));
+                $('#<%=lbl_totalFees.ClientID%>').text(parseInt(total) + parseInt(classAMTs));
+            });
+            //*******************    
+        }); //end of main group
 
 
+    </script>
 
-<%--               var sum = 0;
+
+    <%--               var sum = 0;
                 $.each(selected, function (index, value) {
                     if (value == 8) {
                         sum += 72;
@@ -387,63 +494,4 @@
                     $('#<%=lbl_totalfees.clientid%>').text(sum);
                     $('#<%=hiddenfieldamtdue.clientid%>').val(sum);
                 });--%>
-            }
-
-            //****************          
-            $('#<%=lbCourses.ClientID%>').multiselect({
-                selectAllValue: 'multiselect-all',
-                enableCaseInsensitiveFiltering: false,
-                enableFiltering: false,
-                onChange: function (element, checked) {
-                    var courseIds = $('#<%=lbCourses.ClientID%> option:selected');
-                    var selected = [];
-                    var description = "";
-
-                    $(courseIds).each(function (index, courseIds) {
-                        description = $(this).text();
-                        selected.push([$(this).val()]);
-                        processCourseChoices(selected, description);
-                    });
-                }
-
-            });
-            function processCourseChoices(selected, description) {
-                $('#<%=ddlNumWeeks.ClientID%>').removeAttr("disabled");
-                $.each(selected, function (index, value) {
-                    if (value == 3) {
-                   //     priceMultiplier = 18;
-                        priceMultiplier = 14.37;
-                    }
-                    //else {
-                    //    priceMultiplier = 15;
-                    //}
-                });
-            };
-
-            $('#<%=ddlNumWeeks.ClientID%>').change(function () {
-                if ($('#<%=lbl_ClassesPrice.ClientID%>').text() != "") {
-                    var classAMTs = $('#<%=lbl_ClassesPrice.ClientID%>').text();
-                } else {
-                    classAMTs = 0;
-                }
-                var id = $(this).find("option:selected").attr("value");
-                
-                $('#<%=hiddenValueNumWeeks.ClientID%>').val(id);
-
-                var total = priceMultiplier * id;
-                $('#<%=hiddenTotalFees.ClientID%>').val(parseInt(total) + parseInt(classAMTs));
-                $('#<%=lbl_totalFees.ClientID%>').text(parseInt(total) + parseInt(classAMTs));
-            });
-            //*******************    
-        }); //end of main group
-
-        //$(document).ready(function () {
-        //    $("select").mouseenter(function (e) {
-        //        e.stopPropagation();
-        //        $id = $(this).attr("id");
-        //        console.log($id);
-        //    });      
-        //});
-    </script>
-
 </asp:Content>
