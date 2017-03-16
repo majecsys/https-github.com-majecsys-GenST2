@@ -52,8 +52,20 @@ namespace GenST2
 
         public IQueryable<students> getCurrentStudents()
         {
-            var query = from s in db.students orderby s.lastname select s;
+            var query = (from s in db.students orderby s.firstname select s);
             return query;
+            //var v = (from s in db.students
+
+            //         select new
+            //         {
+            //             s.firstname,
+            //             s.lastname
+            //         }).Select(n => new
+            //         {
+            //             firstname = n.firstname,
+            //             lastname = n.lastname
+            //         }).ToList();
+            //return v.AsQueryable;
         }
 
         public IQueryable<students> returnDemo([Control("ddlCurrent")] int? studentID)
@@ -185,11 +197,9 @@ namespace GenST2
             try
             {
                 db.SaveChanges();
-
             }
             catch (Exception)
             {
-
                 throw;
             }
             return newStudent.studentID;
@@ -211,13 +221,6 @@ namespace GenST2
             }
             else
             {
-                //students newStudent = new students();
-
-                //newStudent.firstname = firstName.Value;
-                //newStudent.lastname = lastname.Value;
-                //newStudent.email = email.Value;
-                //newStudent.phone = phone.Value;
-                //newStudent.entrydate = DateTime.Today;
                 if ((currID != 0))
                 {
                     addFeeAmts(currID);
@@ -229,37 +232,7 @@ namespace GenST2
                     int newID = createStudents(currID);
                     addFeeAmts(newID);
                     makePurchase(newID);
-                //    db.students.Add(newStudent);
                 }
-                
-                //if (currID == 0)
-                //{
-                //    try
-                //    {
-                //        db.SaveChanges();
-                //        addFeeAmts(newStudent.studentID);
-                //        makePurchase(newStudent.studentID);
-                //    }
-                //    catch (Exception)
-                //    {
-                //        db.SaveChanges();
-                //        throw;
-                //    }
-                //}
-                //else
-                //{
-                //    try
-                //    {
-                //        db.SaveChanges();
-                //        addFeeAmts(currID);
-                //        makePurchase(currID);
-                //    }
-                //    catch (Exception)
-                //    {
-                //        // db.SaveChanges();
-                //        throw;
-                //    }
-                //}
             }
         }
 
