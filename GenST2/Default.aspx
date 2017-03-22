@@ -11,7 +11,6 @@
     <div class="row">
         <div class="col-md-6">
             <h2>Adding New Students</h2>
-
             <p>
                 <a class="btn btn-default" href="AddNewStudents.aspx">Add New Students &raquo;</a>
             </p>
